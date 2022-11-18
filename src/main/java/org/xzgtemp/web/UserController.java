@@ -2,14 +2,13 @@ package org.xzgtemp.web;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.xzgtemp.service.UserService;
@@ -23,11 +22,21 @@ public class UserController {
 	@Autowired
 	UserService userservice;
 
-	final Logger logger = LoggerFactory.getLogger(getClass());
+	//final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@GetMapping("/")
-	public ModelAndView index(HttpSession session) {
-		return new ModelAndView("index.html");
+	public ModelAndView Signin(HttpSession session) {
+		return new ModelAndView("signin.html");
+	}
+
+
+	@PostMapping("/signin")
+	public ModelAndView doSignin(@RequestParam("username") String email, @RequestParam("password") String password,
+			HttpSession session) {
+
+
+
+		return new ModelAndView("redirect:/search.html");
 	}
 
 
@@ -38,7 +47,7 @@ public class UserController {
 		return new ModelAndView("register.html");
 	}
     
-
+	
 	@GetMapping("/search")
 	public ModelAndView search() {
 

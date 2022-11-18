@@ -29,25 +29,31 @@ public class DocumentService {
         return false;
     }
 
-    public Document GetBookbyBID(int bid){
+    public Document GetDocumentsbyBID(int bid){
 
         return null;
     }
 
-    public List<Document> GetBookbyTitle(String Title){
-
-        return null;
-    }
-
-
-    public List<Document> GetBookbyAuthor(String Author){
+    public List<Document> GetDocumentsbyTitle(String Title){
 
         return null;
     }
 
 
-    public List<Document> GetBooks(){
+    public List<Document> GetDocumentsbyAuthor(String Author){
+
+        return null;
+    }
+
+
+    public List<Document> GetAllDocuments(){
         return jdbctemplate.query("SELECT * FROM Document",new BeanPropertyRowMapper<>(Document.class));
     }
+
+
+    public void ChangeDocumentTitle(Document document){
+
+    }
+    //还有其他的"ChangeDocument"+其他属性名 函数
 
 }

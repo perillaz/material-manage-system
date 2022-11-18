@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>signin</title>
+</head>
+
+<body>
+    <form method="post" action="/signin">
+        <h3>Meterial Manage System</h3>
+        <p>Welcome</p>
+        <div class="form-group">
+            <label>UserName</label>
+            <input name="username" type="username" class="form-control" placeholder="Email" value="{{ username }}">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input name="password" type="password" class="form-control" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+        </div>
+        <div class="form-group">
+            <a href="/register">Don't have an account?</a>
+        </div>
+    </form>
+</body>
+
+</html>

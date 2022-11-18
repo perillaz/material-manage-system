@@ -34,20 +34,27 @@ public class BookService {
         return null;
     }
 
+    public List<Book> GetBookbyTitleAndAuthor(String s){
+
+        return null;
+    }
     public List<Book> GetBookbyTitle(String Title){
 
         return null;
     }
-
-
     public List<Book> GetBookbyAuthor(String Author){
 
         return null;
     }
 
 
-    public List<Book> GetBooks(){
+    public List<Book> GetALlBooks(){
         return jdbctemplate.query("SELECT * FROM Book",new BeanPropertyRowMapper<>(Book.class));
     }
+
+    public void ChangeBookTitle(Book book){
+
+    }
+    //还有其他的"ChangeBook"+其他属性名 函数
 
 }

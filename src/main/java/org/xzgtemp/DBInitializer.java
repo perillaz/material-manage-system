@@ -14,6 +14,7 @@ public class DBInitializer {
 
 	@PostConstruct
 	public void init() {
-		//jdbcTemplate.update("CREATE TABLE TEST( ID int,name VARCHAR(20),PRIMARY KEY (ID))");
+		jdbcTemplate.update("DROP TABLE IF EXISTS User");
+		jdbcTemplate.update("CREATE TABLE User( u_id VARCHAR(13),u_name VARCHAR(30),PRIMARY KEY (u_id))");
 	}
 }
