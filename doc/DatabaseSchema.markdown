@@ -23,9 +23,9 @@
 | buytime       | 购买时间(上传时间)        | Date         | java.sql.Date |      |
 | whereis       | 在架上位置               | varchar(100) | String       |      |
 | isonshelf     | 是否在架上               |              | Boolean      |      |
+| borrowtimes   | 借阅次数                  |   INTEGER     |      Int        |      |
 | isbn          |                          |              | String       | yes  |
 | publisher     |                          |              |              | yes  |
-|               |                          |              |              |      |
 
 #### Document
 
@@ -39,6 +39,7 @@
 | uploaduser(u_id)  | 购买者(上传信息的用户)     | varchar(13)  | String       |      |
 | uploadtime    | 购买时间(上传时间)        | Date         | java.sql.Date |      |
 | filepath     | 文件路径 | varchar | String |    |
+| downloadtimes | 下载次数                 |   INTEGER     |  Int      |      |
 |  |  |  |  | |
 
 #### BorrowBook

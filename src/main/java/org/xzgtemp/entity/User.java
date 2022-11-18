@@ -6,6 +6,15 @@ public class User {
 	private String name;
 	private String password;
 
+	public User(){
+		
+	}
+
+	public User(String id,String name,String password){
+		this.id = id;
+		this.name = name;
+		this.password = password;
+	}
 
 	public String GetID() {
 		return id;
@@ -29,12 +38,5 @@ public class User {
 
 	public void SetPassword(String password) {
 		this.password = password;
-	}
-
-
-    @Override
-	public String toString() {
-		return String.format("User[id=%s, name=%s, password=%s]", 
-			GetID(),GetName(), GetPassword());
 	}
 }

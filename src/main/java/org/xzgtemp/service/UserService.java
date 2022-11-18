@@ -1,6 +1,7 @@
 package org.xzgtemp.service;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,15 +20,20 @@ public class UserService {
 	RowMapper<User> userRowMapper = new BeanPropertyRowMapper<>(User.class);
 
 	public User GetUserbyID(String id){
-		return jdbcTemplate.queryForObject("SELECT * FROM User WHERE u_id = ?", new Object[] { id },
-				userRowMapper);
+		return jdbcTemplate.queryForObject("SELECT * FROM User WHERE u_id = ?",
+            (ResultSet rs, int rowNum) -> {
+                return new User( // new User object:
+                        rs.getString("u_id"), // id
+						rs.getString("u_name"),// name
+                        rs.getString("u_password") // password
+				); 
+            },
+			id
+		);
 	}
 
 	public User register(String id, String name, String password) {
-		User user = new User();
-		user.SetID(id);
-		user.SetName(name);
-		user.SetPassword(password);
+		User user = new User(id,name,password);
 		if (1 != jdbcTemplate.update((conn) -> {
 			PreparedStatement ps = conn.prepareStatement("INSERT INTO User(u_id,u_name,u_password) VALUES(?,?,?)");
 			ps.setObject(1, user.GetID());
