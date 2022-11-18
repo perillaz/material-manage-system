@@ -6,39 +6,48 @@
 
 java速成，看的东西如下
 
-|----计院java课程的ppt
-|   |---Lecture 1 Java Basic
-|   |---Lecturn 3 Spring Core
-|
-|---- [廖雪峰廖雪峰java教程](https://www.liaoxuefeng.com/wiki/1252599548343744)
-    |---- 面向对象教程
-    |   |----面向对象基础
-    |   |----java核心类
-    |       |--javabean
+    |----计院java课程的ppt
+    |   |---Lecture 1 Java Basic
+    |   |---Lecturn 3 Spring Core
     |
-    |----注解
-    |----单元测试
-    |----Maven基础
-    |----网络编程
-    |   |----网络编程基础
-    |   |----TCP编程
-    |   |----HTTP编程
-    |
-    |----XML与JSON
-    |----JDBC编程
-    |----Web开发
-    |----Spring开发
+    |---- [廖雪峰廖雪峰java教程](https://www.liaoxuefeng.com/wiki/1252599548343744)
+        |---- 面向对象教程
+        |   |----面向对象基础    
+        |   |----java核心类
+        |       |--javabean
+        |    
+        |----注解
+        |----单元测试
+        |----Maven基础
+        |----网络编程
+        |   |----网络编程基础
+        |   |----TCP编程
+        |   |----HTTP编程
+        |
+        |----XML与JSON
+        |----JDBC编程
+        |----Web开发
+        |----Spring开发
 
 # 22-11-16晚上，22-11-17下午
+
 把工程的文件结构理清了
+
 边看教程边试，把需要用的东西和设置写好了，能成功运行并通过浏览器访问
 
-
 # 22-11-17晚上
+
 html速成
-[HTML 教程 | 菜鸟教程](https://www.runoob.com/html/html-tutorial.html)
+    [HTML 教程 | 菜鸟教程](https://www.runoob.com/html/html-tutorial.html)
+
 写了一点接口
 
 # 22-11-18中午
 
 接口+一点功能实现示例
+
+# 22-11-18晚上
+
+改正一些bug
+user相关所有功能正常使用
+实现注册，登陆相关的网页的基础功能和跳转
