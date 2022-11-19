@@ -3,19 +3,19 @@ package org.xzgtemp.entity;
 import java.sql.Date;
 
 public class Document {
-	private String id; 
+	private Long id;
 	private String title;
 	private String author;
 	private String uploader;
 	private Date uploadtime;
 	private String filepath;
 	private Integer downloadtimes;
-	
+
 	public Document(){
 
 	}
 
-	public Document(String id,String title,String author,String uploader,Date uploadtime,String filepath,Integer downloadtimes) {
+	public Document(Long id,String title,String author,String uploader,Date uploadtime,String filepath,Integer downloadtimes) {
 		this.id=id;
 		this.title=title;
 		this.author=author;
@@ -26,11 +26,11 @@ public class Document {
 	}
 
 	//论文id
-	public String GetID() {
+	public Long GetID() {
 		return id;
 	}
 
-	public void SetID(String id) {
+	public void SetID(Long id) {
 		this.id=id;
 	}
 	
