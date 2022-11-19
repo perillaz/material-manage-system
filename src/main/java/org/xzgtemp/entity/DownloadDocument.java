@@ -3,40 +3,48 @@ package org.xzgtemp.entity;
 import java.sql.Date;
 
 public class DownloadDocument {
-	private String download_id;
-	private String d_id;
-	private String user_id;
+	private Long id;
+	private String uid;
+	private Long did;
 	private Date downloadtime;
 	
-	public DownloadDocument(String download_id,String d_id, String user_id,Date downloadtime) {
-		this.download_id=download_id;
-		this.d_id=d_id;
-		this.user_id=user_id;
+	public DownloadDocument(Long id,String uid,Long did,Date downloadtime) {
+		this.id=id;
+		this.did=did;
+		this.uid=uid;
 		this.downloadtime=downloadtime;
 	}
 	
-	//下载信息
-	public String Getdownload_id() {
-		return download_id;
+	public Long GetID() {
+		return id;
 	}
-	public String Getdou() {
-		return d_id;
+
+	public void SetID(Long id){
+		this.id = id;
 	}
-	public String Getuser() {
-		return user_id;
+
+	public String GetUID() {
+		return uid;
 	}
-	public Date Downloadtime() {
+
+	public void SetUID(String uid){
+		this.uid = uid;
+	}
+
+	public Long GetDID() {
+		return did;
+	}
+
+	public void SetDID(Long did){
+		this.did = did;
+	}
+
+	public Date GetDownloadtime(){
 		return downloadtime;
 	}
-	
-	//修改下载信息
-	public void Setdou(String d_id) {
-		this.d_id=d_id;
+
+	public void SetDownloadtime(Date downloadtime){
+		this.downloadtime = downloadtime;
 	}
-	public void Setuser(String user_id) {
-		this.user_id=user_id;
-	}
-	
-	
     
 }

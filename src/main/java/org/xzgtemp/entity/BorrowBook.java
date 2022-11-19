@@ -3,75 +3,92 @@ package org.xzgtemp.entity;
 import java.sql.Date;
 
 public class BorrowBook {
-	private String borrowid;
-	private String book_id;
-	private String user_id;
-	private Date borrowdate;
-	private Date sendbackdate;
-	private Date ddlofborrow;
-	private Boolean hadback;
-	private Boolean ordered;
-	private String orderuser;
+	private Long id;
+	private String uid;
+	private Long bid;
+	private Date borrowtime;
+	private Date sendbacktime;
+	private Date duetime;
+	private Boolean finished;
+	
+	public BorrowBook(){
+
+	}
+
+	public BorrowBook(
+		Long id,
+		String uid,
+		Long bid,
+		Date borrowtime,
+		Date sendbacktime,
+		Date duetime,
+		Boolean finished){
+			this.id = id;
+			this.uid = uid;
+			this.bid = bid;
+			this.borrowtime = borrowtime;
+			this.sendbacktime = sendbacktime;
+			this.duetime = duetime;
+			this.finished = finished;
+		}
 	
 	
-	public BorrowBook(String borrowid, String book_id, String user_id,Date borrowdate, Date sendbackdate,Date ddlofborrow,Boolean hadback,Boolean ordered,String orderuser) {
-		this.borrowid=borrowid;
-		this.book_id=book_id;
-		this.user_id=user_id;
-		this.borrowdate=borrowdate;
-		this.sendbackdate=sendbackdate;
-		this.ddlofborrow=ddlofborrow;
-		this.hadback=hadback;
-		this.ordered=ordered;
-		this.orderuser=orderuser;
+	public Long GetID() {
+		return id;
 	}
-	
-	//借书
-	public String Getborrowid() {
-		return borrowid;
+
+	public void SetID(Long id){
+		this.id = id;
 	}
-	public String Getbook_id() {
-		return book_id;
+
+	public String GetUID() {
+		return uid;
 	}
-	public String Getuser_id() {
-		return user_id;
+
+	public void SetUID(String uid){
+		this.uid = uid;
 	}
-	//借出时间
-	public Date Getborrdate() {
-		return borrowdate;
+
+	public Long GetBID() {
+		return bid;
 	}
-	//归还时间
-	public Date Getbacktime() {
-		return sendbackdate;
+
+	public void SetBID(Long bid){
+		this.bid = bid;
 	}
-	//应还时间
-	public Date Theddl() {
-		return ddlofborrow;
+
+	public Date GetBorrowtime() {
+		return borrowtime;
 	}
-	
-	
-	//是否归还
-	public Boolean Backornot() {
-		return hadback;
+
+	public void SetBorrowtime(Date borrowtime){
+		this.borrowtime = borrowtime;
 	}
-	
-	//是否被预定
-	public Boolean Ordered() {
-		return ordered;
+
+	public Date GetSendbacktime() {
+		return sendbacktime;
 	}
-	public String Orderuser() {
-		return orderuser;
+
+	public void SetSendbacktime(Date sendbacktime){
+		this.sendbacktime = sendbacktime;
 	}
-	
-	//修改借书信息
-	public void Setbook_id(String book_id) {
-		
+
+	public Date GetDuetime() {
+		return duetime;
 	}
-	public void Setuser_id(String user_id) {
-		
+
+	public void SetDuetime(Date duetime){
+		this.duetime = duetime;
 	}
-	
-	
+
+
+	public Boolean GetFinished() {
+		return finished;
+	}
+
+	public void SetFinished(Boolean finished){
+		this.finished = finished;
+	}
 	
     
 }
