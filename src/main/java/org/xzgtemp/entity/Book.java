@@ -55,30 +55,18 @@ public class Book {
 	public Date Getbuytime() {
 		return buytime;
 	}
-	
-	//修改
-	public void Modifytitle(String title) {
-		this.title=title;
-	}
-		public void Modifyauthor(String author) {
-			this.author=author;
-	}
-		
 	//获取书籍位置
 	public String Whereis() {
 		return whereis;
 	}
-	
 	//书籍是否在架上
 	public Boolean Onshelf() {
 		return isonshelf;
 	}
-	
 	//被借次数
 	public Integer Borrowtimes() {
-		return borrowtimes;
+			return borrowtimes;
 	}
-	
 	//预定
 	public Boolean Ordered() {
 		return ordered;
@@ -86,6 +74,54 @@ public class Book {
 	public String Orderuser() {
 		return orderuser;
 	}
+	
+	//修改
+	public void SetBook(String id) {
+		this.id=id;
+	}
+	public void Modifytitle(String title) {
+		this.title=title;
+	}
+	public void Modifyauthor(String author) {
+		this.author=author;
+	}
+	public void SetPublishtime(Date publishtime) {
+		this.publishtime=publishtime;
+	}
+	public void SetPubilsher(String publisher) {
+		this.publisher=publisher;
+	}
+	public void Setbuyer(String buyer) {
+		this.buyer=buyer;
+	}
+	public void Setbuytime(Date buytime) {
+		this.buytime=buytime;
+	}
+	public void Setlocation(String whereis) {
+		this.whereis=whereis;
+	}
+	public void SetOnshelf(Boolean isonshelf) {
+		this.isonshelf=isonshelf;
+	}
+	public void SetBorrowtimes(Integer borrowtimes) {
+		this.borrowtimes=borrowtimes;
+	}
+	public void SetOrder(Boolean ordered) {
+		this.ordered=ordered;
+	}
+	public void SetOrderuser(String orderuser) {
+		this.orderuser=orderuser;
+	}
+	
+	
+		
+	
+	
+	
+	
+	
+	
+	
 	
 
     
