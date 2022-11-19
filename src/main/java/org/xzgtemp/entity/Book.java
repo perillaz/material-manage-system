@@ -3,21 +3,30 @@ package org.xzgtemp.entity;
 import java.sql.Date;
 
 public class Book {
-	private String id;
+
+	private Long id;
 	private String title;
 	private String author;
-	private Date publishtime;
-	private String publisher;
 	private String buyer;
 	private Date buytime;
 	private String whereis;
 	private Boolean isonshelf;
 	private Integer borrowtimes;
-	private Boolean ordered;
-	private String orderuser;
+	private Date publishtime;
+	private String publisher;
 	
+	public Book(Long id,String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes) {
+		this.id=id;
+		this.title=title;
+		this.author=author;
+		this.buyer=buyer;
+		this.buytime=buytime;
+		this.whereis=whereis;
+		this.isonshelf=isonshelf;
+		this.borrowtimes=borrowtimes;
+	}
 	
-	public Book(String id,String title,String author,Date publishtime,String publisher,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes,Boolean ordered,String orderuser) {
+	public Book(Long id,String title,String author,Date publishtime,String publisher,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes,Boolean ordered,String orderuser) {
 		this.id=id;
 		this.title=title;
 		this.author=author;
@@ -28,92 +37,85 @@ public class Book {
 		this.whereis=whereis;
 		this.isonshelf=isonshelf;
 		this.borrowtimes=borrowtimes;
-		this.ordered=ordered;
-		this.orderuser=orderuser;
-		
 	}
 	
-	//获取书籍信息
-	public String GetBook() {
+	public Long  GetID(){
 		return id;
 	}
-	public String Gettitle() {
+
+	public void SetID(Long id){
+		this.id = id;
+	}
+
+	public String GetTitle() {
 		return title;
 	}
-	public String Getauthor() {
+
+	public void SetTitle(String title) {
+		this.title=title;
+	}
+
+	public String GetAuthor() {
 		return author;
 	}
-	public String Getpublisher() {
-		return publisher;
-	}
-	public Date Getpublishtime() {
-		return publishtime;
+	public void SetAuthor(String author) {
+		this.author=author;
 	}
 	public String Getbuyer() {
 		return buyer;
 	}
-	public Date Getbuytime() {
-		return buytime;
-	}
-	//获取书籍位置
-	public String Whereis() {
-		return whereis;
-	}
-	//书籍是否在架上
-	public Boolean Onshelf() {
-		return isonshelf;
-	}
-	//被借次数
-	public Integer Borrowtimes() {
-			return borrowtimes;
-	}
-	//预定
-	public Boolean Ordered() {
-		return ordered;
-	}
-	public String Orderuser() {
-		return orderuser;
-	}
-	
-	//修改
-	public void SetBook(String id) {
-		this.id=id;
-	}
-	public void Modifytitle(String title) {
-		this.title=title;
-	}
-	public void Modifyauthor(String author) {
-		this.author=author;
-	}
-	public void SetPublishtime(Date publishtime) {
-		this.publishtime=publishtime;
-	}
-	public void SetPubilsher(String publisher) {
-		this.publisher=publisher;
-	}
+
 	public void Setbuyer(String buyer) {
 		this.buyer=buyer;
 	}
+
+	public Date Getbuytime() {
+		return buytime;
+	}
+
 	public void Setbuytime(Date buytime) {
 		this.buytime=buytime;
 	}
-	public void Setlocation(String whereis) {
-		this.whereis=whereis;
+
+	public String GetWhereis() {
+		return whereis;
 	}
-	public void SetOnshelf(Boolean isonshelf) {
+
+	public void SetWhereis(String whereis ){
+		this.whereis = whereis;
+	}
+
+	public Boolean GetIsonshelf() {
+		return isonshelf;
+	}
+
+	public void SetIsonshelf(Boolean isonshelf) {
 		this.isonshelf=isonshelf;
 	}
+
+	public Integer GetBorrowtimes() {
+		return borrowtimes;
+	}
+
 	public void SetBorrowtimes(Integer borrowtimes) {
 		this.borrowtimes=borrowtimes;
 	}
-	public void SetOrder(Boolean ordered) {
-		this.ordered=ordered;
+
+	public Date GetPublishtime() {
+		return publishtime;
 	}
-	public void SetOrderuser(String orderuser) {
-		this.orderuser=orderuser;
+
+	public void SetPublishtime(Date publishtime) {
+		this.publishtime=publishtime;
 	}
-	
-	
+
+	public String GetPublisher() {
+		return publisher;
+	}
+
+	public void SetPubilsher(String publisher) {
+		this.publisher=publisher;
+	}
     
 }
 
