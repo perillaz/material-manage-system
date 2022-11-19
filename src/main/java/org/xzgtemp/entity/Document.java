@@ -21,45 +21,57 @@ public class Document {
 		this.filepath=filepath;
 	}
 	
-	//获取论文id
+	//论文id
 	public String GetDoc() {
 		return id;
+	}
+	public void SetDoc(String id) {
+		this.id=id;
 	}
 	
 	//论文名
 	public String Gettitle() {
 		return title;
 	}
+	public void Modifytitle(String title) {
+		this.title=title;
+	}
 	
 	//作者
 	public String Getauthor() {
 		return author;
 	}
-	
-	//修改
-	public void Modifytitle(String title) {
-		this.title=title;
-	}
-	
 	public void Modifyauthor(String author) {
 		this.author=author;
 	}
 	
-	//获取上传信息
+	//上传信息
 	public String Getuploader() {
 		return uploader;
 	}
+	public void Setuploader(String uploader) {
+		this.uploader=uploader;
+	}
 	public Date Getuploadtime() {
 		return uploadtime;
+	}
+	public void Setuploadtime(Date uploadtime) {
+		this.uploadtime=uploadtime;
 	}
 	
 	//下载路径
 	public String Getpath() {
 		return filepath;
 	}
+	public void Setpath(String filepath) {
+		this.filepath=filepath;
+	}
     
 	//下载次数
 	public Integer Gettimes() {
 		return downloadtimes;
+	}
+	public void Settimes(Integer downloadtimes) {
+		this.downloadtimes=downloadtimes;
 	}
 }
