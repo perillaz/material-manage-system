@@ -26,7 +26,7 @@ public class Book {
 		this.borrowtimes=borrowtimes;
 	}
 	
-	public Book(Long id,String title,String author,Date publishtime,String publisher,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes,Boolean ordered,String orderuser) {
+	public Book(Long id,String title,String author,Date publishtime,String publisher,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes) {
 		this.id=id;
 		this.title=title;
 		this.author=author;
