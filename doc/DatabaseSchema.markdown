@@ -49,7 +49,7 @@
 | Attributes   | description | Type in SQL | Type in JAVA  | 可空 |
 | ------------ | ----------- | ----------- | ------------- | ---- |
 | id(key)      | 编号        | BIGINT      | Long          |      |
-| uid(u_id)    | 借书用户id  | varchar(20)  | String      |      |
+| uid(u_id)    | 借书用户id  | varchar(13)  | String      |      |
 | bid(b_id)    | 被借书籍id    | BIGINT | Long |      |
 | borrowtime   | 借出时间     | Date        | java.sql.Date |      |
 | sendbacktime | 归还时间    | Date        | java.sql.Date | yes     |
@@ -63,6 +63,6 @@
 | Attributes   | description | Type in SQL | Type in JAVA | 可空 |
 | ------------ | ----------- | ----------- | ------------ | ---- |
 | id(key)      | 编号        | BIGINT      | Long          |      |
-| uid(u_id)    | 下载用户id   | varchar(20) | String    |      |
+| uid(u_id)    | 下载用户id   | varchar(13) | String    |      |
 | did(d_id)    | 论文id      |  Bigint  | Long |      |
 | downloadtime | 下载时间   | Date        | java.sql.Date |      |
