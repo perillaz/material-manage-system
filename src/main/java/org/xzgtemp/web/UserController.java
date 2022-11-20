@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.xzgtemp.entity.Book;
@@ -86,9 +87,9 @@ public class UserController {
 			model.put("error","register failed");
 			return new ModelAndView("register.html",model);
 		}
-		return new ModelAndView("/register.html");
+		return new ModelAndView("/register.html");//???
 	}
-    
+
 	@GetMapping("/search")
 	public ModelAndView Search() {
 	//TODO
@@ -109,4 +110,17 @@ public class UserController {
 		return "redirect:/signin";
 	}
 
+	@PostMapping("/changePassword")
+	public ModelAndView changePassword(@RequestParam("password") String password,HttpSession session){
+		User user = (User) session.getAttribute(KEY_USER);
+		try {
+			userservice.ChangeUserPassword(user,password);
+		}catch(RuntimeException e){
+			Map<String, Object> model = new HashMap<>();
+			model.put("user", user);
+			model.put("error","changPassword failed");
+			return new ModelAndView("userdetail.html",model);
+		}
+		return new ModelAndView("/user");
+	}
 }

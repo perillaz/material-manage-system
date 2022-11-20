@@ -54,15 +54,15 @@ public class UserService {
 		throw new RuntimeException("login failed.");
     }
 
-    public void ChangeUserPassword(User user) {
-		if (1 != jdbcTemplate.update("UPDATE User SET u_password = ? WHERE u_id = ? ", user.GetPassword(), user.GetID())) {
+    public void ChangeUserPassword(User user,String password) {
+		if (1 != jdbcTemplate.update("UPDATE User SET u_password = ? WHERE u_id = ? ", password, user.GetID())) {
 			throw new RuntimeException("User not found by id");
 		}
 	}
 
 
-    public void ChangeUserName(User user) {
-		if (1 != jdbcTemplate.update("UPDATE User SET u_name = ? WHERE u_id = ? ", user.GetName(), user.GetID())) {
+    public void ChangeUserName(User user,String name) {
+		if (1 != jdbcTemplate.update("UPDATE User SET u_name = ? WHERE u_id = ? ", name, user.GetID())) {
 			throw new RuntimeException("User not found by id");
 		}
 	}

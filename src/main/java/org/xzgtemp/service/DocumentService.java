@@ -31,22 +31,22 @@ public class DocumentService {
     public void AddDocument(Document document){
         //String title, String author, String uploaduser, Date uploadtime, String filepath
         KeyHolder holder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO Document(d_id,d_title,d_author,d_uploader,d_uploadtime,d_filepath,d_downloadtimes) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Document(d_title,d_author,d_uploader,d_uploadtime,d_filepath,d_downloadtimes) VALUES(?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
                     PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                    ps.setObject(1,holder.getKey().longValue());
-                    ps.setObject(2,document.GetTitle());
-                    ps.setObject(3,document.GetAuthor());
-                    ps.setObject(4,document.GetUploader());
-                    ps.setObject(5,document.GetUploadtime());
-                    ps.setObject(6,document.GetFilepath());
-                    ps.setObject(7,document.GetDownloadtimes());
+                    ps.setObject(1,document.GetTitle());
+                    ps.setObject(2,document.GetAuthor());
+                    ps.setObject(3,document.GetUploader());
+                    ps.setObject(4,document.GetUploadtime());
+                    ps.setObject(5,document.GetFilepath());
+                    ps.setObject(6,document.GetDownloadtimes());
                     return ps;
                 },
                 holder)
         ){
             throw new RuntimeException("Insert failed.");
         }
+        document.SetID(holder.getKey().longValue());
     }
 
     //------------GetDocunmentByAttribute-----------------------------
