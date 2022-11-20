@@ -36,6 +36,7 @@ public class BookService {
                     PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                     ps.setObject(1,book.GetTitle());
                     ps.setObject(2,book.GetAuthor());
+<<<<<<< HEAD
                     ps.setObject(3,book.GetPublishtime());
                     ps.setObject(4,book.GetPublisher());
                     ps.setObject(5,book.Getbuyer());
@@ -43,6 +44,15 @@ public class BookService {
                     ps.setObject(7,book.GetWhereis());
                     ps.setObject(8,book.GetIsonshelf());
                     ps.setObject(9,book.GetBorrowtimes());
+=======
+                    ps.setObject(3,book.Getbuyer());
+                    ps.setObject(4,book.Getbuytime());
+                    ps.setObject(5,book.GetWhereis());
+                    ps.setObject(6,book.GetIsonshelf());
+                    ps.setObject(7,book.GetBorrowtimes());
+                    ps.setObject(8,book.GetPublishtime());
+                    ps.setObject(9,book.GetPublisher());
+>>>>>>> 620914ef91a686cfc05b7c65fa9e06844707db20
                     return ps;
                 },
                 holder)
@@ -61,19 +71,24 @@ public class BookService {
                             rs.getLong("b_id"),
                             rs.getString("b_title"),
                             rs.getString("b_author"),
-                            rs.getDate("b_publishtime"),
-                            rs.getString("b_publisher"),
                             rs.getString("b_buyer"),
                             rs.getDate("b_buytime"),
                             rs.getString("b_whereis"),
                             rs.getBoolean("b_isonshelf"),
-                            rs.getInt("borrowtimes")
+                            rs.getInt("borrowtimes"),
+                            rs.getDate("b_publishtime"),
+                            rs.getString("b_publisher")
                     );
                 }
                 ,bid
         );
     }
 
+    public List<Book> GetBookbyTitleOrAuthor(String s){
+        return jdbctemplate.query("SELECT * FROM Book WHERE b_title LIKE %?% OR b_author LIKE %?%",userRowMapper,s,s);
+    }
+
+/* 
     public List<Book> GetBookbyTitleOrAuthor(String s){
         String sql = "SELECT * FROM Book WHERE b_title LIKE %?% OR b_author LIKE %?%";
         return jdbctemplate.query(sql,
@@ -82,17 +97,23 @@ public class BookService {
                             rs.getLong("b_id"),
                             rs.getString("b_title"),
                             rs.getString("b_author"),
-                            rs.getDate("b_publishtime"),
-                            rs.getString("b_publisher"),
                             rs.getString("b_buyer"),
                             rs.getDate("b_buytime"),
                             rs.getString("b_whereis"),
                             rs.getBoolean("b_isonshelf"),
-                            rs.getInt("borrowtimes")
+                            rs.getInt("borrowtimes"),
+                            rs.getDate("b_publishtime"),
+                            rs.getString("b_publisher")
                     );
                 },s,s);
     }
+*/
 
+    public List<Book> GetBookbyTitle(String Title){
+        String sql = "SELECT * FROM Book WHERE b_title LIKE %?%";
+        return jdbctemplate.query(sql,userRowMapper,Title);
+    }
+/* 
     public List<Book> GetBookbyTitle(String Title){
         String sql = "SELECT * FROM Book WHERE b_title LIKE %?%";
         return jdbctemplate.query(sql,
@@ -101,17 +122,22 @@ public class BookService {
                             rs.getLong("b_id"),
                             rs.getString("b_title"),
                             rs.getString("b_author"),
-                            rs.getDate("b_publishtime"),
-                            rs.getString("b_publisher"),
                             rs.getString("b_buyer"),
                             rs.getDate("b_buytime"),
                             rs.getString("b_whereis"),
                             rs.getBoolean("b_isonshelf"),
-                            rs.getInt("borrowtimes")
+                            rs.getInt("borrowtimes"),
+                            rs.getDate("b_publishtime"),
+                            rs.getString("b_publisher")
                     );
                 },Title);
     }
-
+*/
+    public List<Book> GetBookbyAuthor(String Author){
+        String sql = "SELECT * FROM Book WHERE b_author LIKE %?%";
+        return jdbctemplate.query(sql,userRowMapper,Author);
+    }
+/*
     public List<Book> GetBookbyAuthor(String Author){
         String sql = "SELECT * FROM Book WHERE b_author LIKE %?%";
         return jdbctemplate.query(sql,
@@ -120,61 +146,84 @@ public class BookService {
                             rs.getLong("b_id"),
                             rs.getString("b_title"),
                             rs.getString("b_author"),
-                            rs.getDate("b_publishtime"),
-                            rs.getString("b_publisher"),
                             rs.getString("b_buyer"),
                             rs.getDate("b_buytime"),
                             rs.getString("b_whereis"),
                             rs.getBoolean("b_isonshelf"),
-                            rs.getInt("borrowtimes")
+                            rs.getInt("borrowtimes"),
+                            rs.getDate("b_publishtime"),
+                            rs.getString("b_publisher")
                     );
                 },Author);
     }
-
+ */
     public List<Book> GetALlBooks(){
-        return jdbctemplate.query("SELECT * FROM Book",new BeanPropertyRowMapper<>(Book.class));
+        return jdbctemplate.query("SELECT * FROM Book",userRowMapper);
     }
 
     //----------ChangBookAttribute------------------------------
     //need to pass arguments
     public void ChangeBookTitle(Book book){
-        String sql = "UPDATA Book SET b_title = ? WHERE b_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Book SET b_title = ? WHERE b_id = ? ",
+            book.GetTitle(),
+            book.GetID()
+            )
+        ){
             throw new RuntimeException("Book no found by id");
         }
     }
 
     public void ChangeBookAuthor(Book book){
-        String sql = "UPDATA Book SET b_author = ? WHERE b_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Book SET b_author = ? WHERE b_id = ? ",
+            book.GetAuthor(),
+            book.GetID()
+            )
+        ){
             throw new RuntimeException("Book no found by id");
         }
     }
 
     public void ChangeBookBuyer(Book book){
-        String sql = "UPDATA Book SET b_buyer = ? WHERE b_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Book SET b_buyer = ? WHERE b_id = ? ",
+            book.Getbuyer(),
+            book.GetID()
+            )
+        ){
             throw new RuntimeException("Book no found by id");
         }
     }
 
     public void ChangeBookBuytime(Book book){
-        String sql = "UPDATA Book SET b_buytime = ? WHERE b_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Book SET b_buytime = ? WHERE b_id = ? ",
+            book.Getbuytime(),
+            book.GetID()
+            )
+        ){
             throw new RuntimeException("Book no found by id");
         }
     }
 
     public void ChangeBookWhereis(Book book){
-        String sql = "UPDATA Book SET b_whereis = ? WHERE b_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Book SET b_whereis = ? WHERE b_id = ? ",
+            book.GetWhereis(),
+            book.GetID()
+            )
+        ){
             throw new RuntimeException("Book no found by id");
         }
     }
 
     public void ChangeBookIsonshelf(Book book){
-        String sql = "UPDATA Book SET b_isonshelf = ? WHERE b_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Book SET b_isonshelf = ? WHERE b_id = ? ",
+            book.GetIsonshelf(),
+            book.GetID()
+        )){
             throw new RuntimeException("Book no found by id");
         }
     }

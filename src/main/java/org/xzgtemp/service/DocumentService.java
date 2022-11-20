@@ -26,7 +26,6 @@ public class DocumentService {
 	RowMapper<Document> userRowMapper = new BeanPropertyRowMapper<>(Document.class);
 
 
-
     //---------------AddDocunment---------------------------------
     public void AddDocument(Document document){
         //String title, String author, String uploaduser, Date uploadtime, String filepath
@@ -68,6 +67,16 @@ public class DocumentService {
         );
     }
 
+    public List<Document> GetBookbyTitleOrAuthor(String s){
+        return jdbctemplate.query("SELECT * FROM Document WHERE d_title LIKE %?% OR d_author LIKE %?%",userRowMapper,s,s);
+    }
+
+    public List<Document> GetDocumentsbyTitle(String Title){
+        String sql = "SELECT * FROM Document WHERE d_title LIKE %?%";
+        return jdbctemplate.query(sql,userRowMapper,Title);
+    }
+
+    /* 
     public List<Document> GetDocumentsbyTitle(String Title){
         String sql = "SELECT * FROM Document WHERE d_title LIKE %?%";
         return jdbctemplate.query(sql,
@@ -85,8 +94,14 @@ public class DocumentService {
                 Title
         );
     }
+*/
 
+    public List<Document> GetDocumentsbyAuthor(String Author){
+        String sql = "SELECT * FROM Document WHERE d_author LIKE %?%";
+        return jdbctemplate.query(sql,userRowMapper,Author);
+    }
 
+/* 
     public List<Document> GetDocumentsbyAuthor(String Author){
         String sql = "SELECT * FROM Document WHERE d_author = ?";
         return jdbctemplate.query(sql,
@@ -104,45 +119,65 @@ public class DocumentService {
                 Author
         );
     }
-
+*/
 
     public List<Document> GetAllDocuments(){
-        return jdbctemplate.query("SELECT * FROM Document",new BeanPropertyRowMapper<>(Document.class));
+        return jdbctemplate.query("SELECT * FROM Document",userRowMapper);
     }
 
     //----------ChangDocumentAttribute------------------------------
     //need pass arguments
     public void ChangeDocumentTitle(Document document){
-        String sql = "UPDATA Document SET d_title = ? WHERE d_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Document SET d_title = ? WHERE d_id = ? ",
+            document.GetTitle(),
+            document.GetID()
+            )
+        ){
             throw new RuntimeException("Document no found by id.");
         }
     }
 
     public void ChangeDocumentAuthor(Document document){
-        String sql = "UPDATA Document SET d_author = ? WHERE d_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Document SET d_author = ? WHERE d_id = ? ",
+            document.GetAuthor(),
+            document.GetID()
+            )
+        ){
             throw new RuntimeException("Document no found by id.");
         }
     }
 
     public void ChangeDocumentuploader(Document document){
-        String sql = "UPDATA Document SET d_uploader = ? WHERE d_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+                "UPDATA Document SET d_uploader = ? WHERE d_id = ? ",
+                document.GetUploader(),
+                document.GetID()
+            )
+        ){
             throw new RuntimeException("Document no found by id.");
         }
     }
 
     public void ChangeDocumentfilepath(Document document){
-        String sql = "UPDATA Document SET d_filepath = ? WHERE d_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Document SET d_filepath = ? WHERE d_id = ? ",
+            document.GetFilepath(),
+            document.GetID()
+            )
+        ){
             throw new RuntimeException("Document no found by id.");
         }
     }
 
     public void ChangeDocumentdownloadtimes(Document document){
-        String sql = "UPDATA Document SET d_downloadtimes = ? WHERE d_id = ? ";
-        if(1 != jdbctemplate.update(sql)){
+        if(1 != jdbctemplate.update(
+            "UPDATA Document SET d_downloadtimes = ? WHERE d_id = ? ",
+            document.GetDownloadtimes(),
+            document.GetID()
+            )
+        ){
             throw new RuntimeException("Document no found by id.");
         }
     }
