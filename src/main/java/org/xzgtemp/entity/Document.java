@@ -15,6 +15,22 @@ public class Document {
 
 	}
 
+	public Document(
+		String title,
+		String author,
+		String uploader,
+		Date uploadtime,
+		String filepath,
+		Integer downloadtimes
+	) {
+		this.title=title;
+		this.author=author;
+		this.downloadtimes=downloadtimes;
+		this.uploader=uploader;
+		this.uploadtime=uploadtime;
+		this.filepath=filepath;
+	}
+
 	public Document(Long id,String title,String author,String uploader,Date uploadtime,String filepath,Integer downloadtimes) {
 		this.id=id;
 		this.title=title;

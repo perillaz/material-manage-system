@@ -15,6 +15,37 @@ public class Book {
 	private Date publishtime;
 	private String publisher;
 	
+
+	public Book(String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf) {
+		this.title=title;
+		this.author=author;
+		this.buyer=buyer;
+		this.buytime=buytime;
+		this.whereis=whereis;
+		this.isonshelf=isonshelf;
+		this.borrowtimes=0;
+	}
+
+	public Book(
+		String title,
+		String author,
+		String buyer,
+		Date buytime,
+		String whereis,
+		Boolean isonshelf,
+		Date publishtime,
+		String publisher
+	) {
+		this.title=title;
+		this.author=author;
+		this.buyer=buyer;
+		this.buytime=buytime;
+		this.whereis=whereis;
+		this.isonshelf=isonshelf;
+		this.borrowtimes=0;
+		this.publishtime=publishtime;
+		this.publisher=publisher;
+	}
 	public Book(Long id,String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes) {
 		this.id=id;
 		this.title=title;
@@ -26,17 +57,17 @@ public class Book {
 		this.borrowtimes=borrowtimes;
 	}
 	
-	public Book(Long id,String title,String author,Date publishtime,String publisher,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes) {
+	public Book(Long id,String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes,Date publishtime,String publisher) {
 		this.id=id;
 		this.title=title;
 		this.author=author;
-		this.publishtime=publishtime;
-		this.publisher=publisher;
 		this.buyer=buyer;
 		this.buytime=buytime;
 		this.whereis=whereis;
 		this.isonshelf=isonshelf;
 		this.borrowtimes=borrowtimes;
+		this.publishtime=publishtime;
+		this.publisher=publisher;
 	}
 	
 	public Long  GetID(){
