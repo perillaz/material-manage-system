@@ -1,7 +1,6 @@
 package org.xzgtemp.web;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.xzgtemp.entity.Book;
@@ -37,7 +37,10 @@ public class UserController {
 	public ModelAndView Visit(HttpSession session) {
 		User user = (User) session.getAttribute(KEY_USER);
 		if (user != null){
-			return new ModelAndView("redirect:/search.html");
+			Map<String, Object> model = new HashMap<>();
+			model.put("user", user);
+			model.put("name",user.getName());
+			return new ModelAndView("redirect:/search.html",model);
 		}
 		return new ModelAndView("signin.html");
 	}
@@ -47,7 +50,10 @@ public class UserController {
 	public ModelAndView SignIn(HttpSession session) {
 		User user = (User) session.getAttribute(KEY_USER);
 		if (user != null){
-			return new ModelAndView("redirect:/search.html");
+			Map<String, Object> model = new HashMap<>();
+			model.put("user", user);
+			model.put("name",user.getName());
+			return new ModelAndView("redirect:/search.html",model);
 		}
 		return new ModelAndView("signin.html");
 	}
@@ -88,19 +94,68 @@ public class UserController {
 		}
 		return new ModelAndView("/register.html");
 	}
-    
+
 	@GetMapping("/search")
-	public ModelAndView Search() {
+	public ModelAndView Search(HttpSession session) {
 	//TODO
-		
-		return new ModelAndView("search.html");
+		User user = (User) session.getAttribute(KEY_USER);
+		Map<String, Object> model = new HashMap<>();
+		model.put("user", user);
+		model.put("name",user.getName());
+		return new ModelAndView("search.html",model);
 	}
 
 	@PostMapping("/search")
-	public ModelAndView Search(@RequestParam("title") String title) {
+	public ModelAndView doSearch(@RequestParam("searchWhat") String searchwhat,@RequestParam("searchBy") String searchby,@RequestParam("target") String target,HttpSession session) {
 	//TODO
-		
-		return new ModelAndView("search.html");
+		try {
+			User user = (User) session.getAttribute(KEY_USER);
+			Map<String, Object> model = new HashMap<>();
+			model.put("user", user);
+			model.put("name",user.getName());
+			if (searchwhat.equals("book")) {
+				List<Book> books = new ArrayList<>();
+				switch (searchby) {
+					case "title":
+						books = bookservice.GetBooksbyTitle(target);
+						break;
+					case "author":
+						books = bookservice.GetBooksbyAuthor(target);
+						break;
+					default:
+						break;
+				}
+				if(!books.isEmpty()) {
+					model.put("books", books);
+					model.put("error", null);
+					return new ModelAndView("search.html", model);
+				}
+			} else {
+				List<Document> documnets = new ArrayList<>();
+				switch (searchby) {
+					case "title":
+						documnets = documentservice.GetDocumentsbyTitle(target);
+						break;
+					case "author":
+						documnets = documentservice.GetDocumentsbyAuthor(target);
+						break;
+					default:
+						break;
+				}
+				if(!documnets.isEmpty()) {
+					model.put("documents", documnets);
+					model.put("error", null);
+					return new ModelAndView("search.html", model);
+				}
+			}
+		}catch(RuntimeException e){
+			Map<String ,Object> model = new HashMap<>();
+			model.put("error","Fault.");
+			return new ModelAndView("/search.html",model);
+		}
+		Map<String ,Object> model = new HashMap<>();
+		model.put("error","Not found any data by your input.");
+		return new ModelAndView("/search.html",model);
 	}
 	
 	@GetMapping("/signout")
