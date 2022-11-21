@@ -15,10 +15,10 @@ public class DBInitializer {
 	@PostConstruct
 	public void init() {
 		//jdbcTemplate.update("DROP TABLE IF EXISTS User");
-		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS User(u_id VARCHAR(13) PRIMARY KEY,u_name VARCHAR(30) NOT NULL,u_password VARCHAR(30) NOT NULL)");
-		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS Book(b_id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,b_title VARCHAR(100) NOT NULL,b_author VARCHAR(100) NOT NULL,b_buyer VARCHAR(13) NOT NULL,b_whereis VARCHAR(100) NOT NULL,b_isonshelf BOOLEAN NOT NULL,b_borrowtimes INTEGER NOT NULL,b_publishtime Date,b_publisher VARCHAR(100))");
-		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS Document(d_id BIGINT PRIMARY KEY AUTO_INCREMENT,d_title VARCHAR(30) NOT NULL,d_author VARCHAR(30) NOT NULL,d_uploaduser VARCHAR(13) NOT NULL,d_uploadtime DATE NOT NULL,d_filepath VARCHAR(100) NOT NULL,d_downloadtimes INTEGER NOT NULL)");
-		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS BorrowBook(bb_id BIGINT PRIMARY KEY AUTO_INCREMENT,bb_uid VARCHAR(20) NOT NULL,bb_bid BIGINT NOT NULL,bb_borrowtime DATE NOT NULL,bb_sendbacktime DATE NOT NULL,bb_duetime DATE NOT NULL,bb_finished BOOLEAN NOT NULL)");
-		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS DownloadDocument(dd_id BIGINT PRIMARY KEY AUTO_INCREMENT,dd_uid VARCHAR(13) NOT NULL,dd_did BIGINT NOT NULL,dd_downloadtime DATE NOT NULL)");
+		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS User(id VARCHAR(13) PRIMARY KEY,name VARCHAR(30) NOT NULL,password VARCHAR(30) NOT NULL)");
+		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS Book(id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,title VARCHAR(100) NOT NULL,author VARCHAR(100) NOT NULL,buyer VARCHAR(13) NOT NULL,buytime Date NOT NULL,whereis VARCHAR(100) NOT NULL,isonshelf BOOLEAN NOT NULL,borrowtimes INTEGER NOT NULL,publishtime Date,publisher VARCHAR(100))");
+		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS Document(id BIGINT PRIMARY KEY AUTO_INCREMENT,title VARCHAR(30) NOT NULL,author VARCHAR(30) NOT NULL,uploaduser VARCHAR(13) NOT NULL,uploadtime DATE NOT NULL,filepath VARCHAR(100) NOT NULL,downloadtimes INTEGER NOT NULL)");
+		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS BorrowBook(id BIGINT PRIMARY KEY AUTO_INCREMENT,uid VARCHAR(20) NOT NULL,bid BIGINT NOT NULL,borrowtime DATE NOT NULL,sendbacktime DATE NOT NULL,duetime DATE NOT NULL,finished BOOLEAN NOT NULL)");
+		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS DownloadDocument(id BIGINT PRIMARY KEY AUTO_INCREMENT,uid VARCHAR(13) NOT NULL,did BIGINT NOT NULL,downloadtime DATE NOT NULL)");
 	}
 }

@@ -11,32 +11,41 @@ public class User {
 	}
 
 	public User(String id,String name,String password){
-		this.id = id;
-		this.name = name;
-		this.password = password;
+		setId(id);
+		setName(name);
+		setPassword(password);
 	}
 
-	public String GetID() {
+	public String getId() {
 		return id;
 	}
 
-	public void SetID(String id) {
+	public void setId(String id) {
+		if(id == ""){
+			throw new IllegalArgumentException("invalid id value");
+		}
 		this.id = id;
 	}
 
-	public String GetName() {
+	public String getName() {
 		return name;
 	}
 
-	public void SetName(String name) {
+	public void setName(String name) {
+		if(name == ""){
+			throw new IllegalArgumentException("invalid name value");
+		}
 		this.name = name;
 	}
 
-	public String GetPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void SetPassword(String password) {
+	public void setPassword(String password) {
+		if(password == ""){
+			throw new IllegalArgumentException("invalid password value");
+		}
 		this.password = password;
 	}
 }

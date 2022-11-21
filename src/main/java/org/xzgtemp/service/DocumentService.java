@@ -23,115 +23,77 @@ public class DocumentService {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	RowMapper<Document> userRowMapper = new BeanPropertyRowMapper<>(Document.class);
+	RowMapper<Document> documentRowMapper = new BeanPropertyRowMapper<>(Document.class);
 
 
     //---------------AddDocunment---------------------------------
     public void AddDocument(Document document){
         //String title, String author, String uploaduser, Date uploadtime, String filepath
         KeyHolder holder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO Document(d_title,d_author,d_uploader,d_uploadtime,d_filepath,d_downloadtimes) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO Document(title,author,uploader,uploadtime,filepath,downloadtimes) VALUES(?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
                     PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                    ps.setObject(1,document.GetTitle());
-                    ps.setObject(2,document.GetAuthor());
-                    ps.setObject(3,document.GetUploader());
-                    ps.setObject(4,document.GetUploadtime());
-                    ps.setObject(5,document.GetFilepath());
-                    ps.setObject(6,document.GetDownloadtimes());
+                    ps.setObject(1,document.getTitle());
+                    ps.setObject(2,document.getAuthor());
+                    ps.setObject(3,document.getUploader());
+                    ps.setObject(4,document.getUploadtime());
+                    ps.setObject(5,document.getFilepath());
+                    ps.setObject(6,document.getDownloadtimes());
                     return ps;
                 },
                 holder)
         ){
             throw new RuntimeException("Insert failed.");
         }
-        document.SetID(holder.getKey().longValue());
+        document.setId(holder.getKey().longValue());
     }
 
     //------------GetDocunmentByAttribute-----------------------------
     public Document GetDocumentsbyDID(int did){
-        String sql = "SELECT * FROM Document WHERE d_id = ?";
+        String sql = "SELECT * FROM Document WHERE id = ?";
         return jdbctemplate.queryForObject(sql,
                 (ResultSet rs, int rowNum) -> {
                     return new Document(
-                            rs.getLong("d_id"),
-                            rs.getString("d_title"),
-                            rs.getString("d_author"),
-                            rs.getString("d_uploader"),
-                            rs.getDate("d_uploadtime"),
-                            rs.getString("d_filepath"),
-                            rs.getInt("d_downloadtimes")
+                            rs.getLong("id"),
+                            rs.getString("title"),
+                            rs.getString("author"),
+                            rs.getString("uploader"),
+                            rs.getDate("uploadtime"),
+                            rs.getString("filepath"),
+                            rs.getInt("downloadtimes")
                     );
                 },
                 did
         );
     }
 
-    public List<Document> GetBookbyTitleOrAuthor(String s){
-        return jdbctemplate.query("SELECT * FROM Document WHERE d_title LIKE %?% OR d_author LIKE %?%",userRowMapper,s,s);
+    public List<Document> GetDocumentsbyTitleOrAuthor(String s){
+        return jdbctemplate.query("SELECT * FROM Document WHERE title LIKE \"%?%\" OR author LIKE \"%?%\"",documentRowMapper,s,s);
     }
 
     public List<Document> GetDocumentsbyTitle(String Title){
-        String sql = "SELECT * FROM Document WHERE d_title LIKE %?%";
-        return jdbctemplate.query(sql,userRowMapper,Title);
+        String sql = "SELECT * FROM Document WHERE title LIKE \"%?%\"";
+        return jdbctemplate.query(sql,documentRowMapper,Title);
     }
 
-    /* 
-    public List<Document> GetDocumentsbyTitle(String Title){
-        String sql = "SELECT * FROM Document WHERE d_title LIKE %?%";
-        return jdbctemplate.query(sql,
-                (ResultSet rs,int rowNum) -> {
-                    return new Document(
-                            rs.getLong("d_id"),
-                            rs.getString("d_title"),
-                            rs.getString("d_author"),
-                            rs.getString("d_uploader"),
-                            rs.getDate("d_uploadtime"),
-                            rs.getString("d_filepath"),
-                            rs.getInt("d_downloadtimes")
-                    );
-                },
-                Title
-        );
-    }
-*/
 
     public List<Document> GetDocumentsbyAuthor(String Author){
-        String sql = "SELECT * FROM Document WHERE d_author LIKE %?%";
-        return jdbctemplate.query(sql,userRowMapper,Author);
+        String sql = "SELECT * FROM Document WHERE author LIKE \"%?%\"";
+        return jdbctemplate.query(sql,documentRowMapper,Author);
     }
 
-/* 
-    public List<Document> GetDocumentsbyAuthor(String Author){
-        String sql = "SELECT * FROM Document WHERE d_author = ?";
-        return jdbctemplate.query(sql,
-                (ResultSet rs,int rowNum) -> {
-                    return new Document(
-                            rs.getLong("d_id"),
-                            rs.getString("d_title"),
-                            rs.getString("d_author"),
-                            rs.getString("d_uploader"),
-                            rs.getDate("d_uploadtime"),
-                            rs.getString("d_filepath"),
-                            rs.getInt("d_downloadtimes")
-                    );
-                },
-                Author
-        );
-    }
-*/
 
     public List<Document> GetAllDocuments(){
-        return jdbctemplate.query("SELECT * FROM Document",userRowMapper);
+        return jdbctemplate.query("SELECT * FROM Document",documentRowMapper);
     }
 
     //----------ChangDocumentAttribute------------------------------
     //need pass arguments
     public void ChangeDocumentTitle(Document document){
         if(1 != jdbctemplate.update(
-            "UPDATA Document SET d_title = ? WHERE d_id = ? ",
-            document.GetTitle(),
-            document.GetID()
+            "UPDATA Document SET title = ? WHERE id = ? ",
+            document.getTitle(),
+            document.getId()
             )
         ){
             throw new RuntimeException("Document no found by id.");
@@ -140,9 +102,9 @@ public class DocumentService {
 
     public void ChangeDocumentAuthor(Document document){
         if(1 != jdbctemplate.update(
-            "UPDATA Document SET d_author = ? WHERE d_id = ? ",
-            document.GetAuthor(),
-            document.GetID()
+            "UPDATA Document SET author = ? WHERE id = ? ",
+            document.getAuthor(),
+            document.getId()
             )
         ){
             throw new RuntimeException("Document no found by id.");
@@ -151,9 +113,9 @@ public class DocumentService {
 
     public void ChangeDocumentuploader(Document document){
         if(1 != jdbctemplate.update(
-                "UPDATA Document SET d_uploader = ? WHERE d_id = ? ",
-                document.GetUploader(),
-                document.GetID()
+                "UPDATA Document SET uploader = ? WHERE id = ? ",
+                document.getUploader(),
+                document.getId()
             )
         ){
             throw new RuntimeException("Document no found by id.");
@@ -162,9 +124,9 @@ public class DocumentService {
 
     public void ChangeDocumentfilepath(Document document){
         if(1 != jdbctemplate.update(
-            "UPDATA Document SET d_filepath = ? WHERE d_id = ? ",
-            document.GetFilepath(),
-            document.GetID()
+            "UPDATA Document SET filepath = ? WHERE id = ? ",
+            document.getFilepath(),
+            document.getId()
             )
         ){
             throw new RuntimeException("Document no found by id.");
@@ -173,9 +135,9 @@ public class DocumentService {
 
     public void ChangeDocumentdownloadtimes(Document document){
         if(1 != jdbctemplate.update(
-            "UPDATA Document SET d_downloadtimes = ? WHERE d_id = ? ",
-            document.GetDownloadtimes(),
-            document.GetID()
+            "UPDATA Document SET downloadtimes = ? WHERE id = ? ",
+            document.getDownloadtimes(),
+            document.getId()
             )
         ){
             throw new RuntimeException("Document no found by id.");
