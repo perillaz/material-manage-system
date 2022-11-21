@@ -14,10 +14,10 @@ public class Book {
 	private Integer borrowtimes;
 	private Date publishtime;
 	private String publisher;
-<<<<<<< HEAD
 
-=======
-	
+	public Book(){
+
+	}
 
 	public Book(String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf) {
 		this.title=title;
@@ -30,14 +30,14 @@ public class Book {
 	}
 
 	public Book(
-		String title,
-		String author,
-		String buyer,
-		Date buytime,
-		String whereis,
-		Boolean isonshelf,
-		Date publishtime,
-		String publisher
+			String title,
+			String author,
+			String buyer,
+			Date buytime,
+			String whereis,
+			Boolean isonshelf,
+			Date publishtime,
+			String publisher
 	) {
 		this.title=title;
 		this.author=author;
@@ -49,7 +49,6 @@ public class Book {
 		this.publishtime=publishtime;
 		this.publisher=publisher;
 	}
->>>>>>> 620914ef91a686cfc05b7c65fa9e06844707db20
 	public Book(Long id,String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes) {
 		this.id=id;
 		this.title=title;
@@ -60,13 +59,8 @@ public class Book {
 		this.isonshelf=isonshelf;
 		this.borrowtimes=borrowtimes;
 	}
-<<<<<<< HEAD
 
-	public Book(Long id,String title,String author,Date publishtime,String publisher,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes) {
-=======
-	
 	public Book(Long id,String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes,Date publishtime,String publisher) {
->>>>>>> 620914ef91a686cfc05b7c65fa9e06844707db20
 		this.id=id;
 		this.title=title;
 		this.author=author;
@@ -158,4 +152,3 @@ public class Book {
 	}
 
 }
-
