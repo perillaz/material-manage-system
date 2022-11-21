@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.xzgtemp.entity.Book;
 import org.xzgtemp.entity.User;
 import org.xzgtemp.service.BookService;
 import org.xzgtemp.service.DocumentService;
@@ -125,7 +126,7 @@ public class UserController {
 			model.put("searchBy",searchby);
 			model.put("target",target);
 			switch (searchwhat + searchby){
-				case "book" + "dafault":
+				case "book" + "default":
 					model.put("books",bookservice.GetBooksbyTitleOrAuthor(target));
 					break;
 				case "book" + "title":
@@ -134,7 +135,7 @@ public class UserController {
 				case "book" + "author":
 					model.put("books",bookservice.GetBooksbyAuthor(target));
 					break;
-				case "document" + "dafault":
+				case "document" + "default":
 					model.put("documents",documentservice.GetDocumentsbyTitleOrAuthor(target));
 					break;
 				case "document" + "title":

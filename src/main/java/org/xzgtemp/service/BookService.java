@@ -58,16 +58,16 @@ public class BookService {
         return jdbctemplate.queryForObject(sql,
                 (ResultSet rs, int rowNum) -> {
                     return new Book(
-                            rs.getLong("id"),
-                            rs.getString("title"),
-                            rs.getString("author"),
-                            rs.getString("buyer"),
-                            rs.getDate("buytime"),
-                            rs.getString("whereis"),
-                            rs.getBoolean("isonshelf"),
-                            rs.getInt("borrowtimes"),
-                            rs.getDate("publishtime"),
-                            rs.getString("publisher")
+                        rs.getLong("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("buyer"),
+                        rs.getDate("buytime"),
+                        rs.getString("whereis"),
+                        rs.getBoolean("isonshelf"),
+                        rs.getInt("borrowtimes"),
+                        rs.getDate("publishtime"),
+                        rs.getString("publisher")
                     );
                 }
                 ,bid
@@ -75,21 +75,32 @@ public class BookService {
     }
 
     public List<Book> GetBooksbyTitleOrAuthor(String s){
-        return jdbctemplate.query("SELECT * FROM Book WHERE title LIKE \"%?%\" OR author LIKE \"%?%\"",bookRowMapper,s,s);
+        return jdbctemplate.query(
+            "SELECT * FROM Book WHERE title LIKE CONCAT(\'%\',?,\'%\') OR author LIKE CONCAT(\'%\',?,\'%\')",
+            bookRowMapper,
+            s,
+            s
+        );
     }
 
     public List<Book> GetBooksbyTitle(String Title){
-        String sql = "SELECT * FROM Book WHERE title LIKE \"%?%\"";
-        return jdbctemplate.query(sql,bookRowMapper,Title);
+        return jdbctemplate.query(
+            "SELECT * FROM Book WHERE title LIKE CONCAT(\'%\',?,\'%\')",
+            bookRowMapper,
+            Title
+        );
     }
 
     public List<Book> GetBooksbyAuthor(String Author){
-        String sql = "SELECT * FROM Book WHERE author LIKE \"%?%\"";
-        return jdbctemplate.query(sql,bookRowMapper,Author);
+        return jdbctemplate.query(
+            "SELECT * FROM Book WHERE author LIKE CONCAT(\'%\',?,\'%\')",
+            bookRowMapper,
+            Author
+        );
     }
 
     public List<Book> GetALlBooks(){
-        return jdbctemplate.query("SELECT * FROM Book",new BeanPropertyRowMapper<Book>(Book.class));
+        return jdbctemplate.query("SELECT * FROM Book",bookRowMapper);
     }
 
     //----------ChangBookAttribute------------------------------

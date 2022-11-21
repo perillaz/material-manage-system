@@ -68,18 +68,29 @@ public class DocumentService {
     }
 
     public List<Document> GetDocumentsbyTitleOrAuthor(String s){
-        return jdbctemplate.query("SELECT * FROM Document WHERE title LIKE \"%?%\" OR author LIKE \"%?%\"",documentRowMapper,s,s);
+        return jdbctemplate.query(
+            "SELECT * FROM Document WHERE title LIKE CONCAT(\'%\',?,\'%\') OR author LIKE CONCAT(\'%\',?,\'%\')",
+            documentRowMapper,
+            s,
+            s
+        );
     }
 
     public List<Document> GetDocumentsbyTitle(String Title){
-        String sql = "SELECT * FROM Document WHERE title LIKE \"%?%\"";
-        return jdbctemplate.query(sql,documentRowMapper,Title);
+        return jdbctemplate.query(
+            "SELECT * FROM Document WHERE title LIKE CONCAT(\'%\',?,\'%\')",
+            documentRowMapper,
+            Title
+        );
     }
 
 
     public List<Document> GetDocumentsbyAuthor(String Author){
-        String sql = "SELECT * FROM Document WHERE author LIKE \"%?%\"";
-        return jdbctemplate.query(sql,documentRowMapper,Author);
+        return jdbctemplate.query(
+            "SELECT * FROM Document WHERE author LIKE CONCAT(\'%\',?,\'%\')",
+            documentRowMapper,
+            Author
+        );
     }
 
 
