@@ -39,7 +39,7 @@ public class UserController {
 		if (user != null){
 			Map<String, Object> model = new HashMap<>();
 			model.put("user", user);
-			model.put("name",user.GetName());
+			model.put("name",user.getName());
 			return new ModelAndView("redirect:/search.html",model);
 		}
 		return new ModelAndView("signin.html");
@@ -52,7 +52,7 @@ public class UserController {
 		if (user != null){
 			Map<String, Object> model = new HashMap<>();
 			model.put("user", user);
-			model.put("name",user.GetName());
+			model.put("name",user.getName());
 			return new ModelAndView("redirect:/search.html",model);
 		}
 		return new ModelAndView("signin.html");
@@ -62,7 +62,7 @@ public class UserController {
 
 	@PostMapping("/signin")
 	public ModelAndView doSignIn(@RequestParam("id") String id, @RequestParam("password") String password,
-			HttpSession session) {
+								 HttpSession session) {
 		try {
 			User user = userservice.signin(id,password);
 			session.setAttribute(KEY_USER, user);
@@ -97,31 +97,30 @@ public class UserController {
 
 	@GetMapping("/search")
 	public ModelAndView Search(HttpSession session) {
-	//TODO
+		//TODO
 		User user = (User) session.getAttribute(KEY_USER);
 		Map<String, Object> model = new HashMap<>();
 		model.put("user", user);
-		model.put("name",user.GetName());
+		model.put("name",user.getName());
 		return new ModelAndView("search.html",model);
 	}
 
 	@PostMapping("/search")
 	public ModelAndView doSearch(@RequestParam("searchWhat") String searchwhat,@RequestParam("searchBy") String searchby,@RequestParam("target") String target,HttpSession session) {
-	//TODO
+		//TODO
 		try {
 			User user = (User) session.getAttribute(KEY_USER);
 			Map<String, Object> model = new HashMap<>();
 			model.put("user", user);
-			model.put("name",user.GetName());
+			model.put("name",user.getName());
 			if (searchwhat.equals("book")) {
 				List<Book> books = new ArrayList<>();
 				switch (searchby) {
 					case "title":
-						//books = bookservice.GetBookbyTitle(target);
-						books.add(new Book("title","author","user1",null,"library",true));
+						books = bookservice.GetBooksbyTitle(target);
 						break;
 					case "author":
-						books = bookservice.GetBookbyAuthor(target);
+						books = bookservice.GetBooksbyAuthor(target);
 						break;
 					default:
 						break;
@@ -158,7 +157,7 @@ public class UserController {
 		model.put("error","Not found any data by your input.");
 		return new ModelAndView("/search.html",model);
 	}
-	
+
 	@GetMapping("/signout")
 	public String SignOut(HttpSession session) {
 		session.removeAttribute(KEY_USER);
