@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>changeuserinformation</title>
+</head>
+<body>
+<form method="post" action="/user/change">
+    <div>
+    {% if changeinfo == "password" %}
+    <div class="form-group">
+        <label>Input Password:</label>
+        <input name="newinfo1" type="passsword" class="form-control" placeholder="password" value="{{ password }}">
+        <br>
+        <label>Input Password again:</label>
+        <input name="newinfo2" type="passsword" class="form-control" placeholder="password" value="{{ password }}">
+        <div class="form-group">
+            <button name="submit" type="submit" value="password">submit</button>
+        </div>
+    </div>
+    {% endif %}
+    </div>
+    {% if changedpassword == true %}
+    <div class="form-group">
+        <p>Your password has been changed.</p>
+        <a href="/signout">Please log in again.</a>
+    </div>
+    {% endif %}
+    {% if error != null %}
+    <div class="form-group">
+        <p>The password is not the same.</p>
+    </div>
+    {% endif %}
+    {% if fault != null %}
+    <div class="form-group">
+        <p>Fault.</p>
+    </div>
+    {% endif %}
+</form>
+</body>
+</html>
