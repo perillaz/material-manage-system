@@ -73,6 +73,22 @@
             <tr bgcolor="#949494">
             <th>BookID</th><th>Title</th><th>Author</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Publishtime</th><th>Publisher</th>  
             </tr>
+<<<<<<< HEAD
+             <tr>
+                {% for book in books %}
+                    <tb>{{book.id}}</tb>
+                    <tb>{{book.titl}}</tb>
+                    <tb>{{book.autho}}</tb>
+                    <tb>{{book.whereis}}</tb>
+                    <tb>{{book.isonshelf}}</tb>
+                    <tb>{{book.borrowtimes}}</tb>
+                    <tb>{{book.publishtime}}</tb>
+                    <tb>{{book.publisher}}</tb>
+                    {%else %}
+                        <p>no book yet</p>
+                {% endfor %}
+            </tr>
+=======
                 <script>
                     for(i=0;i<books.length();i++){
                         temp+="<td>"+books[i].id+books[i].title+books[i].author+books[i].whereis+books[i].isonshelf+books[i].borrowtimes+books[i].publishtime+books[i].publisher+"</td>";
@@ -80,6 +96,7 @@
                 </script>
                 <tr>temp</tr>
             
+>>>>>>> 707e6c8eaa7d8f19cc19393d1598577b7494c038
             </table>
             <div class="form-group">
                 <label>The book I want</label>
@@ -94,6 +111,21 @@
             <tr bgcolor="#949494">
             <th>DocumentID</th><th>Title</th><th>Author</th><th>Downloadtimes</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th>
             </tr>
+<<<<<<< HEAD
+              <tr>
+                {% for document in documents %}
+                    <tb>{{document.id}}</tb>
+                    <tb>{{document.title}}</tb>
+                    <tb>{{document.author}}</tb>
+                    <tb>{{document.downloadtimes}}</tb>
+                    <tb>{{document.publishtime}}</tb>
+                    <tb>{{document.publisher}}</tb>
+                    <tb>{{document.filepath}}</tb>
+                    {%else %}
+                        <p>no doucument yet</p>
+                {% endfor %}
+            </tr>
+=======
                 <script>
                     for(i=0;i<documents.length();i++){
                         temp+="<td>"+documents[i].id+documents[i].title+documents[i].author+documents[i].downloadtimes+documents[i].publishtime+documents[i].publisher+documents[i].filepath+"</td>";
@@ -101,6 +133,7 @@
                 </script>
                 <tr>temp</tr>
                 
+>>>>>>> 707e6c8eaa7d8f19cc19393d1598577b7494c038
             </table>
             <div class="form-group">
                 <label>The document I want</label>
