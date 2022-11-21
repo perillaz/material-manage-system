@@ -49,5 +49,31 @@ html速成
 # 22-11-18晚上
 
 改正一些bug
+
 user相关所有功能正常使用
+
 实现注册，登陆相关的网页的基础功能和跳转
+
+# 22-11-19
+
+test模块，未完成
+
+# 22-11-20
+
+一些测试，修bug
+
+[pebbble引擎模板语法](https://pebbletemplates.io/wiki/guide/basic-usage/)
+
+map(string,List\<Book\>)需要Book类存在一个无参数的构造函数
+
+# 22-11-21
+
+修bug
+
+关于BeanPropertyRowMapper的使用要求
+
+- 类与数据库中表的属性名称对应
+- 类中的所有属性有set方法（“set” + 属性名，不能是Set）
+
+
+

@@ -11,18 +11,28 @@ public class Book {
 	private Date buytime;
 	private String whereis;
 	private Boolean isonshelf;
-	private Integer borrowtimes;
+	private Integer borrowtimes = 0;
 	private Date publishtime;
 	private String publisher;
 	
+	public Book(){
+		
+	}
 
-	public Book(String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf) {
-		this.title=title;
-		this.author=author;
-		this.buyer=buyer;
-		this.buytime=buytime;
-		this.whereis=whereis;
-		this.isonshelf=isonshelf;
+	public Book(
+		String title,
+		String author,
+		String buyer,
+		Date buytime,
+		String whereis,
+		Boolean isonshelf
+	) {
+		setTitle(title);
+		setAuthor(author);
+		setBuyer(buyer);
+		setBuytime(buytime);
+		setWhereis(whereis);
+		setIsonshelf(isonshelf);
 		this.borrowtimes=0;
 	}
 
@@ -36,115 +46,143 @@ public class Book {
 		Date publishtime,
 		String publisher
 	) {
-		this.title=title;
-		this.author=author;
-		this.buyer=buyer;
-		this.buytime=buytime;
-		this.whereis=whereis;
-		this.isonshelf=isonshelf;
-		this.borrowtimes=0;
-		this.publishtime=publishtime;
-		this.publisher=publisher;
+		setTitle(title);
+		setAuthor(author);
+		setBuyer(buyer);
+		setBuytime(buytime);
+		setWhereis(whereis);
+		setIsonshelf(isonshelf);
+		setPublishtime(publishtime);
+		setPubilsher(publisher);
 	}
-	public Book(Long id,String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes) {
-		this.id=id;
-		this.title=title;
-		this.author=author;
-		this.buyer=buyer;
-		this.buytime=buytime;
-		this.whereis=whereis;
-		this.isonshelf=isonshelf;
-		this.borrowtimes=borrowtimes;
-	}
-	
-	public Book(Long id,String title,String author,String buyer,Date buytime,String whereis,Boolean isonshelf,Integer borrowtimes,Date publishtime,String publisher) {
-		this.id=id;
-		this.title=title;
-		this.author=author;
-		this.buyer=buyer;
-		this.buytime=buytime;
-		this.whereis=whereis;
-		this.isonshelf=isonshelf;
-		this.borrowtimes=borrowtimes;
-		this.publishtime=publishtime;
-		this.publisher=publisher;
+
+	public Book(
+		Long id,
+		String title,
+		String author,
+		String buyer,
+		Date buytime,
+		String whereis,
+		Boolean isonshelf,
+		Integer borrowtimes
+	) {
+		setId(id);
+		setTitle(title);
+		setAuthor(author);
+		setBuyer(buyer);
+		setBuytime(buytime);
+		setWhereis(whereis);
+		setIsonshelf(isonshelf);
+		setBorrowtimes(borrowtimes);
 	}
 	
-	public Long  GetID(){
+	public Book(
+		Long id,
+		String title,
+		String author,
+		String buyer,
+		Date buytime,
+		String whereis,
+		Boolean isonshelf,
+		Integer borrowtimes,
+		Date publishtime,
+		String publisher
+	) {
+		setId(id);
+		setTitle(title);
+		setAuthor(author);
+		setBuyer(buyer);
+		setBuytime(buytime);
+		setWhereis(whereis);
+		setIsonshelf(isonshelf);
+		setBorrowtimes(borrowtimes);
+		setPublishtime(publishtime);
+		setPubilsher(publisher);
+	}
+	
+
+	public Long getId(){
 		return id;
 	}
 
-	public void SetID(Long id){
+	public void setId(Long id){
+		if(id <= 0){
+			throw new IllegalArgumentException("invalid id value");
+		}
 		this.id = id;
 	}
 
-	public String GetTitle() {
+
+	public String getTitle() {
 		return title;
 	}
 
-	public void SetTitle(String title) {
+	public void setTitle(String title) {
+		if(title == ""){
+			throw new IllegalArgumentException("invalid title value");
+		}
 		this.title=title;
 	}
 
-	public String GetAuthor() {
+	public String getAuthor() {
 		return author;
 	}
-	public void SetAuthor(String author) {
+	public void setAuthor(String author) {
 		this.author=author;
 	}
-	public String Getbuyer() {
+	public String getBuyer() {
 		return buyer;
 	}
 
-	public void Setbuyer(String buyer) {
+	public void setBuyer(String buyer) {
 		this.buyer=buyer;
 	}
 
-	public Date Getbuytime() {
+	public Date getBuytime() {
 		return buytime;
 	}
 
-	public void Setbuytime(Date buytime) {
+	public void setBuytime(Date buytime) {
 		this.buytime=buytime;
 	}
 
-	public String GetWhereis() {
+	public String getWhereis() {
 		return whereis;
 	}
 
-	public void SetWhereis(String whereis ){
+	public void setWhereis(String whereis ){
 		this.whereis = whereis;
 	}
 
-	public Boolean GetIsonshelf() {
+	public Boolean getIsonshelf() {
 		return isonshelf;
 	}
 
-	public void SetIsonshelf(Boolean isonshelf) {
+	public void setIsonshelf(Boolean isonshelf) {
 		this.isonshelf=isonshelf;
 	}
 
-	public Integer GetBorrowtimes() {
+	public Integer getBorrowtimes() {
 		return borrowtimes;
 	}
 
-	public void SetBorrowtimes(Integer borrowtimes) {
+	public void setBorrowtimes(Integer borrowtimes) {
 		this.borrowtimes=borrowtimes;
 	}
 
-	public Date GetPublishtime() {
+	public Date getPublishtime() {
 		return publishtime;
 	}
 
-	public void SetPublishtime(Date publishtime) {
+	public void setPublishtime(Date publishtime) {
 		this.publishtime=publishtime;
 	}
 
-	public String GetPublisher() {
+	public String getPublisher() {
 		return publisher;
 	}
 
-	public void SetPubilsher(String publisher) {
+	public void setPubilsher(String publisher) {
 		this.publisher=publisher;
 	}
     
