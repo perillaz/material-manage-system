@@ -44,28 +44,30 @@
         <h2>Search</h2>
         <center>
             <select name="searchWhat">
-                <option value="book">Book</option>
-                <option value="document">Document</option>
+                <option value="book" {%if searchWhat=="book" %}selected{% endif %}>Book</option>
+                <option value="document"{%if searchWhat=="document" %}selected{% endif %}>Document</option>
             </select>
             <select name="searchBy">
-                <option value="author">Author</option>
-                <option value="title">Title</option>
+                <option value="default"{%if searchBy=="default" %}selected{% endif %}></option>
+                <option value="title"{%if searchBy=="title" %}selected{% endif %}>Title</option>
+                <option value="author"{%if searchBy=="author" %}selected{% endif %}>Author</option>
             </select>
 
-            <input type="text" name="target">
+            <input type="text" name="target" value="{{ target }}" >
             <input type="submit" value="submit" name="beginsearch">
         </center>
-
-        <div class="dropdown">
-            <div class="form-group">
-            <button id="name" class="dropbtn">{{ name }}</button>
-            <div class="dropdown-content">
-                <a href="/userdetail">User Information</a>
-                <a href="/uploaddocument">Upload Document</a>
-                <a href="/signout">Log Out</a>
-            </div>
-            </div>
+    </form>
+    <div class="dropdown">
+        <div class="form-group">
+        <button id="name" class="dropbtn">{{ name }}</button>
+        <div class="dropdown-content">
+            <a href="/userdetail">User Information</a>
+            <a href="/uploaddocument">Upload Document</a>
+            <a href="/signout">Log Out</a>
         </div>
+        </div>
+    </div>
+    <div>
         {%if error==null %}
             {%if searchwhat=="book" %}
             <h2>Book Information</h2>
@@ -88,11 +90,13 @@
                 {% endfor %}
             </tr>
             </table>
+            <!--
             <div class="form-group">
                 <label>The book I want</label>
                 <input name="chosenbook" type="search" class="form-control" placeholder="id" value="{{ id }}">
                 <a href="/bookdetail">Search Book</a>
             </div>
+            -->
             {% endif %}
 
             {% if searchwhat=="document" %}
@@ -110,22 +114,24 @@
                     <tb>{{document.publishtime}}</tb>
                     <tb>{{document.publisher}}</tb>
                     <tb>{{document.filepath}}</tb>
-                    {%else %}
+                {%else %}
                         <p>no doucument yet</p>
                 {% endfor %}
             </tr>
             </table>
+            <!--
             <div class="form-group">
                 <label>The document I want</label>
                 <input name="chosendocument" type="search" class="form-control" placeholder="id" value="{{ id }}">
                 <a href="/documentdetail">Search Document</a>
             </div>
+            -->
             {% endif %}
-        {% endif %}
-        {% if error!=null %}
+        {% else %}
         <p id="error" class="text-danger">{{ error }}</p>
         {% endif %}
-    </form>
+    </div>
+    
     
 
 </body>
