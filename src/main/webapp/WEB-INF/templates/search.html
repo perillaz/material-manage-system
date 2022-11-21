@@ -1,16 +1,133 @@
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title>signin</title>
+    <title>search</title>
+    <style>
+        .dropbtn {
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown {
+            position:absolute;
+            top:0px;
+            right:200px;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+        .dropdown-content a {
+            color: black;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            position:absolute;
+        }
+
+    </style>
 </head>
 
 <body>
-        <h3>Meterial Manage System</h3>
-        <p>Search</p>
+    <form method="post" action="/search">
+        <h2>Search</h2>
+        <center>
+            <select name="searchWhat">
+                <option value="book">Book</option>
+                <option value="document">Document</option>
+            </select>
+            <select name="searchBy">
+                <option value="author">Author</option>
+                <option value="title">Title</option>
+            </select>
 
-        <a href="/signout">Sign Out</a>
+            <input type="text" name="target">
+            <input type="submit" value="submit" name="beginsearch">
+        </center>
+
+        <div class="dropdown">
+            <div class="form-group">
+            <button id="name" class="dropbtn">{{ name }}</button>
+            <div class="dropdown-content">
+                <a href="/userdetail">User Information</a>
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/signout">Log Out</a>
+            </div>
+            </div>
+        </div>
+        {%if error==null %}
+            {%if searchwhat=="book" %}
+            <h2>Book Information</h2>
+            <table width="100%" border="1" align="center">
+            <tr bgcolor="#949494">
+            <th>BookID</th><th>Title</th><th>Author</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Publishtime</th><th>Publisher</th>  
+            </tr>
+             <tr>
+                {% for book in books %}
+                    <tb>{{book.id}}</tb>
+                    <tb>{{book.titl}}</tb>
+                    <tb>{{book.autho}}</tb>
+                    <tb>{{book.whereis}}</tb>
+                    <tb>{{book.isonshelf}}</tb>
+                    <tb>{{book.borrowtimes}}</tb>
+                    <tb>{{book.publishtime}}</tb>
+                    <tb>{{book.publisher}}</tb>
+                    {%else %}
+                        <p>no book yet</p>
+                {% endfor %}
+            </tr>
+            </table>
+            <div class="form-group">
+                <label>The book I want</label>
+                <input name="chosenbook" type="search" class="form-control" placeholder="id" value="{{ id }}">
+                <a href="/bookdetail">Search Book</a>
+            </div>
+            {% endif %}
+
+            {% if searchwhat=="document" %}
+            <h2>Document Information</h2>
+            <table width="100%" border="1" align="center">
+            <tr bgcolor="#949494">
+            <th>DocumentID</th><th>Title</th><th>Author</th><th>Downloadtimes</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th>
+            </tr>
+              <tr>
+                {% for document in documents %}
+                    <tb>{{document.id}}</tb>
+                    <tb>{{document.title}}</tb>
+                    <tb>{{document.author}}</tb>
+                    <tb>{{document.downloadtimes}}</tb>
+                    <tb>{{document.publishtime}}</tb>
+                    <tb>{{document.publisher}}</tb>
+                    <tb>{{document.filepath}}</tb>
+                    {%else %}
+                        <p>no doucument yet</p>
+                {% endfor %}
+            </tr>
+            </table>
+            <div class="form-group">
+                <label>The document I want</label>
+                <input name="chosendocument" type="search" class="form-control" placeholder="id" value="{{ id }}">
+                <a href="/documentdetail">Search Document</a>
+            </div>
+            {% endif %}
+        {% endif %}
+        {% if error!=null %}
+        <p id="error" class="text-danger">{{ error }}</p>
+        {% endif %}
+    </form>
+    
+
 </body>
 
 </html>
