@@ -6,6 +6,11 @@
     <meta charset="utf-8">
     <title>search</title>
     <style>
+        a:link {
+            color: black;
+            background-color: transparent;
+            text-decoration: none;
+        }
         .dropbtn {
             font-size: 16px;
             border: none;
@@ -78,8 +83,8 @@
                 <tbody>
                     {% for book in books %}
                     <tr>
-                        <td>{{book.id}}</td>
-                        <td>{{book.title}}</td>
+                        <td><a href="/books/{{book.id}}">{{book.id}}</a></td>
+                        <td><a href="/books/{{book.id}}">{{book.title}}</a></td>
                         <td>{{book.author}}</td>
                         <td>{{book.whereis}}</td>
                         <td>{{book.isonshelf}}</td>
@@ -110,8 +115,8 @@
                 <tbody>
                         {% for document in documents %}
                     <tr>
-                            <td>{{document.id}}</td>
-                            <td>{{document.title}}</td>
+                            <td><a href="/documents/{{document.id}}">{{document.id}}</a></td>
+                            <td><a href="/documents/{{document.id}}">{{document.title}}</a></td>
                             <td>{{document.author}}</td>
                             <td>{{document.downloadtimes}}</td>
                             <td>{{document.publishtime}}</td>

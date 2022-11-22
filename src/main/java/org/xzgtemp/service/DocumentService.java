@@ -49,7 +49,7 @@ public class DocumentService {
     }
 
     //------------GetDocunmentByAttribute-----------------------------
-    public Document GetDocumentsbyDID(int did){
+    public Document GetDocumentsbyDID(Long did){
         String sql = "SELECT * FROM Document WHERE id = ?";
         return jdbctemplate.queryForObject(sql,
                 (ResultSet rs, int rowNum) -> {
