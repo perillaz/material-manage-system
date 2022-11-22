@@ -1,6 +1,10 @@
 package org.xzgtemp.web;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.sql.Date;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -254,6 +258,40 @@ public class UserController {
 			getuser(session,model);
 			model.put("fault","Change information fault.");
 			return new ModelAndView("/userdetial.html",model);
+		}
+	}
+
+	@GetMapping("/uploaddocument")
+	public ModelAndView uploadDocument(HttpSession session){
+		Map<String, Object> model = new HashMap<>();
+		if(getuser(session,model)){
+			return new ModelAndView("/uploaddocument.html",model);
+		}
+		else{
+			return new ModelAndView("redirect:/signin.html");
+		}
+	}
+
+	@PostMapping("/uploaddocument")
+	public ModelAndView doUploadDocument(
+			@RequestParam("file") File file,
+			//@RequestParam("author") String author,
+			HttpSession session){
+		try{
+			Map<String, Object> model = new HashMap<>();
+			User user = (User) session.getAttribute(KEY_USER);
+			String uploader = user.getName();
+			LocalDate date = LocalDate.now();
+			String title = file.getName();
+			String filepath = file.getAbsolutePath();
+			Document document = new Document(title,"author",uploader,Date.valueOf(date),filepath);
+			//documentservice.AddDocument(document);
+			model.put("document",document);
+			return new ModelAndView("/uploaddocument.html",model);
+		}catch (RuntimeException e){
+			Map<String, Object> model = new HashMap<>();
+			getuser(session,model);
+			return new ModelAndView("/search.html",model);
 		}
 	}
 

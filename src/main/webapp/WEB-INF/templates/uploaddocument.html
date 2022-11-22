@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>uploadDocument</title>
+</head>
+<body>
+<form method="post" action="/uploaddocument">
+
+    <div class="form-group">
+        {% if document == null %}
+        <p>{{ user.id }}</p>
+        <label>file :</label>
+        <input name="file" type="file">
+        <button type="submit">submit</button>
+        {% endif %}
+    </div>
+
+    <div>
+        {% if document != null %}
+        <p>Upload document successfully.</p>
+        <p>Details:</p>
+        <table width="100%" border="1" align="center">
+            <thead bgcolor="#949494">
+            <th>Title</th><th>Author</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{document.title}}</td>
+                <td>{{document.author}}</td>
+                <td>{{document.publishtime}}</td>
+                <td>{{document.publisher}}</td>
+                <td>{{document.filepath}}</td>
+            </tr>
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    <div>
+        <br>
+        <a href="/search">Rerurn search.</a>
+    </div>
+</form>
+</body>
+</html>
