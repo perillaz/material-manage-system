@@ -14,7 +14,8 @@
         <spring.version>5.2.0.RELEASE</spring.version>
 		<tomcat.version>9.0.36</tomcat.version>
 		<pebble.version>3.1.2</pebble.version>
-		<logback.version>1.2.3</logback.version>
+        <junit.version>4.12</junit.version>
+		<!--<logback.version>1.2.3</logback.version>-->
     </properties>
 
 
@@ -51,6 +52,19 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+
+        <!--单元测试-->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
 		</dependency>
 <!--
         <dependency>

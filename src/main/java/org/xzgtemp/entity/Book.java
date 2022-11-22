@@ -77,6 +77,27 @@ public class Book {
 	}
 	
 	public Book(
+		String title,
+		String author,
+		String buyer,
+		Date buytime,
+		String whereis,
+		Boolean isonshelf,
+		Integer borrowtimes,
+		Date publishtime,
+		String publisher
+	) {
+		setTitle(title);
+		setAuthor(author);
+		setBuyer(buyer);
+		setBuytime(buytime);
+		setWhereis(whereis);
+		setIsonshelf(isonshelf);
+		setBorrowtimes(borrowtimes);
+		setPublishtime(publishtime);
+		setPublisher(publisher);
+	}
+	public Book(
 		Long id,
 		String title,
 		String author,

@@ -2,7 +2,10 @@ package org.xzgtemp.entity;
 
 import java.sql.Date;
 
+
 public class Document {
+	public final String DocumentFileRootPath = "";
+
 	private Long id;
 	private String title;
 	private String author;

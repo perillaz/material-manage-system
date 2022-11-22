@@ -68,12 +68,24 @@ map(string,List\<Book\>)需要Book类存在一个无参数的构造函数
 
 # 22-11-21
 
-修bug
+修bugs
 
 关于BeanPropertyRowMapper的使用要求
 
 - 类与数据库中表的属性名称对应
 - 类中的所有属性有set方法（“set” + 属性名，不能是Set）
+否则对应的属性值设为null
 
+MYSQL中用CONCAT拼接字符串
+例：
+"SELECT * FROM Document WHERE title LIKE CONCAT(\'%\',?,\'%\')"
+解决jdbcTemplate无法识别引号包裹的“?”的问题
 
+# 22-11-22
+
+修bugs
+
+增加一些小功能
+
+配置测试类
 
