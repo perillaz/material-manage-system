@@ -37,8 +37,6 @@ public class UserController {
 		User user = (User) session.getAttribute(KEY_USER);
 		if(user != null) {
 			model.put("user", user);
-			model.put("id", user.getId());
-			model.put("name", user.getName());
 			return true;
 		}
 		return false;
@@ -100,76 +98,16 @@ public class UserController {
 		return new ModelAndView("/register.html",model);
 	}
 
-	/**	@GetMapping("/search")
-	public ModelAndView Search(HttpSession session) {
-	//TODO
-	Map<String, Object> model = new HashMap<>();
-	getuser(session,model);
-	return new ModelAndView("search.html",model);
-	}
-
-	 @PostMapping("/search")
-	 public ModelAndView doSearch(@RequestParam("searchWhat") String searchwhat,@RequestParam("searchBy") String searchby,@RequestParam("target") String target,HttpSession session) {
-	 //TODO
-	 Map<String, Object> model = new HashMap<>();
-	 getuser(session,model);
-	 try {
-	 if (searchwhat.equals("book")) {
-	 List<Book> books = new ArrayList<>();
-	 switch (searchby) {
-	 case "title":
-	 books = bookservice.GetBooksbyTitle(target);
-	 break;
-	 case "author":
-	 books = bookservice.GetBooksbyAuthor(target);
-	 break;
-	 default:
-	 break;
-	 }
-	 if(!books.isEmpty()) {
-	 model.put("books", books);
-	 model.put("error", null);
-	 return new ModelAndView("search.html", model);
-	 }
-	 } else {
-	 List<Document> documnets = new ArrayList<>();
-	 switch (searchby) {
-	 case "title":
-	 documnets = documentservice.GetDocumentsbyTitle(target);
-	 break;
-	 case "author":
-	 documnets = documentservice.GetDocumentsbyAuthor(target);
-	 break;
-	 default:
-	 break;
-	 }
-	 if(!documnets.isEmpty()) {
-	 model.put("documents", documnets);
-	 model.put("error", null);
-	 return new ModelAndView("search.html", model);
-	 }
-	 }
-	 }catch(RuntimeException e){
-	 model.put("error","Fault.");
-	 return new ModelAndView("/search.html",model);
-	 }
-	 model.put("error","Not found any data by your input.");
-	 return new ModelAndView("/search.html",model);
-	 }
-	 **/
 
 	@GetMapping("/search")
 	public ModelAndView Search(HttpSession session) {
-		User user = (User) session.getAttribute(KEY_USER);
-		if (user == null){
-			return new ModelAndView("signin.html");
-		}
 		Map<String, Object> model = new HashMap<>();
-		//model.put("user", user);
-		model.put("name",user.getName());
-		model.put("searchWhat","default");
-		model.put("searchBy","book");
-		return new ModelAndView("search.html",model);
+		if (getuser(session,model)){
+			model.put("searchWhat","default");
+			model.put("searchBy","book");
+			return new ModelAndView("search.html",model);
+		}
+		return new ModelAndView("redirect:/signin.html");
 	}
 
 	@PostMapping("/search")
@@ -180,13 +118,10 @@ public class UserController {
 			HttpSession session
 	) {
 		try {
-			User user = (User) session.getAttribute(KEY_USER);
-			if (user == null){
-				return new ModelAndView("signin.html");
-			}
 			Map<String, Object> model = new HashMap<>();
-			//model.put("user", user);
-			model.put("name",user.getName());
+			if (!getuser(session,model)){
+				return new ModelAndView("redirect:/signin.html");
+			}
 			model.put("searchWhat",searchwhat);
 			model.put("searchBy",searchby);
 			model.put("target",target);
@@ -211,67 +146,26 @@ public class UserController {
 					break;
 			}
 			return new ModelAndView("/search.html",model);
-			/*
-			if (searchwhat.equals("book")) {
-				List<Book> books = new ArrayList<>();
-				switch (searchby) {
-					case "title":
-						books = bookservice.GetBooksbyTitle(target);
-						break;
-					case "author":
-						books = bookservice.GetBooksbyAuthor(target);
-						break;
-					default:
-						break;
-				}
-				if(!books.isEmpty()) {
-					model.put("books", books);
-					//model.put("error", null);
-					return new ModelAndView("search.html", model);
-				}
-			} else {
-				List<Document> documnets = new ArrayList<>();
-				switch (searchby) {
-					case "title":
-						documnets = documentservice.GetDocumentsbyTitle(target);
-						break;
-					case "author":
-						documnets = documentservice.GetDocumentsbyAuthor(target);
-						break;
-					default:
-						break;
-				}
-				if(!documnets.isEmpty()) {
-					model.put("documents", documnets);
-					//model.put("error", null);
-					return new ModelAndView("search.html", model);
-				}
-
-			}*/
 		}catch(RuntimeException e){
 			e.printStackTrace();
 			Map<String ,Object> model = new HashMap<>();
-			User user = (User) session.getAttribute(KEY_USER);
-			model.put("name",user.getName());
+			getuser(session,model);
 			model.put("searchWhat",searchwhat);
 			model.put("searchBy",searchby);
 			model.put("target",target);
 			model.put("error","Fault.");
 			return new ModelAndView("/search.html",model);
 		}
-		/*
-		Map<String ,Object> model = new HashMap<>();
-		model.put("error","Not found any data by your input.");
-		return new ModelAndView("/search.html",model);
-		*/
 	}
 
 
 	@GetMapping("/user")
 	public ModelAndView userinfo(HttpSession session){
 		Map<String, Object> model = new HashMap<>();
-		getuser(session,model);
-		return new ModelAndView("/userdetial.html",model);
+		if(getuser(session,model)) {
+			return new ModelAndView("/userdetial.html", model);
+		}
+		return new ModelAndView("redirect:/sigin.html");
 	}
 
 	@PostMapping("/user")
@@ -287,40 +181,80 @@ public class UserController {
 			return new ModelAndView("/changeuserinformation.html", model);
 
 		}catch(RuntimeException e){
-			model.put("error","Fault.");
-			return new ModelAndView("/changeuserinformation.html",model);
+			model.put("error","Unknown error.");
+			return new ModelAndView("/userdetial.html",model);
 		}
 	}
 
 	@GetMapping("/user/change")
 	public  ModelAndView changeuserinfo(HttpSession session){
-
-		return new ModelAndView("/changeuserinformation.html");
+		Map<String, Object> model = new HashMap<>();
+		if(getuser(session,model)) {
+			return new ModelAndView("/userdetial.html", model);
+		}
+		return new ModelAndView("redirect:/signin.html");
 
 	}
 
 	@PostMapping("/user/change")
-	public ModelAndView dochangeuserinfo( @RequestParam("newinfo1") String newinfo1,@RequestParam("newinfo2") String newinfo2,@RequestParam("submit") String submit,HttpSession session){
-		Map<String, Object> model = new HashMap<>();
+	public ModelAndView dochangeuserinfo(
+			@RequestParam("newinfo1") String newinfo1,
+			@RequestParam("newinfo2") String newinfo2,
+			@RequestParam("submit") String submit,
+			HttpSession session){
 		try {
+			Map<String, Object> model = new HashMap<>();
 			User user = (User) session.getAttribute(KEY_USER);
-			if(submit.equals("password")) {
-				if (newinfo1.equals(newinfo2)) {
-					user.setPassword(newinfo1);
-					userservice.ChangeUserPassword(user);
-					model.put("user", user);
-					model.put("changedpassword", true);
+			model.put("user",user);
+			if (submit.equals("password")) {
+				if(!newinfo1.equals(newinfo2)){
+					model.put("error", "The two inputs are different.");
+					model.put("changeinfo","password");
+					return new ModelAndView("/changeuserinformation.html", model);
+				}
+				if(newinfo1=="" || newinfo2==""){
+					model.put("error", "The password is null.");
+					model.put("changeinfo","password");
+					return new ModelAndView("/changeuserinformation.html", model);
+				}
+				if (newinfo1.equals(user.getPassword())) {
+					model.put("error", "The password is the same as your old password.");
+					model.put("changeinfo","password");
 					return new ModelAndView("/changeuserinformation.html", model);
 				} else {
-					model.put("error", "The passwords are not the same.");
+					user.setPassword(newinfo1);
+					userservice.ChangeUserPassword(user);
+					model.put("changedpassword", true);
+					return new ModelAndView("/changeuserinformation.html", model);
+				}
+			} else{
+				if(!newinfo1.equals(newinfo2)){
+					model.put("error", "The two inputs are different.");
+					model.put("changeinfo","name");
+					return new ModelAndView("/changeuserinformation.html", model);
+				}
+				if(newinfo1=="" || newinfo2==""){
+					model.put("error", "The name is null.");
+					model.put("changeinfo","name");
+					return new ModelAndView("/changeuserinformation.html", model);
+				}
+				if (newinfo1.equals(user.getName())) {
+					model.put("error", "The name is the same as your old name.");
+					model.put("changeinfo","name");
+					return new ModelAndView("/changeuserinformation.html", model);
+				} else {
+					user.setName(newinfo1);
+					userservice.ChangeUserName(user);
+					model.put("changedname", true);
 					return new ModelAndView("/changeuserinformation.html", model);
 				}
 			}
 		}catch(RuntimeException e){
-			model.put("fault","fault.");
+			Map<String, Object> model = new HashMap<>();
+			getuser(session,model);
+			model.put("fault","Change information fault.");
 			return new ModelAndView("/userdetial.html",model);
 		}
-		return new ModelAndView("/userdetial.html",model);
 	}
 
 	@GetMapping("/signout")

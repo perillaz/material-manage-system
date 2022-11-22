@@ -6,36 +6,61 @@
 </head>
 <body>
 <form method="post" action="/user/change">
+
     <div>
-    {% if changeinfo == "password" %}
-    <div class="form-group">
-        <label>Input Password:</label>
-        <input name="newinfo1" type="passsword" class="form-control" placeholder="password" value="{{ password }}">
-        <br>
-        <label>Input Password again:</label>
-        <input name="newinfo2" type="passsword" class="form-control" placeholder="password" value="{{ password }}">
+        <p>{{ user.id }}</p>
+        {% if error != null %}
         <div class="form-group">
-            <button name="submit" type="submit" value="password">submit</button>
+            <p>{{ error }}</p>
+            <p>Please input again.</p>
         </div>
+        {% endif %}
+
+        {% if changeinfo == "password" %}
+        <div class="form-group">
+            <label>Input Password:</label>
+            <input name="newinfo1" type="passsword" class="form-control" placeholder="password" value="{{ password }}">
+            <br>
+            <label>Input Password again:</label>
+            <input name="newinfo2" type="passsword" class="form-control" placeholder="password" value="{{ password }}">
+            <div class="form-group">
+                <button name="submit" type="submit" value="password">submit</button>
+            </div>
+        </div>
+        {% endif %}
+        {% if changeinfo == "name" %}
+        <div class="form-group">
+            <label>Input Name:</label>
+            <input name="newinfo1" type="passsword" class="form-control" placeholder="name" value="{{ name }}">
+            <br>
+            <label>Input Name again:</label>
+            <input name="newinfo2" type="passsword" class="form-control" placeholder="name" value="{{ name }}">
+            <div class="form-group">
+                <button name="submit" type="submit" value="name">submit</button>
+            </div>
+        </div>
+        {% endif %}
+        {% if changedpassword != true %}
+            {% if changedname != true %}
+                <br>
+                <a href="/user">Abandon modification?</a>
+            {% endif %}
+        {% endif %}
     </div>
-    {% endif %}
-    </div>
+
     {% if changedpassword == true %}
     <div class="form-group">
         <p>Your password has been changed.</p>
         <a href="/signout">Please log in again.</a>
     </div>
     {% endif %}
-    {% if error != null %}
+    {% if changedname == true %}
     <div class="form-group">
-        <p>The password is not the same.</p>
+        <p>Your name has been changed.</p>
+        <a href="/search">To search.</a>
     </div>
     {% endif %}
-    {% if fault != null %}
-    <div class="form-group">
-        <p>Fault.</p>
-    </div>
-    {% endif %}
+
 </form>
 </body>
 </html>

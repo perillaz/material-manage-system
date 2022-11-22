@@ -9,13 +9,17 @@
 <ul>
     <form method="post" action="/user">
         <div class="form-group">
-            <p>Your ID :{{ id }}</p>
-            <p>Your Name :{{ name }}
+            {% if fault != null %}
+                <p>Change Fault, please choose again.</p>
+            {% endif %}
+            <p>Your ID :{{ user.id }}</p>
+            <p>Your Name :{{ user.name }}
                 <button name="change" type="submit" value="name">changename</button>
             </p>
             <button name="change" type="submit" value="password">changepassword</button>
         </div>
-
+        <br>
+        <a href="/search">Return Search.</a>
     </form>
 </ul>
 </body>
