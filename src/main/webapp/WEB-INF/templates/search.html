@@ -53,11 +53,7 @@
                 <option value="author"{%if searchBy=="author" %}selected{% endif %}>Author</option>
             </select>
 
-<<<<<<< HEAD
             <input type="text" name="target" value="{{target}}">
-=======
-            <input type="text" name="target" value="{{ target }}" >
->>>>>>> 02331b95e5c385b2462d07684b41e6d49411377a
             <input type="submit" value="submit" name="beginsearch">
         </center>
     </form>
@@ -76,7 +72,6 @@
             {%if searchWhat=="book" %}
             <h2>Book Information</h2>
             <table width="100%" border="1" align="center">
-<<<<<<< HEAD
                 <thead bgcolor="#949494">
                 <th>BookID</th><th>Title</th><th>Author</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Publishtime</th><th>Publisher</th>  
                 </thead>
@@ -96,25 +91,6 @@
                     {% endfor %}
                     </tr>
                 </tbody>
-=======
-            <tr bgcolor="#949494">
-            <th>BookID</th><th>Title</th><th>Author</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Publishtime</th><th>Publisher</th>  
-            </tr>
-             <tr>
-                {% for book in books %}
-                    <tb>{{book.id}}</tb>
-                    <tb>{{book.title}}</tb>
-                    <tb>{{book.author}}</tb>
-                    <tb>{{book.whereis}}</tb>
-                    <tb>{{book.isonshelf}}</tb>
-                    <tb>{{book.borrowtimes}}</tb>
-                    <tb>{{book.publishtime}}</tb>
-                    <tb>{{book.publisher}}</tb>
-                    {%else %}
-                        <p>no book yet</p>
-                {% endfor %}
-            </tr>
->>>>>>> 02331b95e5c385b2462d07684b41e6d49411377a
             </table>
             <!--
             <div class="form-group">
@@ -128,7 +104,6 @@
             {% if searchWhat=="document" %}
             <h2>Document Information</h2>
             <table width="100%" border="1" align="center">
-<<<<<<< HEAD
                 <thead bgcolor="#949494">
                 <th>DocumentID</th><th>Title</th><th>Author</th><th>Downloadtimes</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th>
                 </thead>
@@ -147,24 +122,6 @@
                         {% endfor %}
                     </tr>
                 </tbody>
-=======
-            <tr bgcolor="#949494">
-            <th>DocumentID</th><th>Title</th><th>Author</th><th>Downloadtimes</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th>
-            </tr>
-              <tr>
-                {% for document in documents %}
-                    <tb>{{document.id}}</tb>
-                    <tb>{{document.title}}</tb>
-                    <tb>{{document.author}}</tb>
-                    <tb>{{document.downloadtimes}}</tb>
-                    <tb>{{document.publishtime}}</tb>
-                    <tb>{{document.publisher}}</tb>
-                    <tb>{{document.filepath}}</tb>
-                {%else %}
-                        <p>no doucument yet</p>
-                {% endfor %}
-            </tr>
->>>>>>> 02331b95e5c385b2462d07684b41e6d49411377a
             </table>
             <!--
             <div class="form-group">
