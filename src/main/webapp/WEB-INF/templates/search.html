@@ -76,8 +76,8 @@
                 <th>BookID</th><th>Title</th><th>Author</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Publishtime</th><th>Publisher</th>  
                 </thead>
                 <tbody>
-                    <tr>
                     {% for book in books %}
+                    <tr>
                         <td>{{book.id}}</td>
                         <td>{{book.title}}</td>
                         <td>{{book.author}}</td>
@@ -86,10 +86,10 @@
                         <td>{{book.borrowtimes}}</td>
                         <td>{{book.publishtime}}</td>
                         <td>{{book.publisher}}</td>
+                    </tr>
                         {%else %}
                             <p>no book yet</p>
                     {% endfor %}
-                    </tr>
                 </tbody>
             </table>
             <!--
@@ -108,8 +108,8 @@
                 <th>DocumentID</th><th>Title</th><th>Author</th><th>Downloadtimes</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th>
                 </thead>
                 <tbody>
-                    <tr>
                         {% for document in documents %}
+                    <tr>
                             <td>{{document.id}}</td>
                             <td>{{document.title}}</td>
                             <td>{{document.author}}</td>
@@ -117,10 +117,10 @@
                             <td>{{document.publishtime}}</td>
                             <td>{{document.publisher}}</td>
                             <td>{{document.filepath}}</td>
+                    </tr>
                             {%else %}
                                 <p>no doucument yet</p>
                         {% endfor %}
-                    </tr>
                 </tbody>
             </table>
             <!--
