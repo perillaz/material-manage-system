@@ -110,7 +110,13 @@
             <h2>Document Information</h2>
             <table width="100%" border="1" align="center">
                 <thead bgcolor="#949494">
-                <th>DocumentID</th><th>Title</th><th>Author</th><th>Downloadtimes</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th>
+                <th>DocumentID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Downloadtimes</th>
+                <!--<th>Publishtime</th>
+                    <th>Publisher</th>-->
+                <th>Filepath</th>
                 </thead>
                 <tbody>
                         {% for document in documents %}
@@ -119,8 +125,6 @@
                             <td><a href="/documents/{{document.id}}">{{document.title}}</a></td>
                             <td>{{document.author}}</td>
                             <td>{{document.downloadtimes}}</td>
-                            <td>{{document.publishtime}}</td>
-                            <td>{{document.publisher}}</td>
                             <td>{{document.filepath}}</td>
                     </tr>
                             {%else %}
