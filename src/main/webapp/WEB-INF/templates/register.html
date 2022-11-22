@@ -10,6 +10,14 @@
     <form method="post" action="/register">
         <h3>Meterial Manage System</h3>
         <p>Welcome</p>
+        {%if registersuccessful %}
+            <div class="form-group">
+                <p class="text-danger">Registered Successfully.</p>
+            </div>
+            <div class="form-group">
+                    <a href="/signin">Sign in</a>
+                </div>
+        {% else %}
         <div class="form-group">
             <label>Your ID :</label>
             <input name="id" type="id" class="form-control" placeholder="student ID" value="{{ id }}">
@@ -33,6 +41,7 @@
         <div class="form-group">
             <a href="/signin">Already have an account?</a>
         </div>
+        {% endif %}
     </form>
 </body>
 

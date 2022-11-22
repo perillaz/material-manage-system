@@ -33,60 +33,60 @@ public class BorrowBook {
 		}
 	
 	
-	public Long GetID() {
+	public Long getId() {
 		return id;
 	}
 
-	public void SetID(Long id){
+	public void setId(Long id){
 		this.id = id;
 	}
 
-	public String GetUID() {
+	public String getUid() {
 		return uid;
 	}
 
-	public void SetUID(String uid){
+	public void setUid(String uid){
 		this.uid = uid;
 	}
 
-	public Long GetBID() {
+	public Long getBid() {
 		return bid;
 	}
 
-	public void SetBID(Long bid){
+	public void setBid(Long bid){
 		this.bid = bid;
 	}
 
-	public Date GetBorrowtime() {
+	public Date getBorrowtime() {
 		return borrowtime;
 	}
 
-	public void SetBorrowtime(Date borrowtime){
+	public void setBorrowtime(Date borrowtime){
 		this.borrowtime = borrowtime;
 	}
 
-	public Date GetSendbacktime() {
+	public Date getSendbacktime() {
 		return sendbacktime;
 	}
 
-	public void SetSendbacktime(Date sendbacktime){
+	public void setSendbacktime(Date sendbacktime){
 		this.sendbacktime = sendbacktime;
 	}
 
-	public Date GetDuetime() {
+	public Date getDuetime() {
 		return duetime;
 	}
 
-	public void SetDuetime(Date duetime){
+	public void setDuetime(Date duetime){
 		this.duetime = duetime;
 	}
 
 
-	public Boolean GetFinished() {
+	public Boolean getFinished() {
 		return finished;
 	}
 
-	public void SetFinished(Boolean finished){
+	public void setFinished(Boolean finished){
 		this.finished = finished;
 	}
 	

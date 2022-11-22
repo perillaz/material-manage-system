@@ -8,6 +8,10 @@ public class DownloadDocument {
 	private Long did;
 	private Date downloadtime;
 	
+	public DownloadDocument(){
+		
+	}
+
 	public DownloadDocument(Long id,String uid,Long did,Date downloadtime) {
 		this.id=id;
 		this.did=did;
@@ -15,35 +19,35 @@ public class DownloadDocument {
 		this.downloadtime=downloadtime;
 	}
 	
-	public Long GetID() {
+	public Long getId() {
 		return id;
 	}
 
-	public void SetID(Long id){
+	public void setId(Long id){
 		this.id = id;
 	}
 
-	public String GetUID() {
+	public String getUid() {
 		return uid;
 	}
 
-	public void SetUID(String uid){
+	public void setUid(String uid){
 		this.uid = uid;
 	}
 
-	public Long GetDID() {
+	public Long getDid() {
 		return did;
 	}
 
-	public void SetDID(Long did){
+	public void setDid(Long did){
 		this.did = did;
 	}
 
-	public Date GetDownloadtime(){
+	public Date getDownloadtime(){
 		return downloadtime;
 	}
 
-	public void SetDownloadtime(Date downloadtime){
+	public void setDownloadtime(Date downloadtime){
 		this.downloadtime = downloadtime;
 	}
     

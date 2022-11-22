@@ -2,7 +2,6 @@ package org.xzgtemp.web;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.sql.Date;
 import javax.servlet.http.HttpSession;
@@ -13,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.xzgtemp.entity.Book;
 import org.xzgtemp.entity.Document;
 import org.xzgtemp.entity.User;
 import org.xzgtemp.service.BookService;
@@ -94,6 +91,7 @@ public class UserController {
 		model.put("id", id);
 		try {
 			userservice.register(id,username,password);
+			model.put("registersuccessful","registersuccessful");
 		} catch (RuntimeException e) {
 			model.put("error","Register failed.\nThe id already exists,please input again.");
 			return new ModelAndView("register.html",model);

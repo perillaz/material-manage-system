@@ -53,7 +53,7 @@ public class Book {
 		setWhereis(whereis);
 		setIsonshelf(isonshelf);
 		setPublishtime(publishtime);
-		setPubilsher(publisher);
+		setPublisher(publisher);
 	}
 
 	public Book(
@@ -97,7 +97,7 @@ public class Book {
 		setIsonshelf(isonshelf);
 		setBorrowtimes(borrowtimes);
 		setPublishtime(publishtime);
-		setPubilsher(publisher);
+		setPublisher(publisher);
 	}
 	
 
@@ -182,7 +182,7 @@ public class Book {
 		return publisher;
 	}
 
-	public void setPubilsher(String publisher) {
+	public void setPublisher(String publisher) {
 		this.publisher=publisher;
 	}
     

@@ -53,7 +53,7 @@ public class BookService {
     }
 
     //---------GetBookByAttribute------------------------------
-    public Book GetBookbyBID(int bid){
+    public Book GetBookbyBID(Long bid){
         String sql = "SELECT * FROM Book WHERE id = ?";
         return jdbctemplate.queryForObject(sql,
                 (ResultSet rs, int rowNum) -> {
