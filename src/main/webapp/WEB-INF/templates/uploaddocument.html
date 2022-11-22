@@ -12,6 +12,9 @@
         <p>{{ user.id }}</p>
         <label>file :</label>
         <input name="file" type="file">
+        <lable>author :</lable>
+        <input name="author" type="name">
+        <br><br>
         <button type="submit">submit</button>
         {% endif %}
     </div>
@@ -20,23 +23,30 @@
         {% if document != null %}
         <p>Upload document successfully.</p>
         <p>Details:</p>
+
         <table width="100%" border="1" align="center">
             <thead bgcolor="#949494">
-            <th>Title</th><th>Author</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th>
+            <th>Id</th><th>Title</th><th>Author</th><th>Publishtime</th><th>Publisher</th><th>Filepath</th><th>Downloadtimes</th>
             </thead>
             <tbody>
             <tr>
+                <td>{{document.id}}</td>
                 <td>{{document.title}}</td>
                 <td>{{document.author}}</td>
-                <td>{{document.publishtime}}</td>
-                <td>{{document.publisher}}</td>
+                <td>{{publishtime}}</td>
+                <td>{{document.uploader}}</td>
                 <td>{{document.filepath}}</td>
+                <td>{{document.downloadtimes}}</td>
             </tr>
             </tbody>
         </table>
         {% endif %}
     </div>
     <div>
+        {%  if error != null %}
+            <p>{{ error }}</p>
+        {%  endif %}
+        <p></p>
         <br>
         <a href="/search">Rerurn search.</a>
     </div>

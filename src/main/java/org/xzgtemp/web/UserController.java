@@ -95,11 +95,11 @@ public class UserController {
 		try {
 			userservice.register(id,username,password);
 		} catch (RuntimeException e) {
-			model.put("error","register failed.");
+			model.put("error","Register failed.\nThe id already exists,please input again.");
 			return new ModelAndView("register.html",model);
 		}
 		model.put("success","Registered suscessfully.");
-		return new ModelAndView("/register.html",model);
+		return new ModelAndView("register.html",model);
 	}
 
 
@@ -149,7 +149,7 @@ public class UserController {
 					model.put("documents",documentservice.GetDocumentsbyAuthor(target));
 					break;
 			}
-			return new ModelAndView("/search.html",model);
+			return new ModelAndView("search.html",model);
 		}catch(RuntimeException e){
 			e.printStackTrace();
 			Map<String ,Object> model = new HashMap<>();
@@ -158,7 +158,7 @@ public class UserController {
 			model.put("searchBy",searchby);
 			model.put("target",target);
 			model.put("error","Fault.");
-			return new ModelAndView("/search.html",model);
+			return new ModelAndView("search.html",model);
 		}
 	}
 
@@ -167,7 +167,7 @@ public class UserController {
 	public ModelAndView userinfo(HttpSession session){
 		Map<String, Object> model = new HashMap<>();
 		if(getuser(session,model)) {
-			return new ModelAndView("/userdetial.html", model);
+			return new ModelAndView("userdetial.html", model);
 		}
 		return new ModelAndView("redirect:/sigin.html");
 	}
@@ -186,7 +186,7 @@ public class UserController {
 
 		}catch(RuntimeException e){
 			model.put("error","Unknown error.");
-			return new ModelAndView("/userdetial.html",model);
+			return new ModelAndView("userdetial.html",model);
 		}
 	}
 
@@ -194,7 +194,7 @@ public class UserController {
 	public  ModelAndView changeuserinfo(HttpSession session){
 		Map<String, Object> model = new HashMap<>();
 		if(getuser(session,model)) {
-			return new ModelAndView("/userdetial.html", model);
+			return new ModelAndView("userdetial.html", model);
 		}
 		return new ModelAndView("redirect:/signin.html");
 
@@ -257,7 +257,7 @@ public class UserController {
 			Map<String, Object> model = new HashMap<>();
 			getuser(session,model);
 			model.put("fault","Change information fault.");
-			return new ModelAndView("/userdetial.html",model);
+			return new ModelAndView("userdetial.html",model);
 		}
 	}
 
@@ -265,7 +265,7 @@ public class UserController {
 	public ModelAndView uploadDocument(HttpSession session){
 		Map<String, Object> model = new HashMap<>();
 		if(getuser(session,model)){
-			return new ModelAndView("/uploaddocument.html",model);
+			return new ModelAndView("uploaddocument.html",model);
 		}
 		else{
 			return new ModelAndView("redirect:/signin.html");
@@ -275,23 +275,29 @@ public class UserController {
 	@PostMapping("/uploaddocument")
 	public ModelAndView doUploadDocument(
 			@RequestParam("file") File file,
-			//@RequestParam("author") String author,
+			@RequestParam("author") String author,
 			HttpSession session){
 		try{
 			Map<String, Object> model = new HashMap<>();
 			User user = (User) session.getAttribute(KEY_USER);
-			String uploader = user.getName();
-			LocalDate date = LocalDate.now();
 			String title = file.getName();
 			String filepath = file.getAbsolutePath();
-			Document document = new Document(title,"author",uploader,Date.valueOf(date),filepath);
-			//documentservice.AddDocument(document);
+			String uploader = user.getName();
+			LocalDate date = LocalDate.now();
+			Date datep = Date.valueOf(date);
+			if(author.equals("")){
+				author = "Unknow";
+			}
+			Document document = new Document(title,author,uploader,datep,filepath,0);
+			documentservice.AddDocument(document);
 			model.put("document",document);
-			return new ModelAndView("/uploaddocument.html",model);
+			model.put("publishtime",datep.toString());
+			return new ModelAndView("uploaddocument.html",model);
 		}catch (RuntimeException e){
 			Map<String, Object> model = new HashMap<>();
 			getuser(session,model);
-			return new ModelAndView("/search.html",model);
+			model.put("error","File not uploaded.Please upload again.");
+			return new ModelAndView("uploaddocument.html",model);
 		}
 	}
 
