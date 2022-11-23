@@ -1,6 +1,8 @@
 package org.xzgtemp;
 
 import java.io.File;
+import java.io.IOException;
+
 import javax.sql.DataSource;
 import javax.servlet.ServletContext;
 
@@ -16,8 +18,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -51,7 +55,30 @@ public class AppConfig {
         tomcat.start();
         tomcat.getServer().await();
     }
+/* */
+/* 
+<bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 默认编码 -->
+        <property name="defaultEncoding" value="utf-8" />
+        <!-- 文件大小最大值 -->
+        <property name="maxUploadSize" value="10485760000" />
+        <!-- 内存中的最大值 -->
+        <property name="maxInMemorySize" value="40960" />
+    </bean>
+*/
 
+    @Bean
+    public CommonsMultipartResolver multipartResolver() throws IOException {
+        CommonsMultipartResolver commonsMultipartResolver = new  CommonsMultipartResolver();
+        commonsMultipartResolver.setDefaultEncoding("utf-8");
+        commonsMultipartResolver.setMaxUploadSize((long)(104857600));
+        commonsMultipartResolver.setMaxInMemorySize(0);
+        //commonsMultipartResolver.setUploadTempDir(new FileSystemResource("~/Desktop/temp"));
+        return commonsMultipartResolver;
+    }
+
+ 
 	// -- Mvc configuration ---------------------------------------------------
 
     @Bean

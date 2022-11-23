@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.xzgtemp.entity.User;
@@ -37,6 +38,19 @@ public class BookController{
 		return new ModelAndView("bookdetial.html",model);
 	}
     
+	@PostMapping("/{bid}")
+	public ModelAndView changeBook(
+		@PathVariable("bid") Long bid,
+		@PathVariable("attribute") String Attribute,
+		HttpSession session){
+		if (session.getAttribute(KEY_USER) ==null){
+			return new ModelAndView("redirect:/signin.html");
+		}
+		Map<String, Object> model = new HashMap<>();
+        model.put("user",(User)session.getAttribute(KEY_USER));
+        model.put("book",bookservice.GetBookbyBID(bid));
+		return new ModelAndView("bookdetial.html",model);
+	}
 
     @GetMapping("/{bid}/{cid}")
     public ModelAndView showCopy(HttpSession session){

@@ -1,9 +1,7 @@
 package org.xzgtemp.web;
 
-import java.io.File;
-import java.time.LocalDate;
 import java.util.*;
-import java.sql.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.xzgtemp.entity.Document;
 import org.xzgtemp.entity.User;
@@ -271,6 +270,30 @@ public class UserController {
 	}
 
 	@PostMapping("/uploaddocument")
+	public ModelAndView onfile(
+		@RequestParam("file")MultipartFile file,
+		@RequestParam("title") String title,
+		@RequestParam("author") String author,
+		HttpSession session
+		){
+		try {
+			if (session.getAttribute(KEY_USER) ==null){
+				return new ModelAndView("redirect:/signin.html");
+			}
+			User user = (User) session.getAttribute(KEY_USER);
+			Document document = documentservice.UploadDocument(user,file,title,author);
+			Map<String, Object> model = new HashMap<>();
+			model.put("document",document);
+			return new ModelAndView("uploaddocument.html",model);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Map<String, Object> model = new HashMap<>();
+			model.put("error","Failed uploaded.Please upload again.");
+			return new ModelAndView("uploaddocument.html",model);
+		}
+	}
+   
+	 /* 
 	public ModelAndView doUploadDocument(
 			@RequestParam("file") File file,
 			@RequestParam("author") String author,
@@ -298,6 +321,7 @@ public class UserController {
 			return new ModelAndView("uploaddocument.html",model);
 		}
 	}
+	*/
 
 	@GetMapping("/signout")
 	public String SignOut(HttpSession session) {

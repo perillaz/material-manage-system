@@ -4,10 +4,14 @@ package org.xzgtemp.service;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import org.xzgtemp.entity.Document;
+import org.xzgtemp.entity.User;
 
 @Component
 public class DocumentService {
@@ -31,6 +36,28 @@ public class DocumentService {
         //TODO:从文件读取记录批量导入数据库，使用预编译，参数为定
     }
     
+    public Document UploadDocument(User user,MultipartFile file,
+        String title,
+        String author
+        ){
+        try {
+            String uploader = user.getId();
+            Date date = Date.valueOf(LocalDate.now());
+            String fileoriginname = file.getOriginalFilename();
+            String filetype = fileoriginname.substring(fileoriginname.lastIndexOf("."));
+            String filename = title + "_" + author+ "_" + String.valueOf(System.currentTimeMillis() % 1000000000) + filetype;
+            File file1 =new File("files/" + filename);//创建file对象
+            if(!file1.exists())
+                file1.createNewFile();//在磁盘创建该文件
+            file.transferTo(file1);//将接受的文件存储
+            Document document = new Document(title,author,uploader,date,filename);
+            AddDocument(document);
+            return document; 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void AddDocument(Document document){
         //TODO：增加其他属性
         //String title, String author, String uploaduser, Date uploadtime, String filepath

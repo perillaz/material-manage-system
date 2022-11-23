@@ -74,6 +74,7 @@ map(string,List\<Book\>)需要Book类存在一个无参数的构造函数
 
 - 类与数据库中表的属性名称对应
 - 类中的所有属性有set方法（“set” + 属性名，不能是Set）
+- 
 否则对应的属性值设为null
 
 MYSQL中用CONCAT拼接字符串
@@ -89,3 +90,16 @@ MYSQL中用CONCAT拼接字符串
 
 配置测试类
 
+Polardb和Mysql8.0可以互换，openGauss不行
+
+
+# 22-11-23
+
+第一阶段初步完成，写第二阶段TODO list；
+
+配置依赖：
+[如何用注解把XML配置文件转成Java配置类](https://blog.csdn.net/u013586483/article/details/109761709)
+
+文件的上传功能完成:使用 MultipartFile
+
+文件存放在项目目录下的files文件夹中
