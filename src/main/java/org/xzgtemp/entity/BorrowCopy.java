@@ -2,7 +2,7 @@ package org.xzgtemp.entity;
 
 import java.sql.Date;
 
-public class BorrowBook {
+public class BorrowCopy {
 	private Long id;
 	private String uid;
 	private Long cid;
@@ -11,11 +11,11 @@ public class BorrowBook {
 	private Date duetime;
 	private Boolean finished;
 	
-	public BorrowBook(){
+	public BorrowCopy(){
 
 	}
 
-	public BorrowBook(
+	public BorrowCopy(
 		Long id,
 		String uid,
 		Long cid,

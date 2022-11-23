@@ -19,6 +19,20 @@ public class UserService {
 
 	RowMapper<User> userRowMapper = new BeanPropertyRowMapper<>(User.class);
 
+
+	public void AddStudent(){
+		//TODO:将账户设为student,参数未定,设置之前判断权限
+		
+	}
+
+	public void AddAdmin(){
+		//TODO:将账号设为管理员参数为定,设置之前判断权限
+	}
+
+	public void AddUserFromFIle(){
+        //TODO:从文件读取记录批量导入数据库，使用预编译，参数为定
+    }
+
 	public User GetUserbyID(String id){
 		return jdbcTemplate.queryForObject("SELECT * FROM User WHERE id = ?",
             (ResultSet rs, int rowNum) -> {

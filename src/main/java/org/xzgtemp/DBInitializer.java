@@ -11,7 +11,9 @@ public class DBInitializer {
     
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-
+//TODO:更改初始化过程
+//TODO：增加初始记录
+//TODO：增加触发器
 	@PostConstruct
 	public void init() {
 		//jdbcTemplate.update("DROP TABLE IF EXISTS User");

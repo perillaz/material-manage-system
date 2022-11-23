@@ -27,7 +27,12 @@ public class DocumentService {
 
 
     //---------------AddDocunment---------------------------------
+    public void AddBookFromFIle(){
+        //TODO:从文件读取记录批量导入数据库，使用预编译，参数为定
+    }
+    
     public void AddDocument(Document document){
+        //TODO：增加其他属性
         //String title, String author, String uploaduser, Date uploadtime, String filepath
         KeyHolder holder = new GeneratedKeyHolder();
         String sql = "INSERT INTO Document(title,author,uploader,uploadtime,filepath,downloadtimes) VALUES(?,?,?,?,?,?)";
@@ -99,6 +104,7 @@ public class DocumentService {
     }
 
     //----------ChangDocumentAttribute------------------------------
+    //TODO:合并以下函数(需要同时该html和controller)
     //need pass arguments
     public void ChangeDocumentTitle(Document document){
         if(1 != jdbctemplate.update(

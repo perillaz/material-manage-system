@@ -27,7 +27,13 @@ public class BookService {
 
 
     //----------AddBook------------------------------------------
+    public void AddBookFromFIle(){
+        //TODO:从文件读取记录批量导入数据库，使用预编译，参数为定
+    }
+
+
     public void AddBook(Book book){
+        //TODO：改变参数：去掉isonshelf和whereis,增加其他属性
         //String title, String author, Date publishtime,String publisher,String buyer, Date buytime,
         //String whereis, Boolean isonshelf,Integer borrowtimes, Boolean orderd, String orderuser
         KeyHolder holder = new GeneratedKeyHolder();
@@ -104,6 +110,7 @@ public class BookService {
     }
 
     //----------ChangBookAttribute------------------------------
+    //TODO:合并以下函数(需要同时该html和controller)
     //need to pass arguments
     public void ChangeBookTitle(Book book){
         if(1 != jdbctemplate.update(
