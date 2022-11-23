@@ -47,6 +47,11 @@ public class DownloadDocument {
 		return downloadtime;
 	}
 
+	public void setDownloadtimeCur(){
+
+//TODO: 将downloadtime设置为当前时间
+
+	}
 	public void setDownloadtime(Date downloadtime){
 		this.downloadtime = downloadtime;
 	}

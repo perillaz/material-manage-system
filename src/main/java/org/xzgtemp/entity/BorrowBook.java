@@ -5,7 +5,7 @@ import java.sql.Date;
 public class BorrowBook {
 	private Long id;
 	private String uid;
-	private Long bid;
+	private Long cid;
 	private Date borrowtime;
 	private Date sendbacktime;
 	private Date duetime;
@@ -18,14 +18,14 @@ public class BorrowBook {
 	public BorrowBook(
 		Long id,
 		String uid,
-		Long bid,
+		Long cid,
 		Date borrowtime,
 		Date sendbacktime,
 		Date duetime,
 		Boolean finished){
 			this.id = id;
 			this.uid = uid;
-			this.bid = bid;
+			this.cid = cid;
 			this.borrowtime = borrowtime;
 			this.sendbacktime = sendbacktime;
 			this.duetime = duetime;
@@ -49,12 +49,12 @@ public class BorrowBook {
 		this.uid = uid;
 	}
 
-	public Long getBid() {
-		return bid;
+	public Long getCid() {
+		return cid;
 	}
 
-	public void setBid(Long bid){
-		this.bid = bid;
+	public void setCid(Long cid){
+		this.cid = cid;
 	}
 
 	public Date getBorrowtime() {

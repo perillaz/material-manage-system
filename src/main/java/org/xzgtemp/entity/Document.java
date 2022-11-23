@@ -2,8 +2,9 @@ package org.xzgtemp.entity;
 
 import java.sql.Date;
 
-
+//TODO:增加其它可空属性，参照zlibrary,。。。或其他论文的属性等
 public class Document {
+
 	public final String DocumentFileRootPath = "";
 
 	private Long id;

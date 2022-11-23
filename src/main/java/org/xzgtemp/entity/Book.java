@@ -2,6 +2,8 @@ package org.xzgtemp.entity;
 
 import java.sql.Date;
 
+//TODO：去掉所有isonshelf和whereis相关的语句
+
 public class Book {
 
 	private Long id;
@@ -9,12 +11,13 @@ public class Book {
 	private String author;
 	private String buyer;
 	private Date buytime;
-	private String whereis;
-	private Boolean isonshelf;
+	//private String whereis;
+	//private Boolean isonshelf;
 	private Integer borrowtimes = 0;
 	private Date publishtime;
 	private String publisher;
 	
+	//TODO: 增加其他的类似publishtime这样的可空的属性如isbn等等，参照校图书馆。。。
 	public Book(){
 		
 	}
