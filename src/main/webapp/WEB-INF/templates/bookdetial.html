@@ -1,14 +1,91 @@
-{% if change != null %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>bookdetails</title>
+        <style>
+            .dropdown {
+            position:absolute;
+            top:0px;
+            right:100px;
+            display: inline-block;
+        }
+        </style>
+        <script>
+            function whenborrow(){
+                if(book.isonshelf){
+                    return alert('borrow succeed!')
+                }
+                else{
+                    return alert('failed! this copy has been borrowed')
+                }
+            }
+            function whenreserve(){
+                if(book.reserve){
+                    return alert('failed! this copy has been reserved')
+                }
+                else{
+                    return alert('reserve succeed!')
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="dropdown">
+            <div class="form-group">
+            <button id="name" class="dropbtn">{{ user.name }}</button>
+            <div class="dropdown-content">
+                <a href="/user">User Information</a>
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/signout">Log Out</a>
+            </div>
+            </div>
+        </div>
+        <form method="post" action="/bookdetail">
+            <h2>bookdetails</h2>
+            <article>
+                <header>
+                    <h3>brief information</h3>
+                    <lable>title:</lable>
+                    <p>{{book.title}}</p>
+                    <lable>author:</lable>
+                    <p>{{book.author}}</p>
+                    <lable>abstract:</lable>
+                    <p>abstract</p>
+                </header>
+            </article>
+        </form>
+        <h3>all copys</h3>
+        <table width="100%" border="1" align="center">
+            <thead bgcolor="#949494">
+            <th>Copy</th><th>Publisher</th><th>Publishtime</th><th>Buyer</th><th>Buytime</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Borrow</th><th>Reserve</th><th>modify</th>  
+            </thead>
+            <tbody>
+                {%for copy in book%}
+                <tr>
+                    <td>{{book.id}}</td>
+                    <td>{{book.publish}}</td>
+                    <td>{{book.publishtime}}</td>
+                    <td>{{book.buyer}}</td>
+                    <td>{{book.buytime}}</td>
+                    <td>{{book.whereis}}</td>
+                    <td>{{book.statement}}</td>
+                    <td>{{book.borrowtimes}}</td>
+                    <td><button type="button" onclick="whenborrow()">borrow</button></td>
+                    <td><button type="button" onclick="whenreserve()">reserve</button></td>
+                    <td>modify</td>
+                </tr>
+            </tbody>
 
-修改界面
+
+    </body>
+</html>
 
 
-{% else %}
 
-正常情况下显示信息
 
-图书所有信息
 
-所有copy信息，预约，借阅按钮
 
-{% endif %}
+
+
+
