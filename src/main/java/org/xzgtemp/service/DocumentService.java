@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -81,7 +82,7 @@ public class DocumentService {
     }
 
     //------------GetDocunmentByAttribute-----------------------------
-    public Document GetDocumentsbyDID(Long did){
+    public Document GetDocumentbyDID(Long did){
         String sql = "SELECT * FROM Document WHERE id = ?";
         return jdbctemplate.queryForObject(sql,
                 (ResultSet rs, int rowNum) -> {
@@ -131,60 +132,24 @@ public class DocumentService {
     }
 
     //----------ChangDocumentAttribute------------------------------
-    //TODO:合并以下函数(需要同时该html和controller)
-    //need pass arguments
-    public void ChangeDocumentTitle(Document document){
-        if(1 != jdbctemplate.update(
-            "UPDATA Document SET title = ? WHERE id = ? ",
-            document.getTitle(),
-            document.getId()
-            )
-        ){
-            throw new RuntimeException("Document no found by id.");
-        }
-    }
 
-    public void ChangeDocumentAuthor(Document document){
-        if(1 != jdbctemplate.update(
-            "UPDATA Document SET author = ? WHERE id = ? ",
-            document.getAuthor(),
-            document.getId()
-            )
-        ){
-            throw new RuntimeException("Document no found by id.");
-        }
-    }
-
-    public void ChangeDocumentuploader(Document document){
-        if(1 != jdbctemplate.update(
-                "UPDATA Document SET uploader = ? WHERE id = ? ",
-                document.getUploader(),
+    public void ChangeDocumentAttribute(Document document,String attribute,Object value){
+        try {
+            Field field = document.getClass().getDeclaredField(attribute);
+            field.setAccessible(true);
+            field.set(document,value);
+            if(1 != jdbctemplate.update(
+                "UPDATE Document SET " + attribute + " = ? WHERE id = ? ",
+                //attribute,
+                field.get(document),
                 document.getId()
-            )
-        ){
-            throw new RuntimeException("Document no found by id.");
+                )
+            ){
+                throw new RuntimeException("Failed to change");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e); 
         }
     }
 
-    public void ChangeDocumentfilepath(Document document){
-        if(1 != jdbctemplate.update(
-            "UPDATA Document SET filepath = ? WHERE id = ? ",
-            document.getFilepath(),
-            document.getId()
-            )
-        ){
-            throw new RuntimeException("Document no found by id.");
-        }
-    }
-
-    public void ChangeDocumentdownloadtimes(Document document){
-        if(1 != jdbctemplate.update(
-            "UPDATA Document SET downloadtimes = ? WHERE id = ? ",
-            document.getDownloadtimes(),
-            document.getId()
-            )
-        ){
-            throw new RuntimeException("Document no found by id.");
-        }
-    }
 }

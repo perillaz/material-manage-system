@@ -4,6 +4,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -110,70 +111,23 @@ public class BookService {
     }
 
     //----------ChangBookAttribute------------------------------
-    //TODO:合并以下函数(需要同时该html和controller)
-    //need to pass arguments
-    public void ChangeBookTitle(Book book){
-        if(1 != jdbctemplate.update(
-            "UPDATA Book SET title = ? WHERE id = ? ",
-            book.getTitle(),
-            book.getId()
-            )
-        ){
-            throw new RuntimeException("Book no found by id");
+    public void ChangeBookAttribute(Book book,String attribute,Object value){
+        try {
+            Field field = book.getClass().getDeclaredField(attribute);
+            field.setAccessible(true);
+            field.set(book,value);
+            if(1 != jdbctemplate.update(
+                "UPDATE Book SET " + attribute + " = ? WHERE id = ? ",
+                //attribute,
+                field.get(book),
+                book.getId()
+                )
+            ){
+                throw new RuntimeException("Failed to change");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e); 
         }
     }
-
-    public void ChangeBookAuthor(Book book){
-        if(1 != jdbctemplate.update(
-            "UPDATA Book SET author = ? WHERE id = ? ",
-            book.getAuthor(),
-            book.getId()
-            )
-        ){
-            throw new RuntimeException("Book no found by id");
-        }
-    }
-
-    public void ChangeBookBuyer(Book book){
-        if(1 != jdbctemplate.update(
-            "UPDATA Book SET buyer = ? WHERE id = ? ",
-            book.getBuyer(),
-            book.getId()
-            )
-        ){
-            throw new RuntimeException("Book no found by id");
-        }
-    }
-
-    public void ChangeBookBuytime(Book book){
-        if(1 != jdbctemplate.update(
-            "UPDATA Book SET buytime = ? WHERE id = ? ",
-            book.getBuytime(),
-            book.getId()
-            )
-        ){
-            throw new RuntimeException("Book no found by id");
-        }
-    }
-
-    public void ChangeBookWhereis(Book book){
-        if(1 != jdbctemplate.update(
-            "UPDATA Book SET whereis = ? WHERE id = ? ",
-            book.getWhereis(),
-            book.getId()
-            )
-        ){
-            throw new RuntimeException("Book no found by id");
-        }
-    }
-
-    public void ChangeBookIsonshelf(Book book){
-        if(1 != jdbctemplate.update(
-            "UPDATA Book SET isonshelf = ? WHERE id = ? ",
-            book.getIsonshelf(),
-            book.getId()
-        )){
-            throw new RuntimeException("Book no found by id");
-        }
-    }
+    
 }

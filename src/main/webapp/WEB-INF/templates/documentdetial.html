@@ -1,14 +1,30 @@
-{% if change != null %}
+{% if change == null %}
 
-修改界面
-
-
-{% else %}
-
+{{did}}
+<a href="/documents/{{did}}/change">修改信息</a>
 正常情况下显示信息
 
 文档所有信息
 
 下载链接
+修改界面
+
+{% else %}
+
+{{error}}
+<div class="form-group">
+    <form method="post" action="/documents/{{did}}/change/title">
+        <label>Title : {{document.title}}</label>
+        <input name="value" type="text" class="form-control" placeholder="value">
+        <button type="submit" class="btn btn-outline-primary">修改</button>
+    </form>
+</div>
+<div class="form-group">
+    <form method="post" action="/documents/{{did}}/change/author">
+        <label>Author : {{document.author}}</label>
+        <input name="value" type="text" class="form-control" placeholder="author" >
+        <button type="submit" class="btn btn-outline-primary">修改</button>
+    </form>
+</div>
 
 {% endif %}
