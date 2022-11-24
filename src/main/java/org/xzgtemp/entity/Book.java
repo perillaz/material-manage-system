@@ -16,6 +16,7 @@ public class Book {
 	private Date publishtime;
 	private String publisher;
 	
+	//!!!更改后的book没有idonshelf和whereis属性，这两个是单册（copy）的属性
 	//TODO：去掉所有isonshelf和whereis相关的语句
 	//TODO:关于author的拆分
 	//TODO: 增加其他的类似publishtime这样的可空的属性如isbn等等，参照校图书馆。。。

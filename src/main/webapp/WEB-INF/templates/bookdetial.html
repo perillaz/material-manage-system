@@ -1,30 +1,120 @@
-{% if change == null %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>bookdetails</title>
+        <style>
+            .dropdown {
+            position:absolute;
+            top:0px;
+            right:100px;
+            display: inline-block;
+        }
+        </style>
+        <script>
+            function whenborrow(){
+                if(!book.isborrowed){
+                    return alert('borrow succeed!')
+                }
+                else{
+                    return alert('failed! this copy has been borrowed')
+                }
+            }
+            function whenreserve(){
+                if(book.reserve){
+                    return alert('failed! this copy has been reserved')
+                }
+                else{
+                    return alert('reserve succeed!')
+                }
+            }
+        </script>
+    </head>
+    <body>
+        {% if change == null %}
+        <div class="dropdown">
+            <div class="form-group">
+            <button id="name" class="dropbtn">{{ user.name }}</button>
+            <div class="dropdown-content">
+                <a href="/user">User Information</a>
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/signout">Log Out</a>
+            </div>
+            </div>
+        </div>
+        <form method="post" action="/bookdetail">
+            <h2>bookdetails</h2>
+            <article>
+                <header>
+                    <h3>brief information</h3>
+                    <lable>title:</lable>
+                    <p>{{book.title}}</p>
+                    <lable>author:</lable>
+                    <p>{{book.author}}</p>
+                    <lable>abstract:</lable>
+                    <p>abstract</p>
+                </header>
+            </article>
+        </form>
+        <h3>all copys</h3>
+        <table width="100%" border="1" align="center">
+            <thead bgcolor="#949494">
+            <th>Copy</th><th>Publisher</th><th>Publishtime</th><th>Buyer</th><th>Buytime</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Borrow</th><th>Reserve</th><th>modify</th>  
+            </thead>
+            <tbody>
+                {%for copy in book%} 
+                //不能这么写
+                //book不是一个list
+                //即使是，循环体里也不应该写book.。。。，应该是copy.。。。、、
+                //应该是controller里传一个"List<Copy>"类型的值进来，如copylist
+                //然后 for copy in copylist ，这里的copy是Copy类型的
+                //在循环体中写copy.。。。
+                //publish是指出版，是book的属性，不是copy的属性
+                <tr>
+                    <td>{{book.id}}</td>
+                    <td>{{book.publish}}</td>
+                    <td>{{book.publishtime}}</td>
+                    <td>{{book.buyer}}</td>
+                    <td>{{book.buytime}}</td>
+                    <td>{{book.whereis}}</td>
+                    <td>{{book.statement}}</td>
+                    <td>{{book.borrowtimes}}</td>
+                    //我把copy里的isonshelf改成isborrowed了,顺便把上面函数里也改了
+                    //不过不知到这里怎么写controller
+                    //以及一般不这么在html里写
+                    //功能的实现是service层的事，一般都建议把功能实现和显示分开
+                    <td><button type="button" onclick="whenborrow()">borrow</button></td>
+                    <td><button type="button" onclick="whenreserve()">reserve</button></td>
+                    <td>modify</td>
+                </tr>
+            </tbody>
 
-{{bid}}
-<a href="/books/{{bid}}/change">修改信息</a>
-修改界面
+
+            {% else %}
+
+            <div class="form-group">
+                <form method="post" action="/books/{{did}}/change/title">
+                    <label>Title : {{document.title}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="value">
+                    <button type="submit" class="btn btn-outline-primary">修改</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form method="post" action="/books/{{did}}/change/author">
+                    <label>Author : {{document.author}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="author" >
+                    <button type="submit" class="btn btn-outline-primary">修改</button>
+                </form>
+            </div>
+            {% endif %}
+    </body>
+</html>
 
 
-正常情况下显示信息
 
-图书所有信息
 
-所有copy信息，预约，借阅按钮
-{% else %}
 
-<div class="form-group">
-    <form method="post" action="/books/{{did}}/change/title">
-        <label>Title : {{document.title}}</label>
-        <input name="value" type="text" class="form-control" placeholder="value">
-        <button type="submit" class="btn btn-outline-primary">修改</button>
-    </form>
-</div>
-<div class="form-group">
-    <form method="post" action="/books/{{did}}/change/author">
-        <label>Author : {{document.author}}</label>
-        <input name="value" type="text" class="form-control" placeholder="author" >
-        <button type="submit" class="btn btn-outline-primary">修改</button>
-    </form>
-</div>
 
-{% endif %}
+
+
+
