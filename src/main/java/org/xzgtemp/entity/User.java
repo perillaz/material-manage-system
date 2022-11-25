@@ -5,6 +5,9 @@ public class User {
 	private String id;
 	private String name;
 	private String password;
+	private String usertype = "visitor";
+	private boolean setadmini = false;
+	private boolean setstudent = false;
 
 	public User(){
 		
@@ -15,6 +18,7 @@ public class User {
 		setName(name);
 		setPassword(password);
 	}
+
 
 	public String getId() {
 		return id;
@@ -47,5 +51,22 @@ public class User {
 			throw new IllegalArgumentException("invalid password value");
 		}
 		this.password = password;
+	}
+
+	public String getType() {  return usertype;  }
+
+	public void setAdmini(){
+		this.usertype="admini";
+	}
+	public void setStudent(){
+		this.usertype="student";
+	}
+
+	public boolean getPermission_setAdmini(){  return setadmini;  }
+	public boolean getPermission_setStudent(){  return setstudent;  }
+
+	public void setPermission_setAdmini(){  this.setadmini = true;  }
+	public void setPermission_setStudent(){
+		this.setstudent = true;
 	}
 }
