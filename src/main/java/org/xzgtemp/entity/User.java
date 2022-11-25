@@ -53,20 +53,28 @@ public class User {
 		this.password = password;
 	}
 
-	public String getType() {  return usertype;  }
+	public String getUsertype() {  return usertype;  }
 
-	public void setAdmini(){
-		this.usertype="admini";
+	public void setUsertype(String usertype){
+		if(usertype == ""){
+			throw new IllegalArgumentException("invalid usertype value");
+		}
+		this.usertype=usertype;
 	}
-	public void setStudent(){
-		this.usertype="student";
+
+	public boolean getSetadmini(){  return setadmini;  }
+	public boolean getSetstudent(){  return setstudent;  }
+
+	public void setSetadmini(Boolean bool){
+		if(bool == null){
+			throw new IllegalArgumentException("invalid set value");
+		}
+		this.setadmini = bool;
 	}
-
-	public boolean getPermission_setAdmini(){  return setadmini;  }
-	public boolean getPermission_setStudent(){  return setstudent;  }
-
-	public void setPermission_setAdmini(){  this.setadmini = true;  }
-	public void setPermission_setStudent(){
-		this.setstudent = true;
+	public void setSetstudent(Boolean bool){
+		if(bool == null){
+			throw new IllegalArgumentException("invalid set value");
+		}
+		this.setstudent = bool;
 	}
 }
