@@ -59,7 +59,7 @@ public class BookController{
 		return new ModelAndView("bookdetial.html",model);
 	}
 
-	@PostMapping("/change/{attribute}")
+	@PostMapping("/{bid}/change/{attribute}")
 	public ModelAndView changeDocumentInfo(
 		@PathVariable("bid") Long bid,
 		@PathVariable("attribute") String attribute,

@@ -31,8 +31,6 @@ public class Book {
 		String author,
 		String buyer,
 		Date buytime,
-		String whereis,
-		Boolean isonshelf
 	) {
 		setTitle(title);
 		setAuthor(author);
