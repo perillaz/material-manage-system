@@ -38,18 +38,17 @@ public class BookService {
         //String title, String author, Date publishtime,String publisher,String buyer, Date buytime,
         //String whereis, Boolean isonshelf,Integer borrowtimes, Boolean orderd, String orderuser
         KeyHolder holder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO Book(title,author,buyer,buytime,whereis,isonshelf,borrowtimes,publishtime,publisher) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Book(title,author,copyamount,borrowcopys,allborrowtimes,publishtime,publisher,brief_info) VALUES(?,?,?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
                     PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                     ps.setObject(1,book.getTitle());
                     ps.setObject(2,book.getAuthor());
-                    ps.setObject(3,book.getBuyer());
-                    ps.setObject(4,book.getBuytime());
-                    ps.setObject(5,book.getWhereis());
-                    ps.setObject(6,book.getIsonshelf());
-                    ps.setObject(7,book.getBorrowtimes());
-                    ps.setObject(8,book.getPublishtime());
-                    ps.setObject(9,book.getPublisher());
+                    ps.setObject(3,book.getCopyamount());
+                    ps.setObject(4,book.getBorrowcopys());
+                    ps.setObject(5,book.getAllborrowtimes());
+                    ps.setObject(6,book.getPublishtime());
+                    ps.setObject(7,book.getPublisher());
+                    ps.setObject(8,book.getBrief_info());
                     return ps;
                 },
                 holder)
@@ -68,13 +67,12 @@ public class BookService {
                         rs.getLong("id"),
                         rs.getString("title"),
                         rs.getString("author"),
-                        rs.getString("buyer"),
-                        rs.getDate("buytime"),
-                        rs.getString("whereis"),
-                        rs.getBoolean("isonshelf"),
-                        rs.getInt("borrowtimes"),
+                        rs.getInt("copyamount"),
+                        rs.getInt("borrowcopys"),
+                        rs.getInt("allborrowtimes"),
                         rs.getDate("publishtime"),
-                        rs.getString("publisher")
+                        rs.getString("publisher"),
+                        rs.getString("brief_info")
                     );
                 }
                 ,bid
@@ -129,5 +127,8 @@ public class BookService {
             throw new RuntimeException(e); 
         }
     }
+    
+    
+    
     
 }

@@ -7,17 +7,13 @@ public class Book {
 	private Long id;
 	private String title;
 	private String author;
-	private String buyer;
-	private Date buytime;
 	private Integer copyamount;
-	//private String whereis;
-	//private Boolean isonshelf;
-	private Integer borrowtimes = 0;
+	private Integer borrowcopys;
+	private Integer allborrowtimes=0;  //所有copys的借阅次数
 	private Date publishtime;
 	private String publisher;
+	private String brief_info;
 	
-	//!!!更改后的book没有idonshelf和whereis属性，这两个是单册（copy）的属性
-	//TODO：去掉所有isonshelf和whereis相关的语句
 	//TODO:关于author的拆分
 	//TODO: 增加其他的类似publishtime这样的可空的属性如isbn等等，参照校图书馆。。。
 	//TODO：增加copyamount相关函数
@@ -27,104 +23,100 @@ public class Book {
 	}
 
 	public Book(
-		String title,
-		String author,
-		String buyer,
-		Date buytime,
-	) {
-		setTitle(title);
-		setAuthor(author);
-		setBuyer(buyer);
-		setBuytime(buytime);
-		setWhereis(whereis);
-		setIsonshelf(isonshelf);
-		this.borrowtimes=0;
-	}
-
-	public Book(
-		String title,
-		String author,
-		String buyer,
-		Date buytime,
-		String whereis,
-		Boolean isonshelf,
-		Date publishtime,
-		String publisher
-	) {
-		setTitle(title);
-		setAuthor(author);
-		setBuyer(buyer);
-		setBuytime(buytime);
-		setWhereis(whereis);
-		setIsonshelf(isonshelf);
-		setPublishtime(publishtime);
-		setPublisher(publisher);
-	}
-
-	public Book(
 		Long id,
 		String title,
 		String author,
-		String buyer,
-		Date buytime,
-		String whereis,
-		Boolean isonshelf,
-		Integer borrowtimes
+		Integer copyamount,
+		Integer borrowcopys
 	) {
 		setId(id);
 		setTitle(title);
 		setAuthor(author);
-		setBuyer(buyer);
-		setBuytime(buytime);
-		setWhereis(whereis);
-		setIsonshelf(isonshelf);
-		setBorrowtimes(borrowtimes);
+		setCopyamount(copyamount);
+		this.borrowcopys=0;
+	}
+
+	public Book(
+			Long id,
+			String title,
+			String author,
+			Integer copyamount,
+			Integer borrowcopys,
+			String brief_info
+		) {
+			setId(id);
+			setTitle(title);
+			setAuthor(author);
+			setCopyamount(copyamount);
+			setBrief_info(brief_info);
+			this.borrowcopys=0;
+			//this.borrowtimes=0;
+		}
+
+	public Book(
+			Long id,
+			String title,
+			String author,
+			Integer copyamount,
+			Integer borrowcopys,
+			Date publishtime,
+			String publisher
+	) {
+		setId(id);
+		setTitle(title);
+		setAuthor(author);
+		setCopyamount(copyamount);
+		this.borrowcopys=0;
+		setPublisher(publisher);
+		setPublishtime(publishtime);
+		
+		
 	}
 	
 	public Book(
-		String title,
-		String author,
-		String buyer,
-		Date buytime,
-		String whereis,
-		Boolean isonshelf,
-		Integer borrowtimes,
-		Date publishtime,
-		String publisher
-	) {
-		setTitle(title);
-		setAuthor(author);
-		setBuyer(buyer);
-		setBuytime(buytime);
-		setWhereis(whereis);
-		setIsonshelf(isonshelf);
-		setBorrowtimes(borrowtimes);
-		setPublishtime(publishtime);
-		setPublisher(publisher);
-	}
-	public Book(
-		Long id,
-		String title,
-		String author,
-		String buyer,
-		Date buytime,
-		String whereis,
-		Boolean isonshelf,
-		Integer borrowtimes,
-		Date publishtime,
-		String publisher
+			Long id,
+			String title,
+			String author,
+			Integer copyamount,
+			Integer borrowcopys,
+			Date publishtime,
+			String publisher,
+			String brief_info
 	) {
 		setId(id);
 		setTitle(title);
 		setAuthor(author);
-		setBuyer(buyer);
-		setBuytime(buytime);
-		setWhereis(whereis);
-		setIsonshelf(isonshelf);
-		setBorrowtimes(borrowtimes);
-		setPublishtime(publishtime);
+		setCopyamount(copyamount);
+		this.borrowcopys=0;
 		setPublisher(publisher);
+		setPublishtime(publishtime);
+		setBrief_info(brief_info);
+		
 	}
+	
+	public Book(
+			Long id,
+			String title,
+			String author,
+			Integer copyamount,
+			Integer borrowcopys,
+			Integer allborrowtimes,
+			Date publishtime,
+			String publisher,
+			String brief_info
+	) {
+		setId(id);
+		setTitle(title);
+		setAuthor(author);
+		setCopyamount(copyamount);
+		this.borrowcopys=0;
+		setPublisher(publisher);
+		setPublishtime(publishtime);
+		setBrief_info(brief_info);
+		
+	}
+	
+	
 	
 
 	public Long getId(){
@@ -156,46 +148,24 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author=author;
 	}
-	public String getBuyer() {
-		return buyer;
+	public Integer getCopyamount() {
+		return copyamount;
 	}
-
-	public void setBuyer(String buyer) {
-		this.buyer=buyer;
+	public void setCopyamount(Integer copyamount) {
+		this.copyamount=copyamount;
 	}
-
-	public Date getBuytime() {
-		return buytime;
+	public String getBrief_info() {
+		return brief_info;
 	}
-
-	public void setBuytime(Date buytime) {
-		this.buytime=buytime;
+	public void setBrief_info(String brief_info) {
+		this.brief_info=brief_info;
 	}
-
-	public String getWhereis() {
-		return whereis;
+	public Integer getBorrowcopys() {
+		return borrowcopys;
 	}
-
-	public void setWhereis(String whereis ){
-		this.whereis = whereis;
+	public void setBorrowcopys(Integer borrowcopys) {
+		this.borrowcopys=borrowcopys;
 	}
-
-	public Boolean getIsonshelf() {
-		return isonshelf;
-	}
-
-	public void setIsonshelf(Boolean isonshelf) {
-		this.isonshelf=isonshelf;
-	}
-
-	public Integer getBorrowtimes() {
-		return borrowtimes;
-	}
-
-	public void setBorrowtimes(Integer borrowtimes) {
-		this.borrowtimes=borrowtimes;
-	}
-
 	public Date getPublishtime() {
 		return publishtime;
 	}
@@ -211,6 +181,17 @@ public class Book {
 	public void setPublisher(String publisher) {
 		this.publisher=publisher;
 	}
+	public Integer getAllborrowtimes() {
+		return allborrowtimes;
+	}
+	public void setAllborrowtimes(Integer allborrowtimes) {
+		this.allborrowtimes=allborrowtimes;
+	}
+	
+	
+	
+
+	
     
 }
 
