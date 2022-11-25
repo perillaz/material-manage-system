@@ -4,24 +4,46 @@
 
 ```sql
 CREATE TABLE IF NOT EXISTS User(
-    u_id VARCHAR(13) PRIMARY KEY,
-    u_name VARCHAR(30) NOT NULL,
-    u_password VARCHAR(30) NOT NULL
+    id VARCHAR(13) PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    password VARCHAR(30) NOT NULL,
+    usertype VARCHAR (10) NOT NULL DEFAULT 'visitor',
+    setadmini BOOLEAN NOT NULL DEFAULT 0,
+    setstudent BOOLEAN NOT NULL DEFAULT 0
 )
 ```
 
 #### Book
 ```sql
 CREATE TABLE IF NOT EXISTS Book(
-    b_id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    b_title VARCHAR(100) NOT NULL,
-    b_author VARCHAR(100) NOT NULL,
-    b_buyer VARCHAR(13) NOT NULL,
-    b_whereis VARCHAR(100) NOT NULL,
-    b_isonshelf BOOLEAN NOT NULL,
-    b_borrowtimes INTEGER NOT NULL,
-    b_publishtime Date,
-    b_publisher VARCHAR(100)
+    id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    title VARCHAR(50) NOT NULL,
+    author VARCHAR(50) NOT NULL,
+    copyamount INTEGER NOT NULL DEFAULT 0,
+    borrowedcopys INTEGER NOT NULL DEFAULT 0,
+    allborrowtimes INTEGER NOT NULL DEFAULT 0,
+    isbn VARCHAR(13),
+    edition VARCHAR(30),
+    publishtime Date,
+    publisher VARCHAR(30),
+    briefinfo VARCHAR(1000)
+)
+```
+
+#### Copy
+
+```sql
+CREATE TABLE IF NOT EXISTS Copy(
+    id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    bid BIGINT NOT NULL,
+    btitle VARCHAR(50) NOT NULL,
+    loc VARCHAR(50) NOT NULL,
+    isborrowed BOOLEAN NOT NULL DEFAULT 0,
+    isreserved BOOLEAN NOT NULL DEFAULT 0,
+    buyerid VARCHAR(13) NOT NULL,
+    buyername VARCHAR(30) NOT NULL,
+    buytime Date NOT NULL,
+    borrowtimes INTEGER NOT NULL DEFAULT 0
 )
 ```
 
@@ -29,28 +51,32 @@ CREATE TABLE IF NOT EXISTS Book(
 
 ```sql
 CREATE TABLE IF NOT EXISTS Document(
-    d_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    d_title VARCHAR(30) NOT NULL,
-    d_author VARCHAR(30) NOT NULL,
-    d_uploaduser VARCHAR(13) NOT NULL,
-    d_uploadtime DATE NOT NULL,
-    d_filepath VARCHAR(100) NOT NULL,
-    d_downloadtimes INTEGER NOT NULL
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(30) NOT NULL,
+    author VARCHAR(30) NOT NULL,
+    uploaderid VARCHAR(13) NOT NULL,
+    uploadertitle VARCHAR(30) NOT NULL,
+    uploadtime DATE NOT NULL,
+    filepath VARCHAR(100) NOT NULL,
+    downloadtimes INTEGER NOT NULL,
+    doi VARCHAR(20),
+    literature VARCHAR(30)
 )
-
 ```
 
-#### BorrowBook
+#### BorrowCopy
 
 ```sql
-CREATE TABLE IF NOT EXISTS BorrowBook(
-    bb_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    bb_uid VARCHAR(20) NOT NULL,
-    bb_bid BIGINT NOT NULL,
-    bb_borrowtime DATE NOT NULL,
-    bb_sendbacktime DATE NOT NULL,
-    bb_duetime DATE NOT NULL,
-    bb_finished BOOLEAN NOT NULL
+CREATE TABLE IF NOT EXISTS BorrowCopy(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    uid VARCHAR(20) NOT NULL,
+    cid BIGINT NOT NULL,
+    bid BIGINT NOT NULL,
+    btitle VARCHAR(50) NOT NULL,
+    borrowtime DATE NOT NULL,
+    sendbacktime DATE NOT NULL,
+    duetime DATE NOT NULL,
+    finished BOOLEAN NOT NULL
 )
 ```
 
@@ -58,9 +84,75 @@ CREATE TABLE IF NOT EXISTS BorrowBook(
 
 ```sql
 CREATE TABLE IF NOT EXISTS DownloadDocument(
-    dd_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    dd_uid VARCHAR(13) NOT NULL,
-    dd_did BIGINT NOT NULL,
-    dd_downloadtime DATE NOT NULL
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    uid VARCHAR(13) NOT NULL,
+    did BIGINT NOT NULL,
+    dtitle VARCHAR(50) NOT NULL,
+    downloadtime DATE NOT NULL
 )
+```
+
+
+### Trigger
+
+#### BookTitle
+
+```mysql
+DELIMITER $
+CREATE TRIGGER BookTitleSynchronization 
+AFTER UPDATE ON Book  
+FOR EACH ROW 
+IF NEW.title<>OLD.title THEN
+BEGIN
+UPDATE Copy SET btitle = NEW.title WHERE bid = NEW.id;
+UPDATE BorrowCopy SET btitle = NEW.title 
+WHERE bid = NEW.id;
+END ;
+END IF $
+DELIMITER;
+```
+#### DocumentTitle
+
+```sql
+DELIMITER $
+CREATE TRIGGER DocumentTitleSynchronization
+AFTER UPDATE ON Document
+FOR EACH ROW 
+IF NEW.title<>OLD.title THEN
+UPDATE DownloadDocument SET documenttitle = NEW.title
+WHERE did = NEW.id;
+END IF $
+DELIMITER;
+```
+
+#### UserName
+```sql
+DELIMITER $
+CREATE TRIGGER UserNameSynchronization
+AFTER UPDATE ON User
+FOR EACH ROW 
+IF NEW.name<>OLD.name THEN
+BEGIN 
+UPDATE Book SET buyername = NEW.name
+WHERE buyerid = NEW.id;
+UPDATE Document SET uploadername = NEW.name
+WHERE uploader = NEW.id;
+END ;
+END IF $
+DELIMITER
+```
+
+#### BorrowBook
+```sql
+DELIMITER $
+CREATE TRIGGER BorrowCopyCount
+AFTER INSERT ON BorrowCopy
+FOR EACH ROW 
+BEGIN 
+UPDATE Book SET allborrowtimes = allborrowtimes + 1
+WHERE id = NEW.bid;
+UPDATE Copy SET borrowtimes = borrowtimes + 1
+WHERE id = NEW.cid;
+END $
+DELIMITER
 ```

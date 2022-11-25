@@ -5,10 +5,12 @@ import java.sql.Date;
 public class Copy {
     private Long id;
     private Long bid;
+	private String btitle;
     private String loc;
     private Boolean isborrowed;
     private Boolean isreserved;
-    private String buyer;
+    private String buyerid;
+    private String buyername;
     private Date buytime;
     private Integer borrowtimes;
 
@@ -16,44 +18,21 @@ public class Copy {
     	
     }
     
-    public Copy(
-    		Long id,
-    		Long bid,
-    		String loc,
-    		Boolean isborrowed,
-    		Boolean isreserved,
-    		Integer borrowtimes
-    		
-    		) {
-    	setId(id);
-    	bid=getBid();
-    	setLoc(loc);
-    	setIsborrowed(isborrowed);
-    	setIsreserved(isreserved);
-    	this.borrowtimes=0;
+	public Copy(Long id, Long bid, String btitle, String loc, Boolean isborrowed, Boolean isreserved, String buyerid,
+            String buyername, Date buytime, Integer borrowtimes) {
+        this.id = id;
+        this.bid = bid;
+        this.btitle = btitle;
+        this.loc = loc;
+        this.isborrowed = isborrowed;
+        this.isreserved = isreserved;
+        this.buyerid = buyerid;
+        this.buyername = buyername;
+        this.buytime = buytime;
+        this.borrowtimes = borrowtimes;
     }
-    
-    public Copy(
-    		Long id,
-    		Long bid,
-    		String loc,
-    		Boolean isborrowed,
-    		Boolean isreserved,
-    		Integer borrowtimes,
-    		String buyer,
-    		Date buytime
-    		
-    		) {
-    	setId(id);
-    	bid=getBid();
-    	setLoc(loc);
-    	setIsborrowed(isborrowed);
-    	setIsreserved(isreserved);
-    	this.borrowtimes=0;
-    	setBuyer(buyer);
-    	setBuytime(buytime);
-    }
-    
+
+
     public Long getId() {
     	return id;
     }
@@ -66,7 +45,19 @@ public class Copy {
     public Long getBid() {
     	return bid;
     }
+    public void setBid(Long bid) {
+    	
+    	this.bid=bid;
+    }
     
+	public String getBtitle() {
+		return btitle;
+	}
+
+	public void setBtitle(String btitle) {
+		this.btitle = btitle;
+	}
+	
     public String getLoc() {
     	return loc;
     }
@@ -91,18 +82,29 @@ public class Copy {
     public void setBorrowtimes(Integer borrowtimes) {
     	this.borrowtimes=borrowtimes;
     }
-    public String getBuyer() {
-    	return buyer;
+    public String getBuyerid() {
+    	return buyerid;
     }
-    public void setBuyer(String buyer) {
-    	this.buyer=buyer;
+    public void setBuyerid(String buyerid) {
+    	this.buyerid=buyerid;
     }
+
+    public String getBuyername() {
+        return buyername;
+    }
+
+    public void setBuyername(String buyername) {
+        this.buyername = buyername;
+    }
+
     public Date getBuytime() {
     	return buytime;
     }
     public void setBuytime(Date buytime) {
     	this.buytime=buytime;
     }
+
+
 }
 
 

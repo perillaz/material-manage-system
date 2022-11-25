@@ -6,17 +6,19 @@ public class DownloadDocument {
 	private Long id;
 	private String uid;
 	private Long did;
+	private String dtitle;
 	private Date downloadtime;
 	
 	public DownloadDocument(){
 		
 	}
 
-	public DownloadDocument(Long id,String uid,Long did,Date downloadtime) {
-		this.id=id;
-		this.did=did;
-		this.uid=uid;
-		this.downloadtime=downloadtime;
+	public DownloadDocument(Long id, String uid, Long did, String dtitle, Date downloadtime) {
+		this.id = id;
+		this.uid = uid;
+		this.did = did;
+		this.dtitle = dtitle;
+		this.downloadtime = downloadtime;
 	}
 	
 	public Long getId() {
@@ -41,6 +43,15 @@ public class DownloadDocument {
 
 	public void setDid(Long did){
 		this.did = did;
+	}
+
+	public String getDtitle() {
+		return dtitle;
+	}
+
+
+	public void setDtitle(String dtitle) {
+		this.dtitle = dtitle;
 	}
 
 	public Date getDownloadtime(){

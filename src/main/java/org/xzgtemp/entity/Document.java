@@ -2,7 +2,6 @@ package org.xzgtemp.entity;
 
 import java.sql.Date;
 
-//TODO:增加其它可空属性，参照zlibrary,。。。或其他论文的属性等
 public class Document {
 
 	private Long id;
@@ -12,9 +11,26 @@ public class Document {
 	private Date uploadtime;
 	private String filepath;
 	private Integer downloadtimes = 0;
+	private String doi;
+	private String literature;//期刊或会议名
 
 	public Document(){
 	}
+
+	
+	public Document(Long id, String title, String author, String uploader, Date uploadtime, String filepath,
+			Integer downloadtimes, String doi, String literature) {
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.uploader = uploader;
+		this.uploadtime = uploadtime;
+		this.filepath = filepath;
+		this.downloadtimes = downloadtimes;
+		this.doi = doi;
+		this.literature = literature;
+	}
+
 
 	public Document(
 		String title,
@@ -142,4 +158,22 @@ public class Document {
 	public void setDownloadtimes(Integer downloadtimes) {
 		this.downloadtimes=downloadtimes;
 	}
+
+	public String getDoi() {
+		return doi;
+	}
+
+	public void setDoi(String doi) {
+		this.doi = doi;
+	}
+
+	public String getLiterature() {
+		return literature;
+	}
+
+	public void setLiterature(String literature) {
+		this.literature = literature;
+	}
+
+	
 }

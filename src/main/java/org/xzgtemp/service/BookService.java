@@ -34,21 +34,22 @@ public class BookService {
 
 
     public void AddBook(Book book){
-        //TODO：改变参数：去掉isonshelf和whereis,增加其他属性
         //String title, String author, Date publishtime,String publisher,String buyer, Date buytime,
         //String whereis, Boolean isonshelf,Integer borrowtimes, Boolean orderd, String orderuser
         KeyHolder holder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO Book(title,author,copyamount,borrowcopys,allborrowtimes,publishtime,publisher,brief_info) VALUES(?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Book(title,author,copyamount,borrowedcopys,allborrowtimes,isbn,edition,publishtime,publisher,briefinfo) VALUES(?,?,?,?,?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
                     PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                     ps.setObject(1,book.getTitle());
                     ps.setObject(2,book.getAuthor());
                     ps.setObject(3,book.getCopyamount());
-                    ps.setObject(4,book.getBorrowcopys());
+                    ps.setObject(4,book.getBorrowedcopys());
                     ps.setObject(5,book.getAllborrowtimes());
-                    ps.setObject(6,book.getPublishtime());
-                    ps.setObject(7,book.getPublisher());
-                    ps.setObject(8,book.getBrief_info());
+                    ps.setObject(6,book.getIsbn());
+                    ps.setObject(7,book.getEdition());
+                    ps.setObject(8,book.getPublishtime());
+                    ps.setObject(9,book.getPublisher());
+                    ps.setObject(10,book.getBriefinfo());
                     return ps;
                 },
                 holder)

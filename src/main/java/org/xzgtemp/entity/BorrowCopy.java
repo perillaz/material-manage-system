@@ -6,6 +6,8 @@ public class BorrowCopy {
 	private Long id;
 	private String uid;
 	private Long cid;
+	private Long bid;
+	private String btitle;
 	private Date borrowtime;
 	private Date sendbacktime;
 	private Date duetime;
@@ -55,6 +57,22 @@ public class BorrowCopy {
 
 	public void setCid(Long cid){
 		this.cid = cid;
+	}
+
+	public Long getBid() {
+		return bid;
+	}
+
+	public void setBid(Long bid) {
+		this.bid = bid;
+	}
+
+	public String getBtitle() {
+		return btitle;
+	}
+
+	public void setBtitle(String btitle) {
+		this.btitle = btitle;
 	}
 
 	public Date getBorrowtime() {

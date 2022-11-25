@@ -60,10 +60,9 @@ public class DocumentService {
     }
 
     public void AddDocument(Document document){
-        //TODO：增加其他属性
         //String title, String author, String uploaduser, Date uploadtime, String filepath
         KeyHolder holder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO Document(title,author,uploader,uploadtime,filepath,downloadtimes) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO Document(title,author,uploader,uploadtime,filepath,downloadtimes,doi,literature) VALUES(?,?,?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
                     PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                     ps.setObject(1,document.getTitle());
@@ -72,6 +71,8 @@ public class DocumentService {
                     ps.setObject(4,document.getUploadtime());
                     ps.setObject(5,document.getFilepath());
                     ps.setObject(6,document.getDownloadtimes());
+                    ps.setObject(6,document.getDoi());
+                    ps.setObject(6,document.getLiterature());
                     return ps;
                 },
                 holder)

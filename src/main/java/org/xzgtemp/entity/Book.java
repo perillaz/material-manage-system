@@ -8,18 +8,31 @@ public class Book {
 	private String title;
 	private String author;
 	private Integer copyamount;
-	private Integer borrowcopys;
+	private Integer borrowedcopys = 0;
 	private Integer allborrowtimes=0;  //所有copys的借阅次数
+	private String isbn;
+	private String edition;
 	private Date publishtime;
 	private String publisher;
-	private String brief_info;
+	private String briefinfo;
 	
-	//TODO:关于author的拆分
-	//TODO: 增加其他的类似publishtime这样的可空的属性如isbn等等，参照校图书馆。。。
-	//TODO：增加copyamount相关函数
-	//TODO:改变构造函数,设置buytime,borrowtime等为初始值
 	public Book(){
 		
+	}
+
+	public Book(Long id, String title, String author, Integer copyamount, Integer borrowedcopys, Integer allborrowtimes,
+			String isbn, String edition, Date publishtime, String publisher, String briefinfo) {
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.copyamount = copyamount;
+		this.borrowedcopys = borrowedcopys;
+		this.allborrowtimes = allborrowtimes;
+		this.isbn = isbn;
+		this.edition = edition;
+		this.publishtime = publishtime;
+		this.publisher = publisher;
+		this.briefinfo = briefinfo;
 	}
 
 	public Book(
@@ -27,13 +40,13 @@ public class Book {
 		String title,
 		String author,
 		Integer copyamount,
-		Integer borrowcopys
+		Integer borrowedcopys
 	) {
 		setId(id);
 		setTitle(title);
 		setAuthor(author);
 		setCopyamount(copyamount);
-		this.borrowcopys=0;
+		setBorrowedcopys(borrowedcopys);
 	}
 
 	public Book(
@@ -41,16 +54,15 @@ public class Book {
 			String title,
 			String author,
 			Integer copyamount,
-			Integer borrowcopys,
-			String brief_info
+			Integer borrowedcopys,
+			String briefinfo
 		) {
 			setId(id);
 			setTitle(title);
 			setAuthor(author);
 			setCopyamount(copyamount);
-			setBrief_info(brief_info);
-			this.borrowcopys=0;
-			//this.borrowtimes=0;
+			setBriefinfo(briefinfo);
+			setBorrowedcopys(borrowedcopys);
 		}
 
 	public Book(
@@ -58,7 +70,7 @@ public class Book {
 			String title,
 			String author,
 			Integer copyamount,
-			Integer borrowcopys,
+			Integer borrowedcopys,
 			Date publishtime,
 			String publisher
 	) {
@@ -66,10 +78,9 @@ public class Book {
 		setTitle(title);
 		setAuthor(author);
 		setCopyamount(copyamount);
-		this.borrowcopys=0;
+		setBorrowedcopys(borrowedcopys);
 		setPublisher(publisher);
 		setPublishtime(publishtime);
-		
 		
 	}
 	
@@ -78,19 +89,19 @@ public class Book {
 			String title,
 			String author,
 			Integer copyamount,
-			Integer borrowcopys,
+			Integer borrowedcopys,
 			Date publishtime,
 			String publisher,
-			String brief_info
+			String briefinfo
 	) {
 		setId(id);
 		setTitle(title);
 		setAuthor(author);
 		setCopyamount(copyamount);
-		this.borrowcopys=0;
+		setBorrowedcopys(borrowedcopys);
 		setPublisher(publisher);
 		setPublishtime(publishtime);
-		setBrief_info(brief_info);
+		setBriefinfo(briefinfo);
 		
 	}
 	
@@ -99,30 +110,26 @@ public class Book {
 			String title,
 			String author,
 			Integer copyamount,
-			Integer borrowcopys,
+			Integer borrowedcopys,
 			Integer allborrowtimes,
 			Date publishtime,
 			String publisher,
-			String brief_info
+			String briefinfo
 	) {
 		setId(id);
 		setTitle(title);
 		setAuthor(author);
 		setCopyamount(copyamount);
-		this.borrowcopys=0;
+		setBorrowedcopys(borrowedcopys);
 		setPublisher(publisher);
 		setPublishtime(publishtime);
-		setBrief_info(brief_info);
+		setBriefinfo(briefinfo);
 		
 	}
-	
-	
-	
 
 	public Long getId(){
 		return id;
 	}
-
 	public void setId(Long id){
 		if(id <= 0){
 			throw new IllegalArgumentException("invalid id value");
@@ -130,11 +137,9 @@ public class Book {
 		this.id = id;
 	}
 
-
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		if(title == ""){
 			throw new IllegalArgumentException("invalid title value");
@@ -148,23 +153,44 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author=author;
 	}
+
 	public Integer getCopyamount() {
 		return copyamount;
 	}
 	public void setCopyamount(Integer copyamount) {
 		this.copyamount=copyamount;
 	}
-	public String getBrief_info() {
-		return brief_info;
+
+
+	public Integer getBorrowedcopys() {
+		return borrowedcopys;
 	}
-	public void setBrief_info(String brief_info) {
-		this.brief_info=brief_info;
+	public void setBorrowedcopys(Integer borrowedcopys) {
+		this.borrowedcopys=borrowedcopys;
 	}
-	public Integer getBorrowcopys() {
-		return borrowcopys;
+
+
+	public Integer getAllborrowtimes() {
+		return allborrowtimes;
 	}
-	public void setBorrowcopys(Integer borrowcopys) {
-		this.borrowcopys=borrowcopys;
+	public void setAllborrowtimes(Integer allborrowtimes) {
+		this.allborrowtimes=allborrowtimes;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public String getEdition() {
+		return edition;
+	}
+
+	public void setEdition(String edition) {
+		this.edition = edition;
 	}
 	public Date getPublishtime() {
 		return publishtime;
@@ -181,17 +207,13 @@ public class Book {
 	public void setPublisher(String publisher) {
 		this.publisher=publisher;
 	}
-	public Integer getAllborrowtimes() {
-		return allborrowtimes;
+	
+	public String getBriefinfo() {
+		return briefinfo;
 	}
-	public void setAllborrowtimes(Integer allborrowtimes) {
-		this.allborrowtimes=allborrowtimes;
+	public void setBriefinfo(String briefinfo) {
+		this.briefinfo=briefinfo;
 	}
-	
-	
-	
 
-	
-    
 }
 
