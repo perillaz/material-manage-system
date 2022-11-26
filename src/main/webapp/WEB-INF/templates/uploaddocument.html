@@ -7,41 +7,29 @@
 <body>
 <form method="post" action="/uploaddocument" enctype='multipart/form-data'>
     <div class="form-group">
-        {% if document == null %}
-        <p>{{ user.id }}</p>
-        <label>file :</label>
-        <input name="file" type="file">
-        <lable>title :</lable>
-        <input name="title" type="text">
-        <lable>author :</lable>
-        <input name="author" type="text">
-        <br><br>
+        <div>
+            <label>file :</label>
+            <input name="file" type="file">
+        </div>
+        <div>
+            <lable>title :</lable>
+            <input name="title" type="text">
+        </div>
+        <div>
+            <lable>author :</lable>
+            <input name="author" type="text">
+        </div>
+        <div>
+            <lable>DOI :</lable>
+            <input name="doi" type="text">
+        </div>
+        <div>
+            <lable>literature :</lable>
+            <input name="literature" type="text">
+        </div>
+        <div>
         <button type="submit">submit</button>
-        {% endif %}
-    </div>
-
-    <div>
-        {% if document != null %}
-        <p>Upload document successfully.</p>
-        <p>Details:</p>
-
-        <table width="100%" border="1" align="center">
-            <thead bgcolor="#949494">
-            <th>Id</th><th>Title</th><th>Author</th><th>Uploadtime</th><!--<th>Uploader</th><th>Filepath</th><th>Downloadtimes</th>-->
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{document.id}}</td>
-                <td>{{document.title}}</td>
-                <td>{{document.author}}</td>
-                <td>{{document.uploadtime}}</td>
-                <!--<td>{{document.uploader}}</td>
-                <td>{{document.filepath}}</td>
-                <td>{{document.downloadtimes}}</td>-->
-            </tr>
-            </tbody>
-        </table>
-        {% endif %}
+        </div>
     </div>
     <div>
         {%  if error != null %}
@@ -50,7 +38,6 @@
         <p></p>
         <br>
         <a href="/search">Rerurn search.</a>
-        <a href="/uploaddocument">Continue uploading</a>
     </div>
 </form>
 </body>
