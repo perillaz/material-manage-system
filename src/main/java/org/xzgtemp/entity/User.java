@@ -5,9 +5,9 @@ public class User {
 	private String id;
 	private String name;
 	private String password;
-	private String usertype = "visitor";
-	private boolean setadmini = false;
-	private boolean setstudent = false;
+	private String usertype;
+	private boolean setadmini;
+	private boolean setstudent;
 
 	public User(){
 		
@@ -19,6 +19,14 @@ public class User {
 		setPassword(password);
 	}
 
+	public User(String id,String name,String password,String usertype,Boolean setadmini,Boolean setstudent){
+		setId(id);
+		setName(name);
+		setPassword(password);
+		setUsertype(usertype);
+		setSetadmini(setadmini);
+		setSetstudent(setstudent);
+	}
 
 	public String getId() {
 		return id;

@@ -25,6 +25,7 @@ public class UserService {
 		if(user.getSetstudent()){
 			for(User User : users){
 				User.setUsertype("student");
+				ChangeUserpermission(User);
 			}
 		}
 	}
@@ -33,6 +34,7 @@ public class UserService {
 		if(user.getSetadmini()){
 			for(User User : users){
 				User.setUsertype("admini");
+				ChangeUserpermission(User);
 			}
 		}
 	}
@@ -43,6 +45,7 @@ public class UserService {
 				User.setUsertype("admini");
 				User.setSetadmini(setAdmini);
 				User.setSetstudent(setStudent);
+				ChangeUserpermission(User);
 			}
 		}
 	}
@@ -58,7 +61,10 @@ public class UserService {
                 return new User( // new User object:
                         rs.getString("id"), // id
 						rs.getString("name"),// name
-                        rs.getString("password") // password
+                        rs.getString("password") ,// password
+						rs.getString("usertype"),
+						rs.getBoolean("setadmini"),
+						rs.getBoolean("setstudent")
 				); 
             },
 			id
@@ -99,6 +105,17 @@ public class UserService {
 
     public void ChangeUserName(User user) {
 		if (1 != jdbcTemplate.update("UPDATE User SET name = ? WHERE id = ? ", user.getName(), user.getId())) {
+			throw new RuntimeException("User not found by id");
+		}
+	}
+
+	public void ChangeUserpermission(User user) {
+		if (1 != jdbcTemplate.update("UPDATE User SET usertype = ? ,setAdmini = ?,setStudent = ?  WHERE id = ? ",
+				user.getUsertype(),
+				user.getSetadmini(),
+				user.getSetstudent(),
+				user.getId()
+		)) {
 			throw new RuntimeException("User not found by id");
 		}
 	}
