@@ -54,10 +54,8 @@ public class DocumentServiceTest {
 	public List<Document> getDocumentsByIO() throws IOException{
         FileReader fr = new FileReader(System.getProperty("user.dir") + "/files/test7.txt");
 		BufferedReader br = new BufferedReader(fr);
-		//定义一个集合存对象
 		ArrayList<Document> list = new ArrayList<>();
 		String line = null;
-		//一次读一行
 		while ((line = br.readLine())!=null) {
 			String[] attr = line.split(",");
 			Document document = new Document(attr[0],attr[1],attr[2],attr[3],sqldateutil.StringtoDate(attr[4]),attr[5],attr[6],attr[7]);
@@ -90,9 +88,6 @@ public class DocumentServiceTest {
 			};
         }).collect(Collectors.toList());
         jdbctemplate.batchUpdate(insertSql, batchArgs);
-
-		//return updateCountArray.length;
-
 	}
 
 	@Test
@@ -127,7 +122,7 @@ public class DocumentServiceTest {
 
 
 	@Test
-	public void AddTest3() throws IOException{
+	public void Test3() throws IOException{
         long startTime = System.currentTimeMillis();
 		List<Document> dlist = getDocumentsByapacheCommonsIO();
         long endTime = System.currentTimeMillis();
