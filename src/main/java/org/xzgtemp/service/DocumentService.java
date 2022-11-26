@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -28,6 +29,8 @@ public class DocumentService {
     
 	@Autowired
 	JdbcTemplate jdbctemplate;
+
+    public final String DocumentFileRootPath = System.getProperty("user.dir") + "/files/";
 
 	RowMapper<Document> documentRowMapper = new BeanPropertyRowMapper<>(Document.class);
 
@@ -47,7 +50,8 @@ public class DocumentService {
             Date date = Date.valueOf(LocalDate.now());
             String fileoriginname = file.getOriginalFilename();
             String filetype = fileoriginname.substring(fileoriginname.lastIndexOf("."));
-            String filename = doi + title +  author + literature + String.valueOf(System.currentTimeMillis() % 1000000000) + filetype;
+            //String filename = doi + title +  author + literature + String.valueOf(System.currentTimeMillis() % 1000000000) + filetype;
+            String filename = UUID.randomUUID().toString().replace("-", "") + filetype;
             File file1 =new File("files/" + filename);//创建file对象
             if(!file1.exists())
                 file1.createNewFile();//在磁盘创建该文件

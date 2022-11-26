@@ -53,7 +53,6 @@
                 <option value="document"{%if searchWhat=="document" %}selected{% endif %}>Document</option>
             </select>
             <select name="searchBy">
-                //TODO：增加通过bid/cid查找
                 <option value="default"{%if searchBy=="default" %}selected{% endif %}></option>
                 <option value="title"{%if searchBy=="title" %}selected{% endif %}>Title</option>
                 <option value="author"{%if searchBy=="author" %}selected{% endif %}>Author</option>
@@ -84,9 +83,6 @@
                 <tbody>
                     {% for book in books %}
                     <tr>
-                        //TODO:更改跳转
-                        //TODO:只显示id,title,author,borrowtimes,可借阅copy数/总copy数
-                        //TODO:参照学校图书馆
                         <td><a href="/books/{{book.id}}">{{book.id}}</a></td>
                         <td><a href="/books/{{book.id}}">{{book.title}}</a></td>
                         <td>{{book.author}}</td>
@@ -118,21 +114,14 @@
                 <th>Title</th>
                 <th>Author</th>
                 <th>Downloadtimes</th>
-                <!--<th>Publishtime</th>
-                    <th>Publisher</th>-->
-                <th>Filepath</th>
                 </thead>
                 <tbody>
                         {% for document in documents %}
                     <tr>
-                        //TODO:更改跳转
-                        //TODO:只显示id,title,author,downloadtimes,uploader
-                        //TODO:author跳转的拆分
                             <td><a href="/documents/{{document.id}}">{{document.id}}</a></td>
                             <td><a href="/documents/{{document.id}}">{{document.title}}</a></td>
                             <td>{{document.author}}</td>
                             <td>{{document.downloadtimes}}</td>
-                            <td>{{document.filepath}}</td>
                     </tr>
                             {%else %}
                                 <p>no doucument yet</p>

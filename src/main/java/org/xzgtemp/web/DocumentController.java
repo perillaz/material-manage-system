@@ -1,12 +1,21 @@
 package org.xzgtemp.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,6 +92,24 @@ public class DocumentController {
 		}
 	}
 
+	@RequestMapping("/download")
+	public ResponseEntity<byte[]> DownloadDocument(
+		@PathVariable("did") Long did,
+		HttpSession session
+	) throws IOException{
+		Document document = documentservice.GetDocumentbyDID(did);
+		String filepath= documentservice.DocumentFileRootPath + document.getFilepath();
+		File file =new File(filepath);
+		InputStream in = new FileInputStream(file);
+		byte[] body = new byte[in.available()];
+		in.read(body);
+		MultiValueMap<String, String> headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attchement;filename=" + file.getName());
+		HttpStatus statusCode = HttpStatus.OK;
+		in.close();
+		ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(body, headers, statusCode);
+		return entity;
+	}
 
 
 }
