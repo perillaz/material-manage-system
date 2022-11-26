@@ -38,6 +38,21 @@ public class Book {
 		this.briefinfo = briefinfo;
 	}
 
+//batch
+	public Book(String title, String author, Integer copyamount, Integer borrowedcopys, String isbn, String edition,
+			Date publishtime, String publisher, String lang, String briefinfo) {
+		setTitle(title);
+		this.author = author;
+		this.copyamount = copyamount;
+		this.borrowedcopys = borrowedcopys;
+		this.isbn = isbn;
+		this.edition = edition;
+		this.publishtime = publishtime;
+		this.publisher = publisher;
+		this.lang = lang;
+		this.briefinfo = briefinfo;
+	}
+
 
 	public Book(
 		Long id,
