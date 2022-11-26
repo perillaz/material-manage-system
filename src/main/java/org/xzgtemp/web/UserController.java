@@ -173,8 +173,8 @@ public class UserController {
 			model.put("user",user);
 			String[] userarr=users.split(",");
 			List<User> userlist = new ArrayList<>();
-			if(userarr==null){
-				model.put("error","No user selected.");
+			if(userarr[0]==""){
+				model.put("error","No user input, please input again.");
 				return new ModelAndView("changeusertype.html",model);
 			}else {
 				if (setwhat.equals("setadmini")) {

@@ -9,6 +9,9 @@
         <div>
             <p>{{ user.usertype }} : {{ user.id }}</p>
             {% if success == null %}
+            {% if error != null %}
+            <p>{{ error }}</p>
+            {% endif %}
             <select name="setwhat">
                 {% if user.setadmini == true %}
                 <option value="setadmini">Set Admini</option>
@@ -25,6 +28,9 @@
             </select>
             <input type="text" name="users" value="{{target}}">
             <input type="submit" value="submit" name="beginset">
+            <br>
+            <br>
+            <a href="/search">Return Search</a>
             {% else %}
             <p>{{ success }}</p>
             <br>
