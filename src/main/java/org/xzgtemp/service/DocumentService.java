@@ -44,16 +44,15 @@ public class DocumentService {
         String literature
         ){
         try {
-            String uploader = user.getId();
             Date date = Date.valueOf(LocalDate.now());
             String fileoriginname = file.getOriginalFilename();
             String filetype = fileoriginname.substring(fileoriginname.lastIndexOf("."));
-            String filename = title + "_" + author+ "_" + String.valueOf(System.currentTimeMillis() % 1000000000) + filetype;
+            String filename = doi + title +  author + literature + String.valueOf(System.currentTimeMillis() % 1000000000) + filetype;
             File file1 =new File("files/" + filename);//创建file对象
             if(!file1.exists())
                 file1.createNewFile();//在磁盘创建该文件
             file.transferTo(file1);//将接受的文件存储
-            Document document = new Document(title,author,uploader,date,filename,doi,literature);
+            Document document = new Document(title,author,user.getId(),user.getName(),date,filename,doi,literature);
             AddDocument(document);
             return document; 
         } catch (Exception e) {
@@ -64,17 +63,18 @@ public class DocumentService {
     public void AddDocument(Document document){
         //String title, String author, String uploaduser, Date uploadtime, String filepath
         KeyHolder holder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO Document(title,author,uploader,uploadtime,filepath,downloadtimes,doi,literature) VALUES(?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Document(title,author,uploaderid,uploadername,uploadtime,filepath,downloadtimes,doi,literature) VALUES(?,?,?,?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
                     PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                     ps.setObject(1,document.getTitle());
                     ps.setObject(2,document.getAuthor());
-                    ps.setObject(3,document.getUploader());
-                    ps.setObject(4,document.getUploadtime());
-                    ps.setObject(5,document.getFilepath());
-                    ps.setObject(6,document.getDownloadtimes());
-                    ps.setObject(6,document.getDoi());
-                    ps.setObject(6,document.getLiterature());
+                    ps.setObject(3,document.getUploaderid());
+                    ps.setObject(4,document.getUploadername());
+                    ps.setObject(5,document.getUploadtime());
+                    ps.setObject(6,document.getFilepath());
+                    ps.setObject(7,document.getDownloadtimes());
+                    ps.setObject(8,document.getDoi());
+                    ps.setObject(9,document.getLiterature());
                     return ps;
                 },
                 holder)
@@ -93,7 +93,8 @@ public class DocumentService {
                             rs.getLong("id"),
                             rs.getString("title"),
                             rs.getString("author"),
-                            rs.getString("uploader"),
+                            rs.getString("uploaderid"),
+                            rs.getString("uploadername"),
                             rs.getDate("uploadtime"),
                             rs.getString("filepath"),
                             rs.getInt("downloadtimes"),

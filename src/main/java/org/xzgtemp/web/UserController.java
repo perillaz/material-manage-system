@@ -274,6 +274,8 @@ public class UserController {
 		@RequestParam("file")MultipartFile file,
 		@RequestParam("title") String title,
 		@RequestParam("author") String author,
+		@RequestParam("doi") String doi,
+		@RequestParam("literature") String literature,
 		HttpSession session
 		){
 		try {
@@ -281,7 +283,7 @@ public class UserController {
 				return new ModelAndView("redirect:/signin.html");
 			}
 			User user = (User) session.getAttribute(KEY_USER);
-			Document document = documentservice.UploadDocument(user,file,title,author);
+			Document document = documentservice.UploadDocument(user,file,title,author,doi,literature);
 			Map<String, Object> model = new HashMap<>();
 			model.put("document",document);
 			return new ModelAndView("uploaddocument.html",model);

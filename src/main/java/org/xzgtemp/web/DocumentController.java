@@ -40,7 +40,7 @@ public class DocumentController {
         model.put("user",(User)session.getAttribute(KEY_USER));
 		Document document = documentservice.GetDocumentbyDID(did);
         model.put("document",document);
-		model.put("uploader",userservice.GetUserbyID(document.getUploader()));
+		model.put("uploader",userservice.GetUserbyID(document.getUploaderid()));
 		return new ModelAndView("documentdetial.html",model);
 	}
     
@@ -56,7 +56,7 @@ public class DocumentController {
         model.put("user",(User)session.getAttribute(KEY_USER));
 		Document document = documentservice.GetDocumentbyDID(did);
         model.put("document",document);
-		model.put("uploader",userservice.GetUserbyID(document.getUploader()));
+		model.put("uploader",userservice.GetUserbyID(document.getUploaderid()));
 		model.put("change","change");
 		return new ModelAndView("documentdetial.html",model);
 	}

@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Document(
     title VARCHAR(30) NOT NULL,
     author VARCHAR(30) NOT NULL,
     uploaderid VARCHAR(13) NOT NULL,
-    uploadertitle VARCHAR(30) NOT NULL,
+    uploadername VARCHAR(30) NOT NULL,
     uploadtime DATE NOT NULL,
     filepath VARCHAR(100) NOT NULL,
     downloadtimes INTEGER NOT NULL,
@@ -137,7 +137,7 @@ BEGIN
 UPDATE Book SET buyername = NEW.name
 WHERE buyerid = NEW.id;
 UPDATE Document SET uploadername = NEW.name
-WHERE uploader = NEW.id;
+WHERE uploaderid = NEW.id;
 END ;
 END IF $
 DELIMITER

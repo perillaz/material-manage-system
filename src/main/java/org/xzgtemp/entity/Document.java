@@ -7,7 +7,8 @@ public class Document {
 	private Long id;
 	private String title;
 	private String author;
-	private String uploader;
+	private String uploaderid;
+	private String uploadername;
 	private Date uploadtime;
 	private String filepath;
 	private Integer downloadtimes = 0;
@@ -17,13 +18,13 @@ public class Document {
 	public Document(){
 	}
 
-	
-	public Document(Long id, String title, String author, String uploader, Date uploadtime, String filepath,
-			Integer downloadtimes, String doi, String literature) {
+	public Document(Long id, String title, String author, String uploaderid, String uploadername, Date uploadtime,
+			String filepath, Integer downloadtimes, String doi, String literature) {
 		this.id = id;
-		setTitle(title);
+		this.title = title;
 		this.author = author;
-		this.uploader = uploader;
+		this.uploaderid = uploaderid;
+		this.uploadername = uploadername;
 		this.uploadtime = uploadtime;
 		this.filepath = filepath;
 		this.downloadtimes = downloadtimes;
@@ -31,18 +32,19 @@ public class Document {
 		this.literature = literature;
 	}
 
-	
-	public Document(String title, String author, String uploader, Date uploadtime, String filepath, String doi,
-			String literature) {
+
+
+	public Document(String title, String author, String uploaderid, String uploadername, Date uploadtime,
+			String filepath, String doi, String literature) {
 		this.title = title;
 		this.author = author;
-		this.uploader = uploader;
+		this.uploaderid = uploaderid;
+		this.uploadername = uploadername;
 		this.uploadtime = uploadtime;
 		this.filepath = filepath;
 		this.doi = doi;
 		this.literature = literature;
 	}
-
 
 	//论文id
 	public Long getId() {
@@ -73,13 +75,28 @@ public class Document {
 		this.author=author;
 	}
 	
-	//上传信息
-	public String getUploader() {
-		return uploader;
+
+	
+	public String getUploaderid() {
+		return uploaderid;
 	}
-	public void setUploader(String uploader) {
-		this.uploader=uploader;
+
+
+	public void setUploaderid(String uploaderid) {
+		this.uploaderid = uploaderid;
 	}
+
+
+	public String getUploadername() {
+		return uploadername;
+	}
+
+
+	public void setUploadername(String uploadername) {
+		this.uploadername = uploadername;
+	}
+
+
 	public Date getUploadtime() {
 		return uploadtime;
 	}

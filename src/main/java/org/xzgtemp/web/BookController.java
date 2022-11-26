@@ -18,7 +18,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 
-@RequestMapping("/books")
+@RequestMapping("/books/{bid}")
 @Controller
 public class BookController{
     
@@ -29,7 +29,7 @@ public class BookController{
 
 
     
-	@GetMapping("/{bid}")
+	@GetMapping("")
 	public ModelAndView showBook(@PathVariable("bid") Long bid,HttpSession session) {
 		if (session.getAttribute(KEY_USER) ==null){
 			return new ModelAndView("redirect:/signin.html");
@@ -59,7 +59,7 @@ public class BookController{
 		return new ModelAndView("bookdetial.html",model);
 	}
 
-	@PostMapping("/{bid}/change/{attribute}")
+	@PostMapping("/change/{attribute}")
 	public ModelAndView changeDocumentInfo(
 		@PathVariable("bid") Long bid,
 		@PathVariable("attribute") String attribute,

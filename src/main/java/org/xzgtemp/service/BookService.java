@@ -50,7 +50,7 @@ public class BookService {
                     ps.setObject(8,book.getPublishtime());
                     ps.setObject(9,book.getPublisher());
                     ps.setObject(10,book.getLang());
-                    ps.setObject(10,book.getBriefinfo());
+                    ps.setObject(11,book.getBriefinfo());
                     return ps;
                 },
                 holder)
