@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS Book(
     edition VARCHAR(30),
     publishtime Date,
     publisher VARCHAR(30),
+    lang VARCHAR(10),
     briefinfo VARCHAR(1000)
 )
 ```

@@ -21,7 +21,7 @@ public class Document {
 	public Document(Long id, String title, String author, String uploader, Date uploadtime, String filepath,
 			Integer downloadtimes, String doi, String literature) {
 		this.id = id;
-		this.title = title;
+		setTitle(title);
 		this.author = author;
 		this.uploader = uploader;
 		this.uploadtime = uploadtime;
@@ -31,72 +31,18 @@ public class Document {
 		this.literature = literature;
 	}
 
-
-	public Document(
-		String title,
-		String author,
-		String uploader,
-		Date uploadtime,
-		String filepath
-	) {
-		setTitle(title);
-		setAuthor(author);
-		setUploader(uploader);
-		setUploadtime(uploadtime);
-		setFilepath(filepath);
+	
+	public Document(String title, String author, String uploader, Date uploadtime, String filepath, String doi,
+			String literature) {
+		this.title = title;
+		this.author = author;
+		this.uploader = uploader;
+		this.uploadtime = uploadtime;
+		this.filepath = filepath;
+		this.doi = doi;
+		this.literature = literature;
 	}
 
-	public Document(
-		String title,
-		String author,
-		String uploader,
-		Date uploadtime,
-		String filepath,
-		Integer downloadtimes
-	) {
-		setTitle(title);
-		setAuthor(author);
-		setUploader(uploader);
-		setUploadtime(uploadtime);
-		setFilepath(filepath);
-		setDownloadtimes(downloadtimes);
-	}
-
-	public Document(
-		Long id,
-		String title,
-		String author,
-		String uploader,
-		Date uploadtime,
-		String filepath
-	) {
-		setId(id);
-		setTitle(title);
-		setAuthor(author);
-		setDownloadtimes(downloadtimes);
-		setUploader(uploader);
-		setUploadtime(uploadtime);
-		setFilepath(filepath);
-		setDownloadtimes(downloadtimes);
-	}
-
-	public Document(
-		Long id,
-		String title,
-		String author,
-		String uploader,
-		Date uploadtime,
-		String filepath,
-		Integer downloadtimes
-	) {
-		setId(id);
-		setTitle(title);
-		setAuthor(author);
-		setUploader(uploader);
-		setUploadtime(uploadtime);
-		setFilepath(filepath);
-		setDownloadtimes(downloadtimes);
-	}
 
 	//论文id
 	public Long getId() {

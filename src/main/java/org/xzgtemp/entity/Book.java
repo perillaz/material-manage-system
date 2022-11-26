@@ -14,16 +14,18 @@ public class Book {
 	private String edition;
 	private Date publishtime;
 	private String publisher;
+	private String lang;
 	private String briefinfo;
 	
 	public Book(){
 		
 	}
 
+
 	public Book(Long id, String title, String author, Integer copyamount, Integer borrowedcopys, Integer allborrowtimes,
-			String isbn, String edition, Date publishtime, String publisher, String briefinfo) {
-		this.id = id;
-		this.title = title;
+			String isbn, String edition, Date publishtime, String publisher, String lang, String briefinfo) {
+		setId(id);
+		setTitle(title);
 		this.author = author;
 		this.copyamount = copyamount;
 		this.borrowedcopys = borrowedcopys;
@@ -32,8 +34,10 @@ public class Book {
 		this.edition = edition;
 		this.publishtime = publishtime;
 		this.publisher = publisher;
+		this.lang = lang;
 		this.briefinfo = briefinfo;
 	}
+
 
 	public Book(
 		Long id,
@@ -206,6 +210,15 @@ public class Book {
 
 	public void setPublisher(String publisher) {
 		this.publisher=publisher;
+	}
+
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
 	}
 	
 	public String getBriefinfo() {

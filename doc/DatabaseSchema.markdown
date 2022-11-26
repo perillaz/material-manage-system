@@ -25,6 +25,7 @@
 | edition        | 版本        | VARCHAR(30)  | String        |      |
 | publishtime | 出版时间 |DATE | java.sql.Date | 可空 |
 | publisher | 出版商 |VARCHAR(30) | String | 可空 |
+| lang | 语言 |VARCHAR(10) | String | 可空 |
 | briedinfo | 简介 |VARCHAR(1000) | String | 可空 |
 
 #### Copy

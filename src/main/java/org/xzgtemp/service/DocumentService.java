@@ -39,7 +39,9 @@ public class DocumentService {
     
     public Document UploadDocument(User user,MultipartFile file,
         String title,
-        String author
+        String author,
+        String doi,
+        String literature
         ){
         try {
             String uploader = user.getId();
@@ -51,7 +53,7 @@ public class DocumentService {
             if(!file1.exists())
                 file1.createNewFile();//在磁盘创建该文件
             file.transferTo(file1);//将接受的文件存储
-            Document document = new Document(title,author,uploader,date,filename);
+            Document document = new Document(title,author,uploader,date,filename,doi,literature);
             AddDocument(document);
             return document; 
         } catch (Exception e) {
@@ -94,7 +96,9 @@ public class DocumentService {
                             rs.getString("uploader"),
                             rs.getDate("uploadtime"),
                             rs.getString("filepath"),
-                            rs.getInt("downloadtimes")
+                            rs.getInt("downloadtimes"),
+                            rs.getString("doi"),
+                            rs.getString("literature")
                     );
                 },
                 did
