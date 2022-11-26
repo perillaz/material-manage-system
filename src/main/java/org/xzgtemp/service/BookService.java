@@ -28,10 +28,6 @@ public class BookService {
 
 
     //----------AddBook------------------------------------------
-    public void AddBookFromFIle(){
-        //TODO:从文件读取记录批量导入数据库，使用预编译，参数为定
-    }
-
 
     public void AddBook(Book book){
         //String title, String author, Date publishtime,String publisher,String buyer, Date buytime,

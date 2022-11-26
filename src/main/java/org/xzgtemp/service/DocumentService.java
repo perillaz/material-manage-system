@@ -34,11 +34,7 @@ public class DocumentService {
 
 	RowMapper<Document> documentRowMapper = new BeanPropertyRowMapper<>(Document.class);
 
-
     //---------------AddDocunment---------------------------------
-    public void AddBookFromFIle(){
-        //TODO:从文件读取记录批量导入数据库，使用预编译，参数为定
-    }
     
     public Document UploadDocument(User user,MultipartFile file,
         String title,
