@@ -94,6 +94,7 @@ public class DocumentController {
 		@PathVariable("did") Long did,
 		HttpSession session
 	) throws IOException{
+		User user = (User) session.getAttribute(KEY_USER);
 		Document document = documentservice.GetDocumentbyDID(did);
 		String filepath= documentservice.DocumentFileRootPath + document.getFilepath();
 		File file =new File(filepath);
@@ -105,6 +106,7 @@ public class DocumentController {
 		HttpStatus statusCode = HttpStatus.OK;
 		in.close();
 		ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(body, headers, statusCode);
+		documentservice.doAddDownloadDocument(user,did);
 		return entity;
 	}
 

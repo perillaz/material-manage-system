@@ -21,6 +21,13 @@ public class DownloadDocument {
 		this.downloadtime = downloadtime;
 	}
 	
+	public DownloadDocument(String uid, Long did, String dtitle, Date downloadtime) {
+		this.uid = uid;
+		this.did = did;
+		this.dtitle = dtitle;
+		this.downloadtime = downloadtime;
+	}
+
 	public Long getId() {
 		return id;
 	}
