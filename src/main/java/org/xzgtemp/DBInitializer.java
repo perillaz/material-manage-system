@@ -27,7 +27,7 @@ public class DBInitializer {
 		jdbcTemplate.update("DROP TRIGGER IF EXISTS DownloadDocumentCount;");
 		jdbcTemplate.update("CREATE TRIGGER BookTitleSynchronization AFTER UPDATE ON Book FOR EACH ROW IF NEW.title<>OLD.title THEN BEGIN UPDATE Copy SET btitle = NEW.title WHERE bid = NEW.id;UPDATE BorrowCopy SET btitle = NEW.title WHERE bid = NEW.id;END ;END IF");
 		jdbcTemplate.update("CREATE TRIGGER DocumentTitleSynchronization AFTER UPDATE ON Document FOR EACH ROW IF NEW.title<>OLD.title THEN UPDATE DownloadDocument SET documenttitle = NEW.title WHERE did = NEW.id;END IF");
-		jdbcTemplate.update("CREATE TRIGGER UserNameSynchronization AFTER UPDATE ON User FOR EACH ROW IF NEW.name<>OLD.name THEN BEGIN UPDATE Book SET buyername = NEW.name WHERE buyerid = NEW.id;UPDATE Document SET uploadername = NEW.name WHERE uploaderid = NEW.id;END ;END IF");
+		jdbcTemplate.update("CREATE TRIGGER UserNameSynchronization AFTER UPDATE ON User FOR EACH ROW IF NEW.name<>OLD.name THEN BEGIN UPDATE Copy SET buyername = NEW.name WHERE buyerid = NEW.id;UPDATE Document SET uploadername = NEW.name WHERE uploaderid = NEW.id;END ;END IF");
 		jdbcTemplate.update("CREATE TRIGGER BorrowCopyCount AFTER INSERT ON BorrowCopy FOR EACH ROW BEGIN UPDATE Book SET allborrowtimes = allborrowtimes + 1 WHERE id = NEW.bid; UPDATE Copy SET borrowtimes = borrowtimes + 1 WHERE id = NEW.cid; END");
 		jdbcTemplate.update("CREATE TRIGGER DownloadDocumentCount AFTER INSERT ON DownloadDocument FOR EACH ROW UPDATE Document SET downloadtimes = downloadtimes + 1 WHERE id = NEW.did");
 		jdbcTemplate.update("INSERT IGNORE INTO User(id,name,password,usertype,setAdmini,setStudent) VALUES ('0000','Administrator','0000','admini',true,true) ");
