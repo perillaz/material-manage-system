@@ -39,12 +39,13 @@ CREATE TABLE IF NOT EXISTS Copy(
     bid BIGINT NOT NULL,
     btitle VARCHAR(50) NOT NULL,
     loc VARCHAR(50) NOT NULL,
-    isborrowed BOOLEAN NOT NULL DEFAULT 0,
-    isreserved BOOLEAN NOT NULL DEFAULT 0,
     buyerid VARCHAR(13) NOT NULL,
     buyername VARCHAR(30) NOT NULL,
     buytime Date NOT NULL,
-    borrowtimes INTEGER NOT NULL DEFAULT 0
+    borrowtimes INTEGER NOT NULL DEFAULT 0,
+    canbeborrowed BOOLEAN NOT NULL DEFAULT 1,
+    canbereserved BOOLEAN NOT NULL DEFAULT 1,
+    reserver VARCHAR(13)
 )
 ```
 
@@ -134,7 +135,7 @@ AFTER UPDATE ON User
 FOR EACH ROW 
 IF NEW.name<>OLD.name THEN
 BEGIN 
-UPDATE Book SET buyername = NEW.name
+UPDATE Copy SET buyername = NEW.name
 WHERE buyerid = NEW.id;
 UPDATE Document SET uploadername = NEW.name
 WHERE uploaderid = NEW.id;

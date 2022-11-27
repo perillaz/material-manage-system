@@ -7,8 +7,6 @@ public class Copy {
     private Long bid;
 	private String btitle;
     private String loc;
-    private Boolean isborrowed;
-    private Boolean isreserved;
     private String buyerid;
     private String buyername;
     private Date buytime;
@@ -29,15 +27,13 @@ public class Copy {
     	
     }
 
-    public Copy(Long id, Long bid, String btitle, String loc, Boolean isborrowed, Boolean isreserved, String buyerid,
-            String buyername, Date buytime, Integer borrowtimes, Boolean canbeborrow, Boolean canbereserve,
-            String reserver) {
+    
+    public Copy(Long id, Long bid, String btitle, String loc, String buyerid, String buyername, Date buytime,
+            Integer borrowtimes, Boolean canbeborrow, Boolean canbereserve, String reserver) {
         this.id = id;
         this.bid = bid;
         this.btitle = btitle;
         this.loc = loc;
-        this.isborrowed = isborrowed;
-        this.isreserved = isreserved;
         this.buyerid = buyerid;
         this.buyername = buyername;
         this.buytime = buytime;
@@ -47,13 +43,11 @@ public class Copy {
         this.reserver = reserver;
     }
 
-    public Copy(Long bid, String btitle, String loc, Boolean isborrowed, Boolean isreserved, String buyerid,
+    public Copy(Long bid, String btitle, String loc, String buyerid,
             String buyername, Date buytime) {
         this.bid = bid;
         this.btitle = btitle;
         this.loc = loc;
-        this.isborrowed = isborrowed;
-        this.isreserved = isreserved;
         this.buyerid = buyerid;
         this.buyername = buyername;
         this.buytime = buytime;
@@ -89,18 +83,6 @@ public class Copy {
     }
     public void setLoc(String loc) {
     	this.loc=loc;
-    }
-    public Boolean getIsborrowed() {
-    	return isborrowed;
-    }
-    public void setIsborrowed(Boolean isborrowed) {
-    	this.isborrowed=isborrowed;
-    }
-    public Boolean getIsreserved() {
-    	return isreserved;
-    }
-    public void setIsreserved(Boolean isreserved) {
-    	this.isreserved=isreserved;
     }
     public Integer getBorrowtimes() {
     	return borrowtimes;

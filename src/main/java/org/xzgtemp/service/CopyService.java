@@ -31,18 +31,19 @@ public class CopyService {
     
     public void AddCopy(Copy copy){
     	KeyHolder holder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO Copy(bid,btitle,loc,isborrowed,isreserved,buyerid,buyername,buytime,borrowtimes,canbeborrow,canbereserve,) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Copy(bid,btitle,loc,buyerid,buyername,buytime,borrowtimes,canbeborrow,canbereserve,reserver) VALUES(?,?,?,?,?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setObject(1,copy.getBid());
             ps.setObject(2,copy.getBtitle());
             ps.setObject(3,copy.getLoc());
-            ps.setObject(4,copy.getIsborrowed());
-            ps.setObject(5,copy.getIsreserved());
-            ps.setObject(6,copy.getBuyerid());
-            ps.setObject(7,copy.getBuyername());
-            ps.setObject(8,copy.getBuytime());
-            ps.setObject(9,copy.getBorrowtimes());
+            ps.setObject(4,copy.getBuyerid());
+            ps.setObject(5,copy.getBuyername());
+            ps.setObject(6,copy.getBuytime());
+            ps.setObject(7,copy.getBorrowtimes());
+            ps.setObject(8,copy.getCanbeborrow());
+            ps.setObject(9,copy.getCanbereserve());
+            ps.setObject(10,copy.getReserver());
             return ps;
         },
         holder)
@@ -84,8 +85,6 @@ public class CopyService {
                         rs.getLong("bid"),
                         rs.getString("btilte"),
                         rs.getString("loc"),
-                        rs.getBoolean("isborrowed"),
-                        rs.getBoolean("isreserved"),
                         rs.getString("buyerid"),
                         rs.getString("buyername"),
                         rs.getDate("buytime"),
