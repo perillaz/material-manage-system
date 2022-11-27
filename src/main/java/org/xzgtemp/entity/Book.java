@@ -7,7 +7,7 @@ public class Book {
 	private Long id;
 	private String title;
 	private String author;
-	private Integer copyamount;
+	private Integer copyamount = 0;
 	private Integer borrowedcopys = 0;
 	private Integer allborrowtimes=0;  //所有copys的借阅次数
 	private String isbn;
@@ -45,6 +45,19 @@ public class Book {
 		this.author = author;
 		this.copyamount = copyamount;
 		this.borrowedcopys = borrowedcopys;
+		this.isbn = isbn;
+		this.edition = edition;
+		this.publishtime = publishtime;
+		this.publisher = publisher;
+		this.lang = lang;
+		this.briefinfo = briefinfo;
+	}
+
+
+	public Book(String title, String author, String isbn, String edition, Date publishtime, String publisher,
+			String lang, String briefinfo) {
+		setTitle(title);
+		this.author = author;
 		this.isbn = isbn;
 		this.edition = edition;
 		this.publishtime = publishtime;

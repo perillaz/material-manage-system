@@ -3,13 +3,37 @@
     <head>
         <meta charset="utf-8">
         <title>bookdetails</title>
+        
         <style>
+            .dropbtn {
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
             .dropdown {
-            position:absolute;
-            top:0px;
-            right:100px;
-            display: inline-block;
-        }
+                position:absolute;
+                top:0px;
+                right:200px;
+                display: inline-block;
+            }
+            .dropdown-content {
+                display: none;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            }
+            .dropdown-content a {
+                color: black;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+                position:absolute;
+            }
         </style>
         <script>
             function whenborrow(){
@@ -31,17 +55,32 @@
         </script>
     </head>
     <body>
-        {% if change == null %}
         <div class="dropdown">
             <div class="form-group">
-            <button id="name" class="dropbtn">{{ user.name }}</button>
+            <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
             <div class="dropdown-content">
-                <a href="/user">User Information</a>
-                <a href="/uploaddocument">Upload Document</a>
+                <a href="/user/information">User Information</a>
+                {% if user.usertype=="admini" %}
+                    {% if user.setadmini == true %}
+                    <a href="/user/changeusertype">Change UserPermission</a>
+                    {% else %}
+                        {% if user.setstudent == true %}
+                        <a href="/user/changeusertype">Change UserPermission</a>
+                        {% endif %}
+                    {% endif %}
+                    <a href="/modifymaterial">Modify Material</a>
+                    <a href="/uploaddocument">Upload Document</a>
+                    <a href="/addbook">Add Book</a>
+                {% endif %}
+                {% if user.usertype=="student" %}
+                    <a href="/uploaddocument">Upload Document</a>
+                    <a href="/addbook">Add Book</a>
+                {% endif %}
                 <a href="/signout">Log Out</a>
             </div>
             </div>
         </div>
+        {% if change == null %}
         <form method="post" action="/bookdetail">
             <h2>bookdetails</h2>
             <article>
@@ -62,14 +101,6 @@
             <th>Copy</th><th>Publisher</th><th>Publishtime</th><th>Buyer</th><th>Buytime</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Borrow</th><th>Reserve</th><th>modify</th>  
             </thead>
             <tbody>
-                {%for copy in book%} 
-                //不能这么写
-                //book不是一个list
-                //即使是，循环体里也不应该写book.。。。，应该是copy.。。。、、
-                //应该是controller里传一个"List<Copy>"类型的值进来，如copylist
-                //然后 for copy in copylist ，这里的copy是Copy类型的
-                //在循环体中写copy.。。。
-                //publish是指出版，是book的属性，不是copy的属性
                 <tr>
                     <td>{{book.id}}</td>
                     <td>{{book.publish}}</td>
@@ -79,10 +110,6 @@
                     <td>{{book.whereis}}</td>
                     <td>{{book.statement}}</td>
                     <td>{{book.borrowtimes}}</td>
-                    //我把copy里的isonshelf改成isborrowed了,顺便把上面函数里也改了
-                    //不过不知到这里怎么写controller
-                    //以及一般不这么在html里写
-                    //功能的实现是service层的事，一般都建议把功能实现和显示分开
                     <td><button type="button" onclick="whenborrow()">borrow</button></td>
                     <td><button type="button" onclick="whenreserve()">reserve</button></td>
                     <td>modify</td>

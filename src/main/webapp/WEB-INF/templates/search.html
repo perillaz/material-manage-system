@@ -50,6 +50,7 @@
                 <option value="default"{%if searchBy=="default" %}selected{% endif %}></option>
                 <option value="title"{%if searchBy=="title" %}selected{% endif %}>Title</option>
                 <option value="author"{%if searchBy=="author" %}selected{% endif %}>Author</option>
+                <option value="id"{%if searchBy=="id" %}selected{% endif %}>id</option>
             </select>
 
             <input type="text" name="target" value="{{target}}">
@@ -60,20 +61,22 @@
         <div class="form-group">
         <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
         <div class="dropdown-content">
-            <a href="/user/${user.id}/information">User Information</a>
+            <a href="/user/information">User Information</a>
             {% if user.usertype=="admini" %}
                 {% if user.setadmini == true %}
-                <a href="/user/${user.id}/changeusertype">Change UserPermission</a>
+                <a href="/user/changeusertype">Change UserPermission</a>
                 {% else %}
                     {% if user.setstudent == true %}
-                    <a href="/user/${user.id}/changeusertype">Change UserPermission</a>
+                    <a href="/user/changeusertype">Change UserPermission</a>
                     {% endif %}
                 {% endif %}
-                <a href="/user/${user.id}/modifymaterial">Modify Material</a>
-                <a href="/user/${user.id}/uploaddocument">Upload Document</a>
+                <a href="/modifymaterial">Modify Material</a>
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/addbook">Add Book</a>
             {% endif %}
             {% if user.usertype=="student" %}
-                <a href="/user/${user.id}/uploaddocument">Upload Document</a>
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/addbook">Add Book</a>
             {% endif %}
             <a href="/signout">Log Out</a>
         </div>
@@ -85,7 +88,10 @@
             <h2>Book Information</h2>
             <table width="100%" border="1" align="center">
                 <thead bgcolor="#949494">
-                <th>BookID</th><th>Title</th><th>Author</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Publishtime</th><th>Publisher</th>  
+                <th>BookID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Borrowtimes</th>
                 </thead>
                 <tbody>
                     {% for book in books %}
@@ -93,11 +99,7 @@
                         <td><a href="/books/{{book.id}}">{{book.id}}</a></td>
                         <td><a href="/books/{{book.id}}">{{book.title}}</a></td>
                         <td>{{book.author}}</td>
-                        <td>{{book.whereis}}</td>
-                        <td>{{book.isonshelf}}</td>
-                        <td>{{book.borrowtimes}}</td>
-                        <td>{{book.publishtime}}</td>
-                        <td>{{book.publisher}}</td>
+                        <td>{{book.allborrowtimes}}</td>
                     </tr>
                         {%else %}
                             <p>no book yet</p>

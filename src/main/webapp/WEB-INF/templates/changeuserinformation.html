@@ -5,7 +5,7 @@
     <title>changeuserinformation</title>
 </head>
 <body>
-<form method="post" action="/user/${user.id}/information/change">
+<form method="post" action="/user/information/change">
     <div>
         <p>{{ user.usertype }} : {{ user.id }}</p>
         {% if error != null %}
@@ -42,7 +42,7 @@
         {% if changedpassword != true %}
             {% if changedname != true %}
                 <br>
-                <a href="/user/${user.id}/information">Abandon modification?</a>
+                <a href="/user/information">Abandon modification?</a>
             {% endif %}
         {% endif %}
     </div>

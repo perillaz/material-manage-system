@@ -5,6 +5,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -16,6 +17,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import org.xzgtemp.entity.Book;
+import org.xzgtemp.entity.User;
 
 @Component
 public class BookService {
@@ -28,6 +30,14 @@ public class BookService {
 
 
     //----------AddBook------------------------------------------
+
+    public Long AddBookInfo(User user,
+        String title,String author,String isbn,String edition,Date publishtime,String publisher,String lang,String briefinfo
+        ){
+        Book book = new Book(title,author,isbn,edition,publishtime,publisher,lang,briefinfo);
+        AddBook(book);
+        return book.getId();
+    }
 
     public void AddBook(Book book){
         //String title, String author, Date publishtime,String publisher,String buyer, Date buytime,
@@ -66,14 +76,14 @@ public class BookService {
                         rs.getString("title"),
                         rs.getString("author"),
                         rs.getInt("copyamount"),
-                        rs.getInt("borrowcopys"),
+                        rs.getInt("borrowedcopys"),
                         rs.getInt("allborrowtimes"),
                         rs.getString("isbn"),
                         rs.getString("edition"),
                         rs.getDate("publishtime"),
                         rs.getString("publisher"),
                         rs.getString("lang"),
-                        rs.getString("brief_info")
+                        rs.getString("briefinfo")
                     );
                 }
                 ,bid

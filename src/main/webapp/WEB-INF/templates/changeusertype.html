@@ -5,7 +5,7 @@
     <title>changeusertype</title>
 </head>
 <body>
-    <form method="post" action="/user/${user.id}/changeusertype">
+    <form method="post" action="/user/changeusertype">
         <div>
             <p>{{ user.usertype }} : {{ user.id }}</p>
             {% if success == null %}
@@ -34,7 +34,7 @@
             {% else %}
             <p>{{ success }}</p>
             <br>
-            <a href="/user/${user.id}/changeusertype">Continue change userpermission</a>
+            <a href="/user/changeusertype">Continue change userpermission</a>
             <br>
             <a href="/search">Return Search</a>
             {% endif %}

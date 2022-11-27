@@ -12,6 +12,9 @@ import org.xzgtemp.service.DocumentService;
 import org.xzgtemp.service.UserService;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.Document;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -124,7 +127,7 @@ public class LoginController {
         try {
             Map<String, Object> model = new HashMap<>();
             if (!getuser(session,model)){
-                return new ModelAndView("redirect:/signin.html");
+                return new ModelAndView("redirect:/signin");
             }
             model.put("searchWhat",searchwhat);
             model.put("searchBy",searchby);
@@ -139,6 +142,9 @@ public class LoginController {
                 case "book" + "author":
                     model.put("books",bookservice.GetBooksbyAuthor(target));
                     break;
+                case "book" + "id":
+                    model.put("books",Arrays.asList(bookservice.GetBookbyBID(Long.parseLong(target))));
+                    break;
                 case "document" + "default":
                     model.put("documents",documentservice.GetDocumentsbyTitleOrAuthor(target));
                     break;
@@ -147,6 +153,9 @@ public class LoginController {
                     break;
                 case "document" + "author":
                     model.put("documents",documentservice.GetDocumentsbyAuthor(target));
+                    break;
+                case "document" + "id":
+                    model.put("documents",Arrays.asList(documentservice.GetDocumentbyDID(Long.parseLong(target))));
                     break;
             }
             return new ModelAndView("/search.html",model);

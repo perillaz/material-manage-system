@@ -20,7 +20,7 @@ import org.xzgtemp.service.BookService;
 import org.xzgtemp.service.DocumentService;
 import org.xzgtemp.service.UserService;
 
-@RequestMapping("/user/{uid}")
+@RequestMapping("/user")
 @Controller
 public class UserController {
 
@@ -50,7 +50,7 @@ public class UserController {
 		if (getuser(session,model)){
 			return new ModelAndView("redirect:/search.html",model);
 		}
-		return new ModelAndView("signin.html");
+		return new ModelAndView("redirect:/signin");
 	}
 
 	@GetMapping("/information")
@@ -59,7 +59,7 @@ public class UserController {
 		if(getuser(session,model)) {
 			return new ModelAndView("userdetial.html", model);
 		}
-		return new ModelAndView("redirect:/sigin.html");
+		return new ModelAndView("redirect:/signin");
 	}
 
 	@PostMapping("/information")
@@ -86,7 +86,7 @@ public class UserController {
 		if(getuser(session,model)) {
 			return new ModelAndView("userdetial.html", model);
 		}
-		return new ModelAndView("redirect:/signin.html");
+		return new ModelAndView("redirect:/signin");
 
 	}
 
@@ -157,7 +157,7 @@ public class UserController {
 		if(getuser(session,model)){
 			return new ModelAndView("changeusertype.html",model);
 		}
-		return new ModelAndView("sigin.html");
+		return new ModelAndView("redirect:/signin");
 	}
 
 	@PostMapping("/changeusertype")

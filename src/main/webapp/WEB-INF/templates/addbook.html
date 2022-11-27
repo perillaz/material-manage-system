@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AddBook</title>
+</head>
+<body>
+<form method="post" action="/addbook" >
+    <div class="form-group">
+        <div>
+            <lable>title :</lable>
+            <input name="title" type="text">
+        </div>
+        <div>
+            <lable>author :</lable>
+            <input name="author" type="text">
+        </div>
+        <div>
+            <lable>ISBN :</lable>
+            <input name="isbn" type="text">
+        </div>
+        <div>
+            <lable>Edition :</lable>
+            <input name="edition" type="text">
+        </div>
+        <div>
+            <lable>Publishtime :</lable>
+            <input type="date" name="publishtime" value="" />
+        </div>
+        <div>
+            <lable>Publisher :</lable>
+            <input name="publisher" type="text">
+        </div>
+        <div>
+            <lable>Language :</lable>
+            <input name="lang" type="text">
+        </div>
+        <div>
+            <lable>Brief Introduction :</lable>
+            <input name="briefinfo" type="text">
+        </div>
+        <div>
+        <button type="submit">submit</button>
+        </div>
+    </div>
+    <div>
+        {%  if error != null %}
+            <p>{{ error }}</p>
+        {%  endif %}
+        <p></p>
+        <br>
+        <a href="/search">Rerurn search.</a>
+    </div>
+</form>
+</body>
+</html>
