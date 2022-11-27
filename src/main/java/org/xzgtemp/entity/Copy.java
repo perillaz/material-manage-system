@@ -12,14 +12,26 @@ public class Copy {
     private String buyerid;
     private String buyername;
     private Date buytime;
-    private Integer borrowtimes;
+    private Integer borrowtimes = 0;
+    private Boolean canbeborrow = true;
+    private Boolean canbereserve = true;
+    private String reserver = "";
+
+    public String getReserver() {
+        return reserver;
+    }
+
+    public void setReserver(String reserver) {
+        this.reserver = reserver;
+    }
 
     public Copy() {
     	
     }
-    
-	public Copy(Long id, Long bid, String btitle, String loc, Boolean isborrowed, Boolean isreserved, String buyerid,
-            String buyername, Date buytime, Integer borrowtimes) {
+
+    public Copy(Long id, Long bid, String btitle, String loc, Boolean isborrowed, Boolean isreserved, String buyerid,
+            String buyername, Date buytime, Integer borrowtimes, Boolean canbeborrow, Boolean canbereserve,
+            String reserver) {
         this.id = id;
         this.bid = bid;
         this.btitle = btitle;
@@ -30,8 +42,22 @@ public class Copy {
         this.buyername = buyername;
         this.buytime = buytime;
         this.borrowtimes = borrowtimes;
+        this.canbeborrow = canbeborrow;
+        this.canbereserve = canbereserve;
+        this.reserver = reserver;
     }
 
+    public Copy(Long bid, String btitle, String loc, Boolean isborrowed, Boolean isreserved, String buyerid,
+            String buyername, Date buytime) {
+        this.bid = bid;
+        this.btitle = btitle;
+        this.loc = loc;
+        this.isborrowed = isborrowed;
+        this.isreserved = isreserved;
+        this.buyerid = buyerid;
+        this.buyername = buyername;
+        this.buytime = buytime;
+    }
 
     public Long getId() {
     	return id;
@@ -102,6 +128,22 @@ public class Copy {
     }
     public void setBuytime(Date buytime) {
     	this.buytime=buytime;
+    }
+
+    public Boolean getCanbeborrow() {
+        return canbeborrow;
+    }
+
+    public void setCanbeborrow(Boolean canbeborrow) {
+        this.canbeborrow = canbeborrow;
+    }
+
+    public Boolean getCanbereserve() {
+        return canbereserve;
+    }
+
+    public void setCanbereserve(Boolean canbereserve) {
+        this.canbereserve = canbereserve;
     }
 
 

@@ -17,24 +17,32 @@ public class BorrowCopy {
 
 	}
 
-	public BorrowCopy(
-		Long id,
-		String uid,
-		Long cid,
-		Date borrowtime,
-		Date sendbacktime,
-		Date duetime,
-		Boolean finished){
-			this.id = id;
-			this.uid = uid;
-			this.cid = cid;
-			this.borrowtime = borrowtime;
-			this.sendbacktime = sendbacktime;
-			this.duetime = duetime;
-			this.finished = finished;
-		}
-	
-	
+	public BorrowCopy(String uid, Long cid, Long bid, String btitle, Date borrowtime, Date sendbacktime, Date duetime,
+			Boolean finished) {
+		this.uid = uid;
+		this.cid = cid;
+		this.bid = bid;
+		this.btitle = btitle;
+		this.borrowtime = borrowtime;
+		this.sendbacktime = sendbacktime;
+		this.duetime = duetime;
+		this.finished = finished;
+	}
+
+	public BorrowCopy(Long id, String uid, Long cid, Long bid, String btitle, Date borrowtime, Date sendbacktime,
+			Date duetime, Boolean finished) {
+		this.id = id;
+		this.uid = uid;
+		this.cid = cid;
+		this.bid = bid;
+		this.btitle = btitle;
+		this.borrowtime = borrowtime;
+		this.sendbacktime = sendbacktime;
+		this.duetime = duetime;
+		this.finished = finished;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
