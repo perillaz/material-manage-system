@@ -22,6 +22,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import org.xzgtemp.entity.Document;
+import org.xzgtemp.entity.DownloadDocument;
 import org.xzgtemp.entity.User;
 
 @Component
@@ -156,6 +157,31 @@ public class DocumentService {
         } catch (Exception e) {
             throw new RuntimeException(e); 
         }
+    }
+
+
+    public void AddDownloadDocument(DownloadDocument downloaddocument){
+        KeyHolder holder = new GeneratedKeyHolder();
+        String sql = "INSERT INTO DownloadDocument(uid,did,dtitle,downloadtime) VALUES(?,?,?,?)";
+        if(1 != jdbctemplate.update((conn) -> {
+                    PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    ps.setObject(1,downloaddocument.getUid());
+                    ps.setObject(2,downloaddocument.getDid());
+                    ps.setObject(3,downloaddocument.getDtitle());
+                    ps.setObject(4,downloaddocument.getDownloadtime());
+                    return ps;
+                },
+                holder)
+        ){
+            throw new RuntimeException("Insert failed.");
+        }
+        downloaddocument.setId(holder.getKey().longValue());
+    }
+
+
+    public void doAddDownloadDocument(User user,Long did){
+        Document document = GetDocumentbyDID(did);
+        AddDownloadDocument(new DownloadDocument(user.getId(),did,document.getTitle(),Date.valueOf(LocalDate.now())));
     }
 
 }
