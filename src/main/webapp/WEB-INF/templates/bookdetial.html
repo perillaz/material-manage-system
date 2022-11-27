@@ -90,28 +90,36 @@
                     <p>{{book.title}}</p>
                     <lable>author:</lable>
                     <p>{{book.author}}</p>
-                    <lable>abstract:</lable>
-                    <p>abstract</p>
+                    <lable>copyamount:</lable>
+                    <p>{{book.copyamount}}</p>
+                    <lable>borrowedcopys:</lable>
+                    <p>{{book.borrowedcopys}}</p>
+                    <lable>isbn:</lable>
+                    <p>{{book.isbn}}</p>
+                    <lable>edition:</lable>
+                    <p>{{book.edition}}</p>
+                    <lable>publishtime:</lable>
+                    <p>{{book.publishtime}}</p>
+                    <lable>publisher:</lable>
+                    <p>{{book.publisher}}</p>
+                    <lable>briefinfo:</lable>
+                    <p>{{book.briefinfo}}</p>
+                    
                 </header>
             </article>
         </form>
         <h3>all copys</h3>
         <table width="100%" border="1" align="center">
             <thead bgcolor="#949494">
-            <th>Copy</th><th>Publisher</th><th>Publishtime</th><th>Buyer</th><th>Buytime</th><th>Call Number</th><th>Statement</th><th>Borrowtimes</th><th>Borrow</th><th>Reserve</th><th>modify</th>  
+            <th>Copy</th><th>Bookid</th><th>BookTitle</th><th>Location</th><th>BuyerName</th><th>BuyTime</th><th>BorrowTimes</th><th>Borrow</th><th>Reserve</th> 
             </thead>
             <tbody>
                 <tr>
-                    <td>{{book.id}}</td>
-                    <td>{{book.publish}}</td>
-                    <td>{{book.publishtime}}</td>
-                    <td>{{book.buyer}}</td>
+                    <td>{{copy.id}}</td>
+                    <td>{{book.buyerbname}}</td>
                     <td>{{book.buytime}}</td>
-                    <td>{{book.whereis}}</td>
-                    <td>{{book.statement}}</td>
-                    <td>{{book.borrowtimes}}</td>
-                    <td><button type="button" onclick="whenborrow()">borrow</button></td>
-                    <td><button type="button" onclick="whenreserve()">reserve</button></td>
+                    <td><a href="/borrow">borrow</a></td>
+                    <td><a href="/reserve">reserve</a></td>
                     <td>modify</td>
                 </tr>
             </tbody>
