@@ -34,6 +34,11 @@
                 display: block;
                 position:absolute;
             }
+
+            article{
+                border-style: groove;
+                border-color:black;
+            }
         </style>
         <script>
             function whenborrow(){
@@ -86,23 +91,25 @@
             <article>
                 <header>
                     <h3>brief information</h3>
-                    <lable>title:</lable>
+                    <lable style="float:left">title:</lable>
                     <p>{{book.title}}</p>
-                    <lable>author:</lable>
+                    <lable style="float:left">author:</lable>
                     <p>{{book.author}}</p>
-                    <lable>copyamount:</lable>
+                    <lable style="float:left">copyamount:</lable>
                     <p>{{book.copyamount}}</p>
-                    <lable>borrowedcopys:</lable>
+                    <lable style="float:left">borrowedcopys:</lable>
                     <p>{{book.borrowedcopys}}</p>
-                    <lable>isbn:</lable>
+                    <lable style="float:left">isbn:</lable>
                     <p>{{book.isbn}}</p>
-                    <lable>edition:</lable>
+                    <lable style="float:left">edition:</lable>
                     <p>{{book.edition}}</p>
-                    <lable>publishtime:</lable>
+                    <lable style="float:left">publishtime:</lable>
                     <p>{{book.publishtime}}</p>
-                    <lable>publisher:</lable>
+                    <lable style="float:left">publisher:</lable>
                     <p>{{book.publisher}}</p>
-                    <lable>briefinfo:</lable>
+                    <lable style="float:left">Lang:</lable>
+                    <p>{{book.lang}}</p>
+                    <lable style="float:left">briefinfo:</lable>
                     <p>{{book.briefinfo}}</p>
                     
                 </header>
@@ -111,20 +118,42 @@
         <h3>all copys</h3>
         <table width="100%" border="1" align="center">
             <thead bgcolor="#949494">
-            <th>Copy</th><th>Bookid</th><th>BookTitle</th><th>Location</th><th>BuyerName</th><th>BuyTime</th><th>BorrowTimes</th><th>Borrow</th><th>Reserve</th> 
+            <th>Copy</th><th>Location</th><th>BuyerName</th><th>BuyTime</th><th>BorrowTimes</th><th>Borrow</th><th>Reserve</th><th>Return</th> 
             </thead>
             <tbody>
+                {% for copy in copys%}
                 <tr>
                     <td>{{copy.id}}</td>
-                    <td>{{book.buyerbname}}</td>
+                    <td>{{copy.loc}}</td>
+                    <td>{{copy.buyername}}</td>
                     <td>{{book.buytime}}</td>
-                    <td><a href="/borrow">borrow</a></td>
-                    <td><a href="/reserve">reserve</a></td>
-                    <td>modify</td>
+                    <td>{{book.borrowtimes}}</td>
+                    {%if copy.canbeborrow %}
+                    <td><a href="/books/{{book.id}}/borrow">borrow</a></td>
+                    {%else%}
+                    <td>had borrowed</td>
+                    {%endif%}
+                    {%if copy.canbereserve %}
+                    <td><a href="/books/{{book.id}}/reserve">reserve</a></td>
+                    {%else%}
+                    <td>had reserved</td>
+                    {%endif%}
+                    {%if user.id==borrowcopy.uid %}
+                    <td><a href="/books/{{book.id}}/return">return</a></td>
+                    {%else%}
+                    <td>had borrowed</td>
+                    {%endif%}
                 </tr>
+                {%endfor%}
             </tbody>
-
-
+            {%if borrowsucceed!=null%}
+            <p>{{borrowsucceed}}</p>
+            {%elif reservesucceed!=null%}
+            <p>{{reservesucceed}}</p>
+            {%elif returnsucceed!=null%}
+            <p>{{returnsucceed}}</p>
+            {%endif%}
+        
             {% else %}
 
             <div class="form-group">

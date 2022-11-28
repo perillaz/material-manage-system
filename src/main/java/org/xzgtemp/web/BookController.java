@@ -45,27 +45,16 @@ public class BookController{
 	}
 
 	//TODO：预约，借阅
-	@PostMapping("/borrow")
-	public ModelAndView doBorrow(@RequestParam("cid") Long cid, @RequestParam("user") User user,HttpSession session) {
+	@GetMapping("/borrow")
+	public ModelAndView doBorrow(@PathVariable("cid") Long cid,HttpSession session) {
 		try{
 			if (session.getAttribute(KEY_USER) ==null){
 				return new ModelAndView("redirect:/signin.html");
 			}
 			Map<String, Object> model = new HashMap<>();
-			if(copyservice.GetCopybyID(cid).getCanbeborrow()) {
-				if(copyservice.GetCopybyID(cid).getCanbereserve()) {
-					copyservice.doBorrowCopy(cid, user);
-					model.put("borrowsucceed", "borrow succeeds!");
-				}
-				else if(user.getId()==copyservice.GetCopybyID(cid).getReserver()) {
-					copyservice.doBorrowCopy(cid, user);
-					model.put("borrowsucceed", "borrow succeeds!");
-				}
-				else {
-					model.put("borrowfailed", "borrow fails!");
-				}
-			}
-			return new ModelAndView("redirect:/bookdetial.html",model);
+			copyservice.doBorrowCopy(cid, (User)session.getAttribute(KEY_USER));
+			model.put("borrowsucceed", "borrow succeeds!");
+			return new ModelAndView("bookdetial.html",model);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -73,19 +62,16 @@ public class BookController{
 		}
 	}
 	
-	@PostMapping("/reserve")
-	public ModelAndView doReserve(@RequestParam("cid") Long cid, @RequestParam("user") User user, HttpSession session) {
+	@GetMapping("/reserve")
+	public ModelAndView doReserve(@PathVariable("cid") Long cid, HttpSession session) {
 		try{
 			if (session.getAttribute(KEY_USER) ==null){
 				return new ModelAndView("redirect:/signin.html");
 			}
 			Map<String, Object> model = new HashMap<>();
-			if (copyservice.GetCopybyID(cid).getCanbereserve()) {
-				copyservice.ReserveCopy(cid, user);
-				model.put("reservesucceed","reserve succeeds!");
-			}
-			
-			return new ModelAndView("redirect:/bookdetial.html",model);
+			copyservice.ReserveCopy(cid, (User)session.getAttribute(KEY_USER));
+			model.put("reservesucceed","reserve succeeds!");
+			return new ModelAndView("bookdetial.html",model);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -93,14 +79,16 @@ public class BookController{
 		}
 	}
 	
-	@PostMapping("/return")
-	public ModelAndView doreturn(@RequestParam("cid") Long cid, @RequestParam("bid") Long bid, HttpSession session) {
+	@GetMapping("/return")
+	public ModelAndView doreturn(@PathVariable("cid") Long cid, @PathVariable("bid") Long bid, HttpSession session) {
 		try{
 			if (session.getAttribute(KEY_USER) ==null){
 				return new ModelAndView("redirect:/signin.html");
 			}
+			Map<String, Object> model = new HashMap<>();
 			copyservice.ReturnCopy(cid, bid);
-			return new ModelAndView("redirect:/bookdetial.html");
+			model.put("returnsucceed", "return succeeds!");
+			return new ModelAndView("bookdetial.html",model);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
