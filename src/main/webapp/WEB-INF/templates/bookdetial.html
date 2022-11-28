@@ -155,22 +155,103 @@
             {%endif%}
         
             {% else %}
-
-            <div class="form-group">
-                <form method="post" action="/books/{{did}}/change/title">
-                    <label>Title : {{document.title}}</label>
-                    <input name="value" type="text" class="form-control" placeholder="value">
-                    <button type="submit" class="btn btn-outline-primary">修改</button>
-                </form>
-            </div>
-            <div class="form-group">
-                <form method="post" action="/books/{{did}}/change/author">
-                    <label>Author : {{document.author}}</label>
-                    <input name="value" type="text" class="form-control" placeholder="author" >
-                    <button type="submit" class="btn btn-outline-primary">修改</button>
-                </form>
-            </div>
+            
+                {%if user.getUsertype()=="admini"%}
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/change/title">
+                        <label>Title : {{book.title}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="title">
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/change/author">
+                        <label>Author : {{book.author}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="author" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/change/isbn">
+                        <label>Isbn : {{book.isbn}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="isbn" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/change/edition">
+                        <label>Edition : {{book.edition}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="edition" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/change/publisher">
+                        <label>Publisher : {{book.publisher}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="publisher" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/change/publishtime">
+                        <label>Publishtime : {{book.publishtime}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="publishtime" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/change/lang">
+                        <label>Lang : {{book.lang}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="lang" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/change/briefinfo">
+                        <label>Brief Information : {{book.briefinfo}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="briefinfo" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                {%endif%}
             {% endif %}
+
+            {%if user.getUsertype()=="admini"%}
+            <form method="post" action="/books/{{book.id}}/changecopy">
+                <button type="submit" name="changecopy">modifycopy</button>
+            </form>
+                {%if changecopy != null % }
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/changecopy/loc">
+                        <label>Location: {{copy.loc}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="location" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/changecopy/buyerid">
+                        <label>Buyer ID : {{copy.buyerid}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="buyerid" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/changecopy/buyername">
+                        <label>Buyer Name: {{copy.buyername}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="buyername" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <form method="post" action="/books/{{book.id}}/changecopy/buytime">
+                        <label>Buy Time : {{copy.buytime}}</label>
+                        <input name="value" type="text" class="form-control" placeholder="buytime" >
+                        <button type="submit" class="btn btn-outline-primary">modify</button>
+                    </form>
+                </div>
+                {%endif%}
+                
+            {%endif%}
     </body>
 </html>
 
