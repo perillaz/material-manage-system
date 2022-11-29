@@ -66,6 +66,17 @@ public class BookService {
         book.setId(holder.getKey().longValue());
     }
 
+
+    public void DeleteBook(Long id){
+        if(1 != jdbctemplate.update(
+                "DELETE FROM Book WHERE id = ?",
+                id
+                )
+            ){
+                throw new RuntimeException("Failed to delete");
+            }
+    }
+
     //---------GetBookByAttribute------------------------------
     public Book GetBookbyBID(Long bid){
         String sql = "SELECT * FROM Book WHERE id = ?";
@@ -92,7 +103,7 @@ public class BookService {
 
     public List<Book> GetBooksbyTitleOrAuthor(String s){
         return jdbctemplate.query(
-            "SELECT * FROM Book WHERE title LIKE CONCAT(\'%\',?,\'%\') OR author LIKE CONCAT(\'%\',?,\'%\')",
+            "SELECT * FROM Book WHERE title LIKE CONCAT(\'%\',?,\'%\') OR author LIKE CONCAT(\'%\',?,\'%\') ORDER BY allborrowtimes DESC",
             bookRowMapper,
             s,
             s
@@ -101,7 +112,7 @@ public class BookService {
 
     public List<Book> GetBooksbyTitle(String Title){
         return jdbctemplate.query(
-            "SELECT * FROM Book WHERE title LIKE CONCAT(\'%\',?,\'%\')",
+            "SELECT * FROM Book WHERE title LIKE CONCAT(\'%\',?,\'%\') ORDER BY allborrowtimes DESC",
             bookRowMapper,
             Title
         );
@@ -109,7 +120,7 @@ public class BookService {
 
     public List<Book> GetBooksbyAuthor(String Author){
         return jdbctemplate.query(
-            "SELECT * FROM Book WHERE author LIKE CONCAT(\'%\',?,\'%\')",
+            "SELECT * FROM Book WHERE author LIKE CONCAT(\'%\',?,\'%\') ORDER BY allborrowtimes DESC",
             bookRowMapper,
             Author
         );
@@ -138,8 +149,5 @@ public class BookService {
             throw new RuntimeException(e); 
         }
     }
-    
-    
-    
     
 }

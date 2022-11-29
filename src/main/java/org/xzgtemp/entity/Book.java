@@ -2,6 +2,9 @@ package org.xzgtemp.entity;
 
 import java.sql.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.xzgtemp.util.SqlDateUtil;
+
 public class Book {
 
 	private Long id;
@@ -159,6 +162,9 @@ public class Book {
 		
 	}
 
+	@Autowired
+	SqlDateUtil sqldateutil;
+
 	public Long getId(){
 		return id;
 	}
@@ -230,6 +236,11 @@ public class Book {
 
 	public void setPublishtime(Date publishtime) {
 		this.publishtime=publishtime;
+	}
+
+
+	public void setPublishtime(String publishtime) {
+		this.publishtime=sqldateutil.StringtoDate(publishtime);
 	}
 
 	public String getPublisher() {

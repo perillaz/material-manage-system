@@ -51,10 +51,6 @@ public class UserService {
 	}
 
 
-	public void AddUserFromFile(){
-        //TODO:从文件读取记录批量导入数据库，使用预编译，参数为定
-    }
-
 	public User GetUserbyID(String id){
 		return jdbcTemplate.queryForObject("SELECT * FROM User WHERE id = ?",
             (ResultSet rs, int rowNum) -> {

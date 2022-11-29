@@ -60,10 +60,163 @@
         </script>
     </head>
     <body>
+    
+    {% if change == null %}
+    <div>
+        <h2>bookdetails</h2>
+    </div>
+    <div>
+        <article>
+            <header>
+                <h3>brief information</h3>
+                <lable style="float:left">title:</lable>
+                <p>{{book.title}}</p>
+                <lable style="float:left">author:</lable>
+                <p>{{book.author}}</p>
+                <lable style="float:left">copyamount:</lable>
+                <p>{{book.copyamount}}</p>
+                <lable style="float:left">borrowedcopys:</lable>
+                <p>{{book.borrowedcopys}}</p>
+                <lable style="float:left">isbn:</lable>
+                <p>{{book.isbn}}</p>
+                <lable style="float:left">edition:</lable>
+                <p>{{book.edition}}</p>
+                <lable style="float:left">publishtime:</lable>
+                <p>{{book.publishtime}}</p>
+                <lable style="float:left">publisher:</lable>
+                <p>{{book.publisher}}</p>
+                <lable style="float:left">Lang:</lable>
+                <p>{{book.lang}}</p>
+                <lable style="float:left">briefinfo:</lable>
+                <p>{{book.briefinfo}}</p>
+            </header>
+        </article>
+    </div>
+    {%if borrowsucceed!=null%}
+    <div>
+        <p>{{borrowsucceed}}</p>
+    </div>
+    {% else %}
+    {% if reservesucceed!=null%}
+    <div>
+        <p>{{reservesucceed}}</p>
+    </div>
+    {% else %}
+    {%if returnsucceed!=null%}
+    <div>
+        <p>{{returnsucceed}}</p>
+    </div>
+    {% else %}
+    <div>
+        <h3>all copys</h3>
+        <table width="100%" border="1" align="center">
+            <thead bgcolor="#949494">
+            <th>Copy</th><th>Location</th><th>BuyerName</th><th>BorrowTimes</th><th>Borrow</th><th>Reserve</th> 
+            </thead>
+            <tbody>
+                {% for copy in copys%}
+                <tr>
+                    <td>{{copy.id}}</td>
+                    <td>{{copy.loc}}</td>
+                    <td>{{copy.buyername}}</td>
+                    <td>{{copy.borrowtimes}}</td>
+                    {%if copy.canbeborrow and ((copy.canbereserve) or (copy.reserver == user.id)) %}
+                    <td><a href="/books/{{book.id}}/copy/{{copy.id}}/borrow">borrow</a></td>
+                    {%else%}
+                    <td>can't borrow now</td>
+                    {%endif%}
+                    {%if copy.canbereserve %}
+                    <td><a href="/books/{{book.id}}/copy/{{copy.id}}/reserve">reserve</a></td>
+                    {%else%}
+                    <td>can't reserve now</td>
+                    {%endif%}
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    {%endif%}
+    {%endif%}
+    {%endif%}
+    <div>
+        <a href="/books/{{book.id}}/addcopy">Add Copy</a>
+    </div>
+    <div>
+        <a href="/search">Return Search</a>
+    </div>    
+    {%if user.getUsertype()=="admini"%}
+    <div>
+        <a href="/books/{{book.id}}/change">Change Book Information</a>
+    </div>
+    <div>
+        <a href="/books/{{book.id}}/delete">Delete Book</a>
+    </div>    
+    {%endif%}
+        {% else %}
+            <div class="form-group">
+                <form method="post" action="/books/{{book.id}}/change/title">
+                    <label>Title : {{book.title}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="title">
+                    <button type="submit" class="btn btn-outline-primary">modify</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form method="post" action="/books/{{book.id}}/change/author">
+                    <label>Author : {{book.author}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="author" >
+                    <button type="submit" class="btn btn-outline-primary">modify</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form method="post" action="/books/{{book.id}}/change/isbn">
+                    <label>Isbn : {{book.isbn}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="isbn" >
+                    <button type="submit" class="btn btn-outline-primary">modify</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form method="post" action="/books/{{book.id}}/change/edition">
+                    <label>Edition : {{book.edition}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="edition" >
+                    <button type="submit" class="btn btn-outline-primary">modify</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form method="post" action="/books/{{book.id}}/change/publisher">
+                    <label>Publisher : {{book.publisher}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="publisher" >
+                    <button type="submit" class="btn btn-outline-primary">modify</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form method="post" action="/books/{{book.id}}/change/publishtime">
+                    <label>Publishtime : {{book.publishtime}}</label>
+                    <input name="value" type="date" >
+                    <button type="submit" class="btn btn-outline-primary">modify</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form method="post" action="/books/{{book.id}}/change/lang">
+                    <label>Lang : {{book.lang}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="lang" >
+                    <button type="submit" class="btn btn-outline-primary">modify</button>
+                </form>
+            </div>
+            <div class="form-group">
+                <form method="post" action="/books/{{book.id}}/change/briefinfo">
+                    <label>Brief Information : {{book.briefinfo}}</label>
+                    <input name="value" type="text" class="form-control" placeholder="briefinfo" >
+                    <button type="submit" class="btn btn-outline-primary">modify</button>
+                </form>
+            </div>
+        {% endif %}
+
+
         <div class="dropdown">
             <div class="form-group">
             <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
             <div class="dropdown-content">
+                <a href="/search">Search</a>
                 <a href="/user/information">User Information</a>
                 {% if user.usertype=="admini" %}
                     {% if user.setadmini == true %}
@@ -73,7 +226,6 @@
                         <a href="/user/changeusertype">Change UserPermission</a>
                         {% endif %}
                     {% endif %}
-                    <a href="/modifymaterial">Modify Material</a>
                     <a href="/uploaddocument">Upload Document</a>
                     <a href="/addbook">Add Book</a>
                 {% endif %}
@@ -85,173 +237,6 @@
             </div>
             </div>
         </div>
-        {% if change == null %}
-        <form method="post" action="/bookdetail">
-            <h2>bookdetails</h2>
-            <article>
-                <header>
-                    <h3>brief information</h3>
-                    <lable style="float:left">title:</lable>
-                    <p>{{book.title}}</p>
-                    <lable style="float:left">author:</lable>
-                    <p>{{book.author}}</p>
-                    <lable style="float:left">copyamount:</lable>
-                    <p>{{book.copyamount}}</p>
-                    <lable style="float:left">borrowedcopys:</lable>
-                    <p>{{book.borrowedcopys}}</p>
-                    <lable style="float:left">isbn:</lable>
-                    <p>{{book.isbn}}</p>
-                    <lable style="float:left">edition:</lable>
-                    <p>{{book.edition}}</p>
-                    <lable style="float:left">publishtime:</lable>
-                    <p>{{book.publishtime}}</p>
-                    <lable style="float:left">publisher:</lable>
-                    <p>{{book.publisher}}</p>
-                    <lable style="float:left">Lang:</lable>
-                    <p>{{book.lang}}</p>
-                    <lable style="float:left">briefinfo:</lable>
-                    <p>{{book.briefinfo}}</p>
-                    
-                </header>
-            </article>
-        </form>
-        <h3>all copys</h3>
-        <table width="100%" border="1" align="center">
-            <thead bgcolor="#949494">
-            <th>Copy</th><th>Location</th><th>BuyerName</th><th>BuyTime</th><th>BorrowTimes</th><th>Borrow</th><th>Reserve</th><th>Return</th> 
-            </thead>
-            <tbody>
-                {% for copy in copys%}
-                <tr>
-                    <td>{{copy.id}}</td>
-                    <td>{{copy.loc}}</td>
-                    <td>{{copy.buyername}}</td>
-                    <td>{{book.buytime}}</td>
-                    <td>{{book.borrowtimes}}</td>
-                    {%if copy.canbeborrow %}
-                    <td><a href="/books/{{book.id}}/borrow">borrow</a></td>
-                    {%else%}
-                    <td>had borrowed</td>
-                    {%endif%}
-                    {%if copy.canbereserve %}
-                    <td><a href="/books/{{book.id}}/reserve">reserve</a></td>
-                    {%else%}
-                    <td>had reserved</td>
-                    {%endif%}
-                    {%if user.id==borrowcopy.uid %}
-                    <td><a href="/books/{{book.id}}/return">return</a></td>
-                    {%else%}
-                    <td>had borrowed</td>
-                    {%endif%}
-                </tr>
-                {%endfor%}
-            </tbody>
-            {%if borrowsucceed!=null%}
-            <p>{{borrowsucceed}}</p>
-            {%elif reservesucceed!=null%}
-            <p>{{reservesucceed}}</p>
-            {%elif returnsucceed!=null%}
-            <p>{{returnsucceed}}</p>
-            {%endif%}
-        
-            {% else %}
-            
-                {%if user.getUsertype()=="admini"%}
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/change/title">
-                        <label>Title : {{book.title}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="title">
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/change/author">
-                        <label>Author : {{book.author}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="author" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/change/isbn">
-                        <label>Isbn : {{book.isbn}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="isbn" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/change/edition">
-                        <label>Edition : {{book.edition}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="edition" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/change/publisher">
-                        <label>Publisher : {{book.publisher}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="publisher" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/change/publishtime">
-                        <label>Publishtime : {{book.publishtime}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="publishtime" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/change/lang">
-                        <label>Lang : {{book.lang}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="lang" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/change/briefinfo">
-                        <label>Brief Information : {{book.briefinfo}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="briefinfo" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                {%endif%}
-            {% endif %}
-
-            {%if user.getUsertype()=="admini"%}
-            <form method="post" action="/books/{{book.id}}/changecopy">
-                <button type="submit" name="changecopy">modifycopy</button>
-            </form>
-                {%if changecopy != null % }
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/changecopy/loc">
-                        <label>Location: {{copy.loc}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="location" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/changecopy/buyerid">
-                        <label>Buyer ID : {{copy.buyerid}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="buyerid" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/changecopy/buyername">
-                        <label>Buyer Name: {{copy.buyername}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="buyername" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                <div class="form-group">
-                    <form method="post" action="/books/{{book.id}}/changecopy/buytime">
-                        <label>Buy Time : {{copy.buytime}}</label>
-                        <input name="value" type="text" class="form-control" placeholder="buytime" >
-                        <button type="submit" class="btn btn-outline-primary">modify</button>
-                    </form>
-                </div>
-                {%endif%}
-                
-            {%endif%}
     </body>
 </html>
 

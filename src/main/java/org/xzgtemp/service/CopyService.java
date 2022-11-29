@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.xzgtemp.entity.Book;
 import org.xzgtemp.entity.BorrowCopy;
 import org.xzgtemp.entity.Copy;
 import org.xzgtemp.entity.User;
@@ -28,6 +29,7 @@ public class CopyService {
 	JdbcTemplate jdbctemplate;
     
     RowMapper<Copy> copyRowMapper = new BeanPropertyRowMapper<>(Copy.class);
+    RowMapper<BorrowCopy> borrowcopyRowMapper = new BeanPropertyRowMapper<>(BorrowCopy.class);
     
     public void AddCopy(Copy copy){
     	KeyHolder holder = new GeneratedKeyHolder();
@@ -55,7 +57,7 @@ public class CopyService {
     }
     public void AddBorrowCopy(BorrowCopy borrowcopy){
     	KeyHolder holder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO BorrowCopy(uid,cid,bid,btitle,borrowtime,duetime,finished) (?,?,?,?,?,?,?,0)";
+        String sql = "INSERT INTO BorrowCopy(uid,cid,bid,btitle,borrowtime,sendbacktime,duetime,finished) VALUES(?,?,?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setObject(1,borrowcopy.getUid());
@@ -65,6 +67,7 @@ public class CopyService {
             ps.setObject(5,borrowcopy.getBorrowtime());
             ps.setObject(6,borrowcopy.getSendbacktime());
             ps.setObject(7,borrowcopy.getDuetime());
+            ps.setObject(8,borrowcopy.getFinished());
             return ps;
         },
         holder)
@@ -75,7 +78,23 @@ public class CopyService {
         borrowcopy.setId(holder.getKey().longValue());
     }
 
-    public Copy GetCopybyID(Long id) {
+    public Long doAddCopy(User user,Book book,String loc){
+        Copy copy = new Copy(book.getId(),book.getTitle(),loc,user.getId(),user.getName(),Date.valueOf(LocalDate.now()));
+        AddCopy(copy);
+        return copy.getId();
+    }
+
+    public void DeleteCopy(Long id){
+        if(1 != jdbctemplate.update(
+                "DELETE FROM Copy WHERE id = ?",
+                id
+                )
+            ){
+                throw new RuntimeException("Failed to delete");
+            }
+    }
+
+    public Copy GetCopybyCID(Long id) {
     	//获得copy信息
     	String sql="SELECT * FROM COPY WHERE id=?";
     	return jdbctemplate.queryForObject(sql,
@@ -83,7 +102,7 @@ public class CopyService {
                     return new Copy(
                         rs.getLong("id"),
                         rs.getLong("bid"),
-                        rs.getString("btilte"),
+                        rs.getString("btitle"),
                         rs.getString("loc"),
                         rs.getString("buyerid"),
                         rs.getString("buyername"),
@@ -109,7 +128,7 @@ public class CopyService {
                         rs.getString("uid"),
                         rs.getLong("cid"),
                         rs.getLong("bid"),
-                        rs.getString("btilte"),
+                        rs.getString("btitle"),
                         rs.getDate("borrowtime"),
                         rs.getDate("sendbacktime"),
                         rs.getDate("duetime"),
@@ -120,37 +139,48 @@ public class CopyService {
         );
     }
 
-    public List<Copy> GetCopybyBID(Long cid){
+    public List<Copy> GetCopybyBID(Long bid){
         return jdbctemplate.query(
-            "SELECT * FROM Copy WHERE cid = ",
+            "SELECT * FROM Copy WHERE bid = ?",
             copyRowMapper,
-            cid
+            bid
         );
     }
 
-    public List<Copy> GetCopybyReserver(Long cid){
+    public List<BorrowCopy> GetUnfinnishedBorrowCopybyUid(String uid){
         return jdbctemplate.query(
-            "SELECT * FROM Copy WHERE reserver = ",
-            copyRowMapper,
-            cid
+            "SELECT * FROM BorrowCopy WHERE uid = ? AND  finished = false",
+            borrowcopyRowMapper,
+            uid
         );
     }
+
+    public List<BorrowCopy> GetFinnishedBorrowCopybyUid(String uid){
+        return jdbctemplate.query(
+            "SELECT * FROM BorrowCopy WHERE uid = ? AND  finished = true",
+            borrowcopyRowMapper,
+            uid
+        );
+    }
+
+    public List<Copy> GetCopiesbyBuyerid(String buyerid){
+        return jdbctemplate.query(
+            "SELECT * FROM Copy WHERE buyerid = ?",
+            copyRowMapper,
+            buyerid
+        );
+    }
+
     
     public void ReserveCopy(Long cid, User user){
-        Copy copy = GetCopybyID(cid);
-        if(!copy.getCanbeborrow()){
-            throw new RuntimeException("Copy Can't be Reserve");
-        }
+        Copy copy = GetCopybyCID(cid);
         ChangeCopy(copy,"canbereserve",false);
         ChangeCopy(copy,"reserver",user.getId());
     }
 
     public BorrowCopy doBorrowCopy(Long cid, User user){
-        Copy copy = GetCopybyID(cid);
-        if((!copy.getCanbereserve() && (copy.getReserver() != user.getId()))
-            || (!copy.getCanbeborrow()) ){
-            throw new RuntimeException("Copy Can't be Borrow");
-        }
+        Copy copy = GetCopybyCID(cid);
+        System.out.println(copy.toString());
         Date today = Date.valueOf(LocalDate.now());
         BorrowCopy borrowcopy = new BorrowCopy(user.getId(),cid,copy.getBid() ,copy.getBtitle(),today,today,getDueTime(today),false);
         AddBorrowCopy(borrowcopy);
@@ -160,28 +190,13 @@ public class CopyService {
     }
     
     public void ReturnCopy(Long cid,Long bcid){
-        Copy copy = GetCopybyID(cid);
+        Copy copy = GetCopybyCID(cid);
         BorrowCopy borrowcopy = GetBorrowCopybyID(bcid);
         ChangeCopy(copy,"canbeborrow",true);
-        ChangeBorrowCopy(borrowcopy, "finished",1);
+        ChangeBorrowCopy(borrowcopy, "finished",true);
         ChangeBorrowCopy(borrowcopy, "sendbacktime",Date.valueOf(LocalDate.now()));
     }
-/*
-    public boolean DeleteCopy(Copy copy, Long id) {
-    	boolean flag=false;
-    	try {
-    		if(1 != jdbctemplate.update("DELETE frome Cpoy where id=" + id,
-    				flag=true)
-                )
-    		{
-                throw new RuntimeException("Failed to delete");
-            }
-    	}catch (Exception e) {
-            throw new RuntimeException(e);
-            }
-    	return flag;
-    }
-    */ 	
+
     private Date getDueTime( Date starttime ) {
         Calendar calendar =new GregorianCalendar();
         calendar.setTime(starttime);
@@ -216,7 +231,7 @@ public class CopyService {
             field.setAccessible(true);
             field.set(borrowcopy,value);
             if(1 != jdbctemplate.update(
-                "UPDATE Copy SET " + attribute + " = ? WHERE id = ? ",
+                "UPDATE BorrowCopy SET " + attribute + " = ? WHERE id = ? ",
                 //attribute,
                 field.get(borrowcopy),
                 borrowcopy.getId()

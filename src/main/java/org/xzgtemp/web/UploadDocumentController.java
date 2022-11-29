@@ -30,12 +30,12 @@ public class UploadDocumentController {
 	@GetMapping("")
 	public ModelAndView uploadDocument(HttpSession session){
 		Map<String, Object> model = new HashMap<>();
-		if(session.getAttribute(KEY_USER) ==null){
-			return new ModelAndView("redirect:/signin.html");
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
 		}
-		else{
-			return new ModelAndView("uploaddocument.html",model);
-		}
+		model.put("user",user);
+		return new ModelAndView("uploaddocument.html",model);
 	}
 
 	@PostMapping("")
@@ -47,17 +47,18 @@ public class UploadDocumentController {
 		@RequestParam("literature") String literature,
 		HttpSession session
 		){
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
 		try {
-			if (session.getAttribute(KEY_USER) ==null){
-				return new ModelAndView("redirect:/signin.html");
-			}
-			User user = (User) session.getAttribute(KEY_USER);
 			Document document = documentservice.UploadDocument(user,file,title,author,doi,literature);
             return new ModelAndView("redirect:/uploaddocument/success/" + document.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Map<String, Object> model = new HashMap<>();
 			model.put("error","Failed uploaded.Please upload again.");
+			model.put("user",user);
 			return new ModelAndView("uploaddocument.html",model);
 		}
 	}
@@ -66,12 +67,17 @@ public class UploadDocumentController {
     public ModelAndView uploadSuccessful(
         @PathVariable("did") Long did,
 		HttpSession session
-    )
-    {
+    	){
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin.html");
+		}
         Document document = documentservice.GetDocumentbyDID(did);
         Map<String, Object> model = new HashMap<>();
+		model.put("user",user);
         model.put("document",document);
-        return new ModelAndView("uploadsuccess.html",model);
+		model.put("success","success");
+        return new ModelAndView("uploaddocument.html",model);
     }
 
 

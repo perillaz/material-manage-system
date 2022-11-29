@@ -15,13 +15,6 @@ public class Copy {
     private Boolean canbereserve = true;
     private String reserver = "";
 
-    public String getReserver() {
-        return reserver;
-    }
-
-    public void setReserver(String reserver) {
-        this.reserver = reserver;
-    }
 
     public Copy() {
     	
@@ -128,6 +121,21 @@ public class Copy {
         this.canbereserve = canbereserve;
     }
 
+    public String getReserver() {
+        return reserver;
+    }
+
+    public void setReserver(String reserver) {
+        this.reserver = reserver;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Copy [id=" + id + ", bid=" + bid + ", btitle=" + btitle + ", loc=" + loc + ", buyerid=" + buyerid
+                + ", buyername=" + buyername + ", buytime=" + buytime + ", borrowtimes=" + borrowtimes
+                + ", canbeborrow=" + canbeborrow + ", canbereserve=" + canbereserve + ", reserver=" + reserver + "]";
+    }
 
 }
 

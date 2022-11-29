@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>search</title>
+    <style>
+        .dropbtn {
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown {
+            position:absolute;
+            top:0px;
+            right:200px;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+        .dropdown-content a {
+            color: black;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            position:absolute;
+        }
+    </style>
+</head>
+
+<body>
+    {%if type == "upload" %}
+    <h4>Upload history</h4>
+    {%if udlist == null or udlist.size == 0%}
+    <p>no history</p>
+    {% else %}
+    <table width="100%" border="1" align="center">
+        <thead bgcolor="#949494">
+        <th>Document ID</th>
+        <th>Document Title</th>
+        <th>Document Author</th>
+        <th>Upload time </th>
+        <th>Download times</th>
+        </thead>
+        <tbody>
+            {% for document in udlist %}
+            <tr>
+                <td><a href="/documents/{{document.id}}">{{document.id}}</a></td>
+                <td><a href="/documents/{{document.id}}">{{document.title}}</a></td>
+                <td>{{document.author}}</td>
+                <td>{{document.uploadtime}}</td>
+                <td>{{document.downloadtimes}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {%endif%}
+
+
+    {%if type == "download" %}
+    <h4>Download history</h4>
+    {%if ddlist == null or ddlist.size == 0%}
+    <p>no history</p>
+    {% else %}
+    <table width="100%" border="1" align="center">
+        <thead bgcolor="#949494">
+        <th>Document ID</th>
+        <th>Document Title</th>
+        <th>Downloadload time </th>
+        </thead>
+        <tbody>
+            {% for dd in udlist %}
+            <tr>
+                <td><a href="/documents/{{dd.did}}">{{dd.did}}</a></td>
+                <td><a href="/documents/{{dd.did}}">{{dd.dtitle}}</a></td>
+                <td>{{dd.downloadtime}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% endif %}
+
+
+    {%if type == "addcopy" %}
+    <h4>Buy Copy history</h4>
+    {%if bclist == null or bclist.size == 0%}
+    <p>no history</p>
+    {% else %}
+    <table width="100%" border="1" align="center">
+        <thead bgcolor="#949494">
+        <th>Book ID</th>
+        <th>Book Title</th>
+        <th>Copy ID</th>
+        <th>Buy Time</th>
+        <th>Borrow Times</th>
+        </thead>
+        <tbody>
+            {% for copy in udlist %}
+            <tr>
+                <td><a href="/books/{{copy.bid}}">{{copy.bid}}</a></td>
+                <td><a href="//books/{{copy.bid}}">{{copy.btitle}}</a></td>
+                <td>{{copy.id}}</td>
+                <td>{{copy.buytime}}</td>
+                <td>{{copy.borrowtimes}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% endif %}
+
+
+    {%if type == "borrowcopy" %}
+    <h4>Borrow Copy history</h4>
+    {%if bclist == null or bclist.size == 0%}
+    <p>no history</p>
+    {% else %}
+    <table width="100%" border="1" align="center">
+        <thead bgcolor="#949494">
+        <th>Book Title</th>
+        <th>Copy id</th>
+        <th>Borrow time</th>
+        <th>Return time</th>
+        </thead>
+        <tbody>
+            {%for bc in bclist %}
+            <tr>
+            <td><a href="/books/{{bc.bid}}">{{bc.btitle}}</a></td>
+            <td><a href="/books/{{bc.bid}}">{{bc.btitle}}</a></td>
+            <td>{{bc.cid}}</td>
+            <td>{{bc.borrowtime}}</td>
+            <td>{{bc.sendbacktime}}</td>
+            </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% endif %}
+
+    <a href="/user/information">Return to User Information</a>
+
+
+    <div class="dropdown">
+        <div class="form-group">
+        <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
+        <div class="dropdown-content">
+            <a href="/search">Search</a>
+            <a href="/user/information">User Information</a>
+            {% if user.usertype=="admini" %}
+                {% if user.setadmini == true %}
+                <a href="/user/changeusertype">Change UserPermission</a>
+                {% else %}
+                    {% if user.setstudent == true %}
+                    <a href="/user/changeusertype">Change UserPermission</a>
+                    {% endif %}
+                {% endif %}
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/addbook">Add Book</a>
+            {% endif %}
+            {% if user.usertype=="student" %}
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/addbook">Add Book</a>
+            {% endif %}
+            <a href="/signout">Log Out</a>
+        </div>
+        </div>
+    </div>
+</body>

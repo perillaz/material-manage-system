@@ -41,11 +41,12 @@ public class DocumentController {
 
 	@GetMapping("")
 	public ModelAndView showDocument(@PathVariable("did") Long did,HttpSession session) {
-		if (session.getAttribute(KEY_USER) ==null){
-			return new ModelAndView("redirect:/signin.html");
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
 		}
 		Map<String, Object> model = new HashMap<>();
-        model.put("user",(User)session.getAttribute(KEY_USER));
+        model.put("user",user);
 		Document document = documentservice.GetDocumentbyDID(did);
         model.put("document",document);
 		return new ModelAndView("documentdetial.html",model);
@@ -56,11 +57,12 @@ public class DocumentController {
 		@PathVariable("did") Long did,
 		HttpSession session
 	) {
-		if (session.getAttribute(KEY_USER) ==null){
-			return new ModelAndView("redirect:/signin.html");
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
 		}
 		Map<String, Object> model = new HashMap<>();
-        model.put("user",(User)session.getAttribute(KEY_USER));
+        model.put("user",user);
 		Document document = documentservice.GetDocumentbyDID(did);
         model.put("document",document);
 		model.put("change","change");
@@ -74,11 +76,12 @@ public class DocumentController {
 		@RequestParam("value") Object value,
 		HttpSession session
 	) {
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
 		try{
-
-			if (session.getAttribute(KEY_USER) ==null){
-				return new ModelAndView("redirect:/signin.html");
-			}
+			System.out.println(attribute);
 			Document document = documentservice.GetDocumentbyDID(did);
 			documentservice.ChangeDocumentAttribute(document, attribute, value);
 			return new ModelAndView("redirect:/documents/" + did + "/change");
@@ -108,6 +111,19 @@ public class DocumentController {
 		ResponseEntity<byte[]> entity = new ResponseEntity<byte[]>(body, headers, statusCode);
 		documentservice.doAddDownloadDocument(user,did);
 		return entity;
+	}
+
+	@GetMapping("/delete")
+	public ModelAndView DeleteDocument(
+		@PathVariable("did") Long did,
+		HttpSession session
+	) {
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
+		documentservice.DeleteDocument(did);
+		return new ModelAndView("redirect:/search");
 	}
 
 

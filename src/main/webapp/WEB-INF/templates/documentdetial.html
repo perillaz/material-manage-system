@@ -1,32 +1,158 @@
-{% if change == null %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>bookdetails</title>
+        
+        <style>
+            .dropbtn {
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+            .dropdown {
+                position:absolute;
+                top:0px;
+                right:200px;
+                display: inline-block;
+            }
+            .dropdown-content {
+                display: none;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            }
+            .dropdown-content a {
+                color: black;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
 
-{{did}}
-<a href="/documents/{{did}}/change">修改信息</a>
-正常情况下显示信息
+            .dropdown:hover .dropdown-content {
+                display: block;
+                position:absolute;
+            }
 
-文档所有信息
+            article{
+                border-style: groove;
+                border-color:black;
+            }
+        </style>
+        <script>
+            function whenborrow(){
+                if(!book.isborrowed){
+                    return alert('borrow succeed!')
+                }
+                else{
+                    return alert('failed! this copy has been borrowed')
+                }
+            }
+            function whenreserve(){
+                if(book.reserve){
+                    return alert('failed! this copy has been reserved')
+                }
+                else{
+                    return alert('reserve succeed!')
+                }
+            }
+        </script>
+    </head>
+    <body>
+    
+    {% if change == null %}
+    <div>
+        <h2>Document Details</h2>
+    </div>
+    <div>
+        <article>
+            <header>
+                <h3>brief information</h3>
+                <lable style="float:left">title:</lable>
+                <p>{{document.title}}</p>
+                <lable style="float:left">author:</lable>
+                <p>{{document.author}}</p>
+                <lable style="float:left">DOI:</lable>
+                <p>{{document.doi}}</p>
+                <lable style="float:left">literature:</lable>
+                <p>{{document.literature}}</p>
+                <a href="/documents/{{did}}/download">Download</a>
+            </header>
+        </article>
+    </div>
+    <div>
+        <a href="/search">Return Search</a>
+    </div>    
+    {%if user.getUsertype()=="admini" or user.id == document.uploaderid%}
+    <div>   
+        <a href="/documents/{{did}}/change">Change Document Information</a>
+    </div> 
+    <div>   
+        <a href="/documents/{{did}}/delete">Delete Document</a>
+    </div> 
+    {%endif%}
+    {% else %}
+        <div class="form-group">
+            <form method="post" action="/documents/{{did}}/change/title">
+                <label>Title : {{document.title}}</label>
+                <input name="value" type="text" class="form-control" placeholder="title">
+                <button type="submit" class="btn btn-outline-primary">modify</button>
+            </form>
+        </div>
+        <div class="form-group">
+            <form method="post" action="/documents/{{did}}/change/author">
+                <label>Author : {{document.author}}</label>
+                <input name="value" type="text" class="form-control" placeholder="author" >
+                <button type="submit" class="btn btn-outline-primary">modify</button>
+            </form>
+        </div>
+        <div class="form-group">
+            <form method="post" action="/documents/{{did}}/change/doi">
+                <label>DOI : {{document.doi}}</label>
+                <input name="value" type="text" class="form-control" >
+                <button type="submit" class="btn btn-outline-primary">modify</button>
+            </form>
+        </div>
+        <div class="form-group">
+            <form method="post" action="/documents/{{did}}/change/literature">
+                <label>Literature : {{document.literature}}</label>
+                <input name="value" type="text" class="form-control"  >
+                <button type="submit" class="btn btn-outline-primary">modify</button>
+            </form>
+        </div>
+        <div>
+            <a href="/documents/{{document.id}}">Return to Document Detail</a>
+        </div>
+        <div>
+            <a href="/search">Return Search</a>
+        </div>      
+    {% endif %}
 
-下载链接
-
-<a href="/documents/{{did}}/download">Download</a>
-修改界面
-
-{% else %}
-
-{{error}}
-<div class="form-group">
-    <form method="post" action="/documents/{{did}}/change/title">
-        <label>Title : {{document.title}}</label>
-        <input name="value" type="text" class="form-control" placeholder="value">
-        <button type="submit" class="btn btn-outline-primary">修改</button>
-    </form>
-</div>
-<div class="form-group">
-    <form method="post" action="/documents/{{did}}/change/author">
-        <label>Author : {{document.author}}</label>
-        <input name="value" type="text" class="form-control" placeholder="author" >
-        <button type="submit" class="btn btn-outline-primary">修改</button>
-    </form>
-</div>
-
-{% endif %}
+    <div class="dropdown">
+        <div class="form-group">
+        <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
+        <div class="dropdown-content">
+            <a href="/search">Search</a>
+            <a href="/user/information">User Information</a>
+            {% if user.usertype=="admini" %}
+                {% if user.setadmini == true %}
+                <a href="/user/changeusertype">Change UserPermission</a>
+                {% else %}
+                    {% if user.setstudent == true %}
+                    <a href="/user/changeusertype">Change UserPermission</a>
+                    {% endif %}
+                {% endif %}
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/addbook">Add Book</a>
+            {% endif %}
+            {% if user.usertype=="student" %}
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/addbook">Add Book</a>
+            {% endif %}
+            <a href="/signout">Log Out</a>
+        </div>
+        </div>
+    </div>
+    </body>
+</html>

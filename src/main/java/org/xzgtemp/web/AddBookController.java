@@ -29,15 +29,13 @@ public class AddBookController {
 
 	@GetMapping("")
 	public ModelAndView addBooks(HttpSession session){
-		Map<String, Object> model = new HashMap<>();
 		User user = (User)session.getAttribute(KEY_USER);
 		if (user ==null){
-			return new ModelAndView("redirect:/signin.html");
+			return new ModelAndView("redirect:/signin");
 		}
-		else{
-            model.put("user", user);
-			return new ModelAndView("addbook.html",model);
-		}
+		Map<String, Object> model = new HashMap<>();
+        model.put("user", user);
+		return new ModelAndView("addbook.html",model);
 	}
 
 	@PostMapping("")
@@ -52,17 +50,17 @@ public class AddBookController {
         @RequestParam("briefinfo") String briefinfo,
 		HttpSession session
 		){
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
 		try {
-			User user = (User)session.getAttribute(KEY_USER);
-			if (user ==null){
-				return new ModelAndView("redirect:/signin.html");
-			}
             Long bid = bookservice.AddBookInfo(user,title,author,isbn,edition,publishtime,publisher,lang,briefinfo);
             return new ModelAndView("redirect:/addbook/success/" + bid);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Map<String, Object> model = new HashMap<>();
-            model.put("user", (User)session.getAttribute(KEY_USER));
+            model.put("user", user);
 			model.put("error","Failed to add book information.Please do it again.");
 			return new ModelAndView("addbook.html",model);
 		}
@@ -76,13 +74,14 @@ public class AddBookController {
     {	
 		User user = (User)session.getAttribute(KEY_USER);
 		if (user ==null){
-			return new ModelAndView("redirect:/signin.html");
+			return new ModelAndView("redirect:/signin");
 		}
-        Book book = bookservice.GetBookbyBID(bid);
         Map<String, Object> model = new HashMap<>();
-        model.put("book",book);
 		model.put("user", user);
-        return new ModelAndView("addbooksuccess.html",model);
+        Book book = bookservice.GetBookbyBID(bid);
+        model.put("book",book);
+        model.put("success","success");
+        return new ModelAndView("addbook.html",model);
     }
 
 

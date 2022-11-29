@@ -34,7 +34,7 @@ public class DocumentService {
     public final String DocumentFileRootPath = System.getProperty("user.dir") + "/files/";
 
 	RowMapper<Document> documentRowMapper = new BeanPropertyRowMapper<>(Document.class);
-
+    RowMapper<DownloadDocument> downloaddocumentRowMapper = new BeanPropertyRowMapper<>(DownloadDocument.class);
     //---------------AddDocunment---------------------------------
     
     public Document UploadDocument(User user,MultipartFile file,
@@ -85,6 +85,19 @@ public class DocumentService {
         document.setId(holder.getKey().longValue());
     }
 
+    public void DeleteDocument(Long id){
+        Document document = GetDocumentbyDID(id);
+        File file =new File("files/" + document.getFilepath());
+        if (file.exists()) file.delete();
+        if(1 != jdbctemplate.update(
+                "DELETE FROM Document WHERE id = ?",
+                id
+                )
+            ){
+                throw new RuntimeException("Failed to delete");
+            }
+    }
+
     //------------GetDocunmentByAttribute-----------------------------
     public Document GetDocumentbyDID(Long did){
         String sql = "SELECT * FROM Document WHERE id = ?";
@@ -109,7 +122,7 @@ public class DocumentService {
 
     public List<Document> GetDocumentsbyTitleOrAuthor(String s){
         return jdbctemplate.query(
-            "SELECT * FROM Document WHERE title LIKE CONCAT(\'%\',?,\'%\') OR author LIKE CONCAT(\'%\',?,\'%\')",
+            "SELECT * FROM Document WHERE title LIKE CONCAT(\'%\',?,\'%\') OR author LIKE CONCAT(\'%\',?,\'%\') ORDER BY downloadtimes DESC",
             documentRowMapper,
             s,
             s
@@ -118,7 +131,7 @@ public class DocumentService {
 
     public List<Document> GetDocumentsbyTitle(String Title){
         return jdbctemplate.query(
-            "SELECT * FROM Document WHERE title LIKE CONCAT(\'%\',?,\'%\')",
+            "SELECT * FROM Document WHERE title LIKE CONCAT(\'%\',?,\'%\') ORDER BY downloadtimes DESC",
             documentRowMapper,
             Title
         );
@@ -127,19 +140,35 @@ public class DocumentService {
 
     public List<Document> GetDocumentsbyAuthor(String Author){
         return jdbctemplate.query(
-            "SELECT * FROM Document WHERE author LIKE CONCAT(\'%\',?,\'%\')",
+            "SELECT * FROM Document WHERE author LIKE CONCAT(\'%\',?,\'%\') ORDER BY downloadtimes DESC",
             documentRowMapper,
             Author
         );
     }
 
 
+    public List<Document> GetDocumentsbyUploaderid(String uploaderid){
+        return jdbctemplate.query(
+            "SELECT * FROM Document WHERE uploaderid = ?",
+            documentRowMapper,
+            uploaderid
+        );
+    }
+
     public List<Document> GetAllDocuments(){
         return jdbctemplate.query("SELECT * FROM Document",documentRowMapper);
     }
 
-    //----------ChangDocumentAttribute------------------------------
+    
+    public List<DownloadDocument> GetDownloadDocumentsbyUID(String uid){
+        return jdbctemplate.query(
+            "SELECT * FROM DownloadDocument WHERE uid = ?",
+            downloaddocumentRowMapper,
+            uid
+        );
+    }
 
+    //----------ChangDocumentAttribute------------------------------
     public void ChangeDocumentAttribute(Document document,String attribute,Object value){
         try {
             Field field = document.getClass().getDeclaredField(attribute);

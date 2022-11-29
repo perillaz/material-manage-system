@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -61,6 +60,7 @@
         <div class="form-group">
         <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
         <div class="dropdown-content">
+            <a href="/search">Search</a>
             <a href="/user/information">User Information</a>
             {% if user.usertype=="admini" %}
                 {% if user.setadmini == true %}
@@ -70,7 +70,6 @@
                     <a href="/user/changeusertype">Change UserPermission</a>
                     {% endif %}
                 {% endif %}
-                <a href="/modifymaterial">Modify Material</a>
                 <a href="/uploaddocument">Upload Document</a>
                 <a href="/addbook">Add Book</a>
             {% endif %}
@@ -86,12 +85,14 @@
         {%if error==null %}
             {%if searchWhat=="book" %}
             <h2>Book Information</h2>
+            {%if books != null and books.size != 0 %}
             <table width="100%" border="1" align="center">
                 <thead bgcolor="#949494">
                 <th>BookID</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Borrowtimes</th>
+                <th></th>
                 </thead>
                 <tbody>
                     {% for book in books %}
@@ -100,16 +101,19 @@
                         <td><a href="/books/{{book.id}}">{{book.title}}</a></td>
                         <td>{{book.author}}</td>
                         <td>{{book.allborrowtimes}}</td>
+                        <td>{{book.copyamount - book.borrowedcopys}}/{{book.copyamount}}</td>
                     </tr>
-                        {%else %}
-                            <p>no book yet</p>
                     {% endfor %}
                 </tbody>
             </table>
+            {%else %}
+                <p>no book yet</p>
+            {% endif %}
             {% endif %}
 
-            {% if searchWhat=="document" %}
+            {% if searchWhat=="document"%}
             <h2>Document Information</h2>
+            {%if documents != null and documents.size != 0 %}
             <table width="100%" border="1" align="center">
                 <thead bgcolor="#949494">
                 <th>DocumentID</th>
@@ -125,11 +129,12 @@
                             <td>{{document.author}}</td>
                             <td>{{document.downloadtimes}}</td>
                     </tr>
-                            {%else %}
-                                <p>no doucument yet</p>
                         {% endfor %}
                 </tbody>
             </table>
+            {%else %}
+                <p>no doucument yet</p>
+            {% endif %}
             {% endif %}
         {% else %}
         <p id="error" class="text-danger">{{ error }}</p>

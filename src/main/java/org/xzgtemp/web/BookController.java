@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.xzgtemp.entity.Book;
-import org.xzgtemp.entity.Copy;
 import org.xzgtemp.entity.User;
 import org.xzgtemp.service.BookService;
 import org.xzgtemp.service.CopyService;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,90 +30,32 @@ public class BookController{
 	CopyService copyservice;
 
 	public static final String KEY_USER = "__user__";
-
-
     
 	@GetMapping("")
 	public ModelAndView showBook(@PathVariable("bid") Long bid,HttpSession session) {
-		if (session.getAttribute(KEY_USER) ==null){
-			return new ModelAndView("redirect:/signin.html");
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
 		}
 		Map<String, Object> model = new HashMap<>();
-        model.put("user",(User)session.getAttribute(KEY_USER));
+        model.put("user",user);
         model.put("book",bookservice.GetBookbyBID(bid));
         model.put("copys", copyservice.GetCopybyBID(bid));
 		return new ModelAndView("bookdetial.html",model);
 	}
 
-	//TODO：预约，借阅
-	@GetMapping("/borrow")
-	public ModelAndView doBorrow(@PathVariable("cid") Long cid,HttpSession session) {
-		try{
-			if (session.getAttribute(KEY_USER) ==null){
-				return new ModelAndView("redirect:/signin.html");
-			}
-			Map<String, Object> model = new HashMap<>();
-			copyservice.doBorrowCopy(cid, (User)session.getAttribute(KEY_USER));
-			model.put("borrowsucceed", "borrow succeeds!");
-			return new ModelAndView("bookdetial.html",model);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return new ModelAndView("redirect:/error/unknown");
-		}
-	}
 	
-	@GetMapping("/reserve")
-	public ModelAndView doReserve(@PathVariable("cid") Long cid, HttpSession session) {
-		try{
-			if (session.getAttribute(KEY_USER) ==null){
-				return new ModelAndView("redirect:/signin.html");
-			}
-			Map<String, Object> model = new HashMap<>();
-			copyservice.ReserveCopy(cid, (User)session.getAttribute(KEY_USER));
-			model.put("reservesucceed","reserve succeeds!");
-			return new ModelAndView("bookdetial.html",model);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return new ModelAndView("redirect:/error/unknown");
-		}
-	}
-	
-	@GetMapping("/return")
-	public ModelAndView doreturn(@PathVariable("cid") Long cid, @PathVariable("bid") Long bid, HttpSession session) {
-		try{
-			if (session.getAttribute(KEY_USER) ==null){
-				return new ModelAndView("redirect:/signin.html");
-			}
-			Map<String, Object> model = new HashMap<>();
-			copyservice.ReturnCopy(cid, bid);
-			model.put("returnsucceed", "return succeeds!");
-			return new ModelAndView("bookdetial.html",model);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return new ModelAndView("redirect:/error/unknown");
-		}
-	}
-	/*@GetMapping("/borrow")
-	public ModelAndView borrowcopy(@PathVariable("cid") Long cid,HttpSession session) {
-		if (session.getAttribute(KEY_USER)==null) {
-			return new ModelAndView("redirect:/signin.html");
-		}
-		
-	}*/
-
 	@GetMapping("/change")
 	public ModelAndView changeBookInfo(
 		@PathVariable("bid") Long bid,
 		HttpSession session
 	) {
-		if (session.getAttribute(KEY_USER) ==null){
-			return new ModelAndView("redirect:/signin.html");
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
 		}
 		Map<String, Object> model = new HashMap<>();
-        model.put("user",(User)session.getAttribute(KEY_USER));
+        model.put("user",user);
         model.put("book",bookservice.GetBookbyBID(bid));
 		model.put("change","change");
 		return new ModelAndView("bookdetial.html",model);
@@ -126,65 +68,36 @@ public class BookController{
 		@RequestParam("value") Object value,
 		HttpSession session
 	) {
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
 		try{
-
-			if (session.getAttribute(KEY_USER) ==null){
-				return new ModelAndView("redirect:/signin.html");
-			}
-			System.out.println(attribute);
-			System.out.println(value);
+			Map<String, Object> model = new HashMap<>();
+			model.put("user",user);
 			Book book = bookservice.GetBookbyBID(bid);
-			System.out.println(book.getId());
-			System.out.println(book.getTitle());
 			bookservice.ChangeBookAttribute(book, attribute, value);
-			System.out.println(book.getId());
-			System.out.println(book.getTitle());
-			return new ModelAndView("redirect:/books/" + bid );
+			return new ModelAndView("redirect:/books/" + bid + "/change");
 		}
 		catch (Exception e){
 			e.printStackTrace();
 			return new ModelAndView("redirect:/error/unknown");
 		}
 	}
-	
-	@GetMapping("/changecopy")
-	public ModelAndView changeCopy(
+
+
+	@GetMapping("/delete")
+	public ModelAndView DeleteBook(
 		@PathVariable("bid") Long bid,
-		@PathVariable("cid") Long cid,
 		HttpSession session
 	) {
-		if (session.getAttribute(KEY_USER) ==null){
-			return new ModelAndView("redirect:/signin.html");
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
 		}
-		Map<String, Object> model = new HashMap<>();
-        model.put("user",(User)session.getAttribute(KEY_USER));
-        model.put("book",bookservice.GetBookbyBID(bid));
-        model.put("copy",copyservice.GetCopybyID(cid));
-		model.put("changecopy","changecopy");
-		return new ModelAndView("bookdetial.html",model);
+		bookservice.DeleteBook(bid);;
+		return new ModelAndView("redirect:/search");
 	}
+
 	
-	@PostMapping("/changecopy/{attribute}")
-	public ModelAndView changeCopyInfo(
-		@PathVariable("bid") Long bid,
-		@PathVariable("cid") Long cid,
-		@PathVariable("attribute") String attribute,
-		@RequestParam("value") Object value,
-		HttpSession session
-	) {
-		try{
-
-			if (session.getAttribute(KEY_USER) ==null){
-				return new ModelAndView("redirect:/signin.html");
-			}
-			Copy copy=copyservice.GetCopybyID(cid);
-			copyservice.ChangeCopy(copy, attribute, value);
-			return new ModelAndView("redirect:/books/"+bid);
-		}catch (Exception e){
-			e.printStackTrace();
-			return new ModelAndView("redirect:/error/unknown");
-		}
-	}
-
-
-	}
+}

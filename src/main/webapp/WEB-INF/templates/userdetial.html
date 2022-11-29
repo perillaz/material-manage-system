@@ -3,24 +3,119 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>user</title>
+    <style>
+        .dropbtn {
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown {
+            position:absolute;
+            top:0px;
+            right:200px;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+        .dropdown-content a {
+            color: black;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            position:absolute;
+        }
+    </style>
 </head>
 
 <body>
-<ul>
-    <form method="post" action="/user/information">
+    <div>
+        <form method="post" action="/user/information">
+            <div class="form-group">
+                {% if fault != null %}
+                    <p>Change Fault, please choose again.</p>
+                {% endif %}
+                <p>Your ID :{{ user.id }}</p>
+                <p>Your Name :{{ user.name }}
+                    <button name="change" type="submit" value="name">changename</button>
+                </p>
+                <button name="change" type="submit" value="password">changepassword</button>
+            </div>
+            <br>
+            <a href="/search">Return Search.</a>
+        </form>
+    </div>
+    <div>
+    {%if borrowcopylist != null and borrowcopylist.size != 0 %}
+    <h2>Borrowed books</h2>
+    <table width="100%" border="1" align="center">
+        <thead bgcolor="#949494">
+        <th>Book Title</th>
+        <th>Copy id</th>
+        <th>Borrow time</th>
+        <th>Due time</th>
+        <th>Return</th>
+        </thead>
+        <tbody>
+            {%for bc in borrowcopylist %}
+            <tr>
+                    <td>{{bc.btitle}}</td>
+                    <td>{{bc.cid}}</td>
+                    <td>{{bc.borrowtime}}</td>
+                    <td>{{bc.duetime}}</td>
+                    <td><a href="/books/{{bc.bid}}/copy/{{bc.cid}}/return/{{bc.id}}">Return</a></td>
+            </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    </div>
+    <div>
+        <a href="/user/uploadhistory">Upload History</a>
+    </div>
+    <div>
+        <a href="/user/downloadhistory">Download History</a>
+    </div>
+    <div>
+        <a href="/user/addcopyhistory">Buy Copy History</a>
+    </div>
+    <div>
+        <a href="/user/borrowcopyhistory">Borrow History</a>
+    </div>
+
+
+    <div class="dropdown">
         <div class="form-group">
-            {% if fault != null %}
-                <p>Change Fault, please choose again.</p>
+        <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
+        <div class="dropdown-content">
+            <a href="/search">Search</a>
+            <a href="/user/information">User Information</a>
+            {% if user.usertype=="admini" %}
+                {% if user.setadmini == true %}
+                <a href="/user/changeusertype">Change UserPermission</a>
+                {% else %}
+                    {% if user.setstudent == true %}
+                    <a href="/user/changeusertype">Change UserPermission</a>
+                    {% endif %}
+                {% endif %}
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/addbook">Add Book</a>
             {% endif %}
-            <p>Your ID :{{ user.id }}</p>
-            <p>Your Name :{{ user.name }}
-                <button name="change" type="submit" value="name">changename</button>
-            </p>
-            <button name="change" type="submit" value="password">changepassword</button>
+            {% if user.usertype=="student" %}
+                <a href="/uploaddocument">Upload Document</a>
+                <a href="/addbook">Add Book</a>
+            {% endif %}
+            <a href="/signout">Log Out</a>
         </div>
-        <br>
-        <a href="/search">Return Search.</a>
-    </form>
-</ul>
+        </div>
+    </div>
 </body>
 </html>

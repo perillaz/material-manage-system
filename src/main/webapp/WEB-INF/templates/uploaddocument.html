@@ -3,8 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>uploadDocument</title>
+    <style>
+        .dropbtn {
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown {
+            position:absolute;
+            top:0px;
+            right:200px;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+        .dropdown-content a {
+            color: black;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            position:absolute;
+        }
+    </style>
 </head>
 <body>
+{% if success == null%}
 <form method="post" action="/uploaddocument" enctype='multipart/form-data'>
     <div class="form-group">
         <div>
@@ -40,5 +72,58 @@
         <a href="/search">Rerurn search.</a>
     </div>
 </form>
+{% else %}div>
+    <p>Upload document successfully.</p>
+    <p>Details:</p>
+    </div>
+    <div>
+    <table width="100%" border="1" align="center">
+        <thead bgcolor="#949494">
+            <th>Id</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Uploadtime</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{document.id}}</td>
+            <td>{{document.title}}</td>
+            <td>{{document.author}}</td>
+            <td>{{document.uploadtime}}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <div>
+    <a href="/uploaddocument">Continue uploading</a>
+    </div>
+{% endif %}
+
+
+<div class="dropdown">
+    <div class="form-group">
+    <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
+    <div class="dropdown-content">
+        <a href="/search">Search</a>
+        <a href="/user/information">User Information</a>
+        {% if user.usertype=="admini" %}
+            {% if user.setadmini == true %}
+            <a href="/user/changeusertype">Change UserPermission</a>
+            {% else %}
+                {% if user.setstudent == true %}
+                <a href="/user/changeusertype">Change UserPermission</a>
+                {% endif %}
+            {% endif %}
+            <a href="/uploaddocument">Upload Document</a>
+            <a href="/addbook">Add Book</a>
+        {% endif %}
+        {% if user.usertype=="student" %}
+            <a href="/uploaddocument">Upload Document</a>
+            <a href="/addbook">Add Book</a>
+        {% endif %}
+        <a href="/signout">Log Out</a>
+    </div>
+    </div>
+</div>
 </body>
 </html>

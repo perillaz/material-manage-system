@@ -128,6 +128,7 @@ public class DocumentServiceTest {
         long endTime = System.currentTimeMillis();
         System.out.println("读入数据时间  :" + (double) (endTime - startTime) / 1000 + "s");
 		System.out.println("行数 : " + dlist.size());
+		jdbctemplate.update("TRUNCATE TABLE Document");
 	}
 
 }

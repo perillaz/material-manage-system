@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.xzgtemp.entity.Document;
 import org.xzgtemp.entity.User;
 import org.xzgtemp.service.BookService;
+import org.xzgtemp.service.CopyService;
 import org.xzgtemp.service.DocumentService;
 import org.xzgtemp.service.UserService;
 
@@ -32,6 +31,9 @@ public class UserController {
 
 	@Autowired
 	DocumentService documentservice;
+
+	@Autowired
+	CopyService copyservice;
 
 	public static final String KEY_USER = "__user__";
 
@@ -53,13 +55,70 @@ public class UserController {
 		return new ModelAndView("redirect:/signin");
 	}
 
+
+	@GetMapping("/uploadhistory")
+	public ModelAndView uploadhistory(HttpSession session){
+		Map<String, Object> model = new HashMap<>();
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
+		model.put("user",user);
+		model.put("type","upload");
+		model.put("udlist",documentservice.GetDocumentsbyUploaderid(user.getId()));
+		return new ModelAndView("userhistory.html", model);
+	}
+
+	@GetMapping("/downloadhistory")
+	public ModelAndView downloadhistory(HttpSession session){
+		Map<String, Object> model = new HashMap<>();
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
+		model.put("user",user);
+		model.put("type","download");
+		model.put("ddlist",documentservice.GetDownloadDocumentsbyUID(user.getId()));
+		return new ModelAndView("userhistory.html", model);
+	}
+
+	@GetMapping("/addcopyhistory")
+	public ModelAndView addcopyhistory(HttpSession session){
+		Map<String, Object> model = new HashMap<>();
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
+		model.put("user",user);
+		model.put("type","addcopy");
+		model.put("bclist",copyservice.GetCopiesbyBuyerid(user.getId()));
+		return new ModelAndView("userhistory.html", model);
+	}
+
+
+	@GetMapping("/borrowcopyhistory")
+	public ModelAndView borrowcopyhistory(HttpSession session){
+		Map<String, Object> model = new HashMap<>();
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
+		model.put("user",user);
+		model.put("type","borrowcopy");
+		model.put("bclist",copyservice.GetFinnishedBorrowCopybyUid(user.getId()));
+		return new ModelAndView("userhistory.html", model);
+	}
+
 	@GetMapping("/information")
 	public ModelAndView userinfo(HttpSession session){
 		Map<String, Object> model = new HashMap<>();
-		if(getuser(session,model)) {
-			return new ModelAndView("userdetial.html", model);
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
 		}
-		return new ModelAndView("redirect:/signin");
+		model.put("user",user);
+		model.put("borrowcopylist",copyservice.GetUnfinnishedBorrowCopybyUid(user.getId()));
+		return new ModelAndView("userdetial.html", model);
 	}
 
 	@PostMapping("/information")

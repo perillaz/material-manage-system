@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AddBook</title>
+    <title>AddCopy</title>
     <style>
         .dropbtn {
             font-size: 16px;
@@ -36,77 +36,53 @@
     </style>
 </head>
 <body>
+
+
 {% if success == null%}
-<form method="post" action="/addbook" >
+<h3>Add Copy</h3>
+<div>
+<form method="post" action="/books/{{bid}}/addcopy" >
     <div class="form-group">
         <div>
-            <lable>title :</lable>
-            <input name="title" type="text">
+            <p>book id : {{book.id}}</p>
+            <p>book title : {{book.title}}</p>
+            <p>buyer : {{user.name}}</p>
         </div>
         <div>
-            <lable>author :</lable>
-            <input name="author" type="text">
-        </div>
-        <div>
-            <lable>ISBN :</lable>
-            <input name="isbn" type="text">
-        </div>
-        <div>
-            <lable>Edition :</lable>
-            <input name="edition" type="text">
-        </div>
-        <div>
-            <lable>Publishtime :</lable>
-            <input type="date" name="publishtime" value="" />
-        </div>
-        <div>
-            <lable>Publisher :</lable>
-            <input name="publisher" type="text">
-        </div>
-        <div>
-            <lable>Language :</lable>
-            <input name="lang" type="text">
-        </div>
-        <div>
-            <lable>Brief Introduction :</lable>
-            <input name="briefinfo" type="text">
+            <lable>location :</lable>
+            <input name="loc" type="text">
         </div>
         <div>
         <button type="submit">submit</button>
         </div>
     </div>
-    <div>
-        {%  if error != null %}
-            <p>{{ error }}</p>
-        {%  endif %}
-        <p></p>
-        <br>
-        <a href="/search">Rerurn search.</a>
-    </div>
 </form>
+</div>
+{%  if error != null %}
+<div>
+    <p>{{ error }}</p>
+</div>
+{%  endif %}
 {% else %}
 <div>
-    <p>Add book successfully.</p>
+    <h3>Add Copy successfully.</h3>
     <p>Details:</p>
 </div>
 <div>
-    <p>Title:{{book.title}}</p>
-    <p>Author:{{book.author}}</p>
-    <p>ISBN:{{book.isbn}}</p>
-    <p>Edition:{{book.edition}}</p>
-    <p>Publishtime:{{book.publishtime}}</p>
-    <p>Publisher:{{book.publisher}}</p>
-    <p>Language:{{book.lang}}</p>
-    <p>Brief Introduction:{{book.briefinfo}}</p>
+    <p>Book Title:{{copy.btitle}}</p>
+    <p>Buyer :{{copy.buyername}}</p>
+    <p>Location :{{copy.loc}}</p>
 </div>
 <div>
-    <a href="/addbook">Continue uploading</a>
+    <a href="/books/{{copy.bid}}/addcopy/{cid}">Continue add copy</a>
+</div>
+{% endif%}
+<div>
+    <a href="/books/{{copy.bid}}">Return to Book Details</a>
 </div>
 <div>
     <a href="/search">Rerurn search.</a>
 </div>
-{% endif %}
-
 
 
 <div class="dropdown">
