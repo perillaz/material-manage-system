@@ -100,7 +100,10 @@ public class UserService {
 
 
     public void ChangeUserName(User user) {
-		if (1 != jdbcTemplate.update("UPDATE User SET name = ? WHERE id = ? ", user.getName(), user.getId())) {
+		if (1 != jdbcTemplate.update("UPDATE User SET name = ? WHERE id = ? ",
+				user.getName(),
+				user.getId())
+		) {
 			throw new RuntimeException("User not found by id");
 		}
 	}
