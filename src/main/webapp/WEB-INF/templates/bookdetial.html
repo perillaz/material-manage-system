@@ -39,6 +39,8 @@
                 border-style: groove;
                 border-color:black;
             }
+            .div-a{ float:left;width:49%;border:2px solid #000}
+            .div-b{ float:right;width:50%;border:2px solid #000}
         </style>
         <script>
             function whenborrow(){
@@ -91,26 +93,31 @@
             <article>
                 <header>
                     <h3>brief information</h3>
-                    <lable style="float:left">title:</lable>
-                    <p>{{book.title}}</p>
-                    <lable style="float:left">author:</lable>
-                    <p>{{book.author}}</p>
-                    <lable style="float:left">copyamount:</lable>
-                    <p>{{book.copyamount}}</p>
-                    <lable style="float:left">borrowedcopys:</lable>
-                    <p>{{book.borrowedcopys}}</p>
-                    <lable style="float:left">isbn:</lable>
-                    <p>{{book.isbn}}</p>
-                    <lable style="float:left">edition:</lable>
-                    <p>{{book.edition}}</p>
-                    <lable style="float:left">publishtime:</lable>
-                    <p>{{book.publishtime}}</p>
-                    <lable style="float:left">publisher:</lable>
-                    <p>{{book.publisher}}</p>
-                    <lable style="float:left">Lang:</lable>
-                    <p>{{book.lang}}</p>
-                    <lable style="float:left">briefinfo:</lable>
-                    <p>{{book.briefinfo}}</p>
+                    <div class="div-a">
+                        <lable style="float:left">title:</lable>
+                        <p>{{book.title}}</p>
+                        <lable style="float:left">author:</lable>
+                        <p>{{book.author}}</p>
+                        <lable style="float:left">copyamount:</lable>
+                        <p>{{book.copyamount}}</p>
+                        <lable style="float:left">borrowedcopys:</lable>
+                        <p>{{book.borrowedcopys}}</p>
+                        <lable style="float:left">isbn:</lable>
+                        <p>{{book.isbn}}</p>
+                    </div>
+                    <div class="div-b">
+                        <lable style="float:left">edition:</lable>
+                        <p>{{book.edition}}</p>
+                        <lable style="float:left">publishtime:</lable>
+                        <p>{{book.publishtime}}</p>
+                        <lable style="float:left">publisher:</lable>
+                        <p>{{book.publisher}}</p>
+                        <lable style="float:left">Lang:</lable>
+                        <p>{{book.lang}}</p>
+                        <lable style="float:left">briefinfo:</lable>
+                        <p>{{book.briefinfo}}</p>
+                    </div>
+
                     
                 </header>
             </article>
@@ -146,11 +153,14 @@
                 </tr>
                 {%endfor%}
             </tbody>
-            {%if borrowsucceed!=null%}
+        </table>
+            {% if borrowsucceed!=null %}
             <p>{{borrowsucceed}}</p>
-            {%elif reservesucceed!=null%}
+            {%endif%}
+            {% if reservesucceed!=null %}
             <p>{{reservesucceed}}</p>
-            {%elif returnsucceed!=null%}
+            {%endif%}
+            {% if returnsucceed!=null %}
             <p>{{returnsucceed}}</p>
             {%endif%}
         
@@ -220,7 +230,7 @@
             <form method="post" action="/books/{{book.id}}/changecopy">
                 <button type="submit" name="changecopy">modifycopy</button>
             </form>
-                {%if changecopy != null % }
+                {%if changecopy != null %}
                 <div class="form-group">
                     <form method="post" action="/books/{{book.id}}/changecopy/loc">
                         <label>Location: {{copy.loc}}</label>

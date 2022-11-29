@@ -120,11 +120,11 @@ public class CopyService {
         );
     }
 
-    public List<Copy> GetCopybyBID(Long cid){
+    public List<Copy> GetCopybyBID(Long bid){
         return jdbctemplate.query(
-            "SELECT * FROM Copy WHERE cid = ",
+            "SELECT * FROM Copy WHERE bid = ?",
             copyRowMapper,
-            cid
+            bid
         );
     }
 
