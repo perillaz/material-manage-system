@@ -197,7 +197,7 @@ public class CopyService {
         ChangeBorrowCopy(borrowcopy, "sendbacktime",Date.valueOf(LocalDate.now()));
     }
 
-    private Date getDueTime( Date starttime ) {
+    private Date getDueTime(Date starttime ) {
         Calendar calendar =new GregorianCalendar();
         calendar.setTime(starttime);
         calendar.add(calendar.DATE, 14);
