@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.xzgtemp.entity.User;
 import org.xzgtemp.service.BookService;
 import org.xzgtemp.service.DocumentService;
+import org.xzgtemp.service.StatisticService;
 import org.xzgtemp.service.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,9 @@ public class LoginController {
 
     @Autowired
     DocumentService documentservice;
+    
+    @Autowired
+	StatisticService statisticservice;
 
     public static final String KEY_USER = "__user__";
 
@@ -169,6 +173,30 @@ public class LoginController {
             return new ModelAndView("/search.html",model);
         }
     }
+    
+    @GetMapping("/UserStatistic")
+    public ModelAndView UserStatistic(HttpSession session) {
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("userstatistic", statisticservice.GetUserStatistic());
+    	return new ModelAndView("userstatistics.html",model);
+    	
+    }
 
+    @GetMapping("/BookRank")
+    public ModelAndView Bookrank(HttpSession session) {
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("bookrank", statisticservice.GetWeekBorrowRank());
+    	return new ModelAndView("bookrank.html",model);
+    	
+    }
+    
+    @GetMapping("/DocumentRank")
+    public ModelAndView Documentrank(HttpSession session) {
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("documentrank", statisticservice.GetWeekDownloadRank());
+    	return new ModelAndView("documentrank.html",model);
+    	
+    }
+    
 
 }

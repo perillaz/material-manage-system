@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>bookrank</title>
+    </head>
+    <body>
+        <h3>Top 10 books borrowed this week</h3>
+        <table width="100%" border="1" align="center">
+            <thead bgcolor="#949494">
+            <th>Book ID</th><th>Title</th><th>Borrowtimes</th>
+            </thead>
+            <tbody>
+                {%for book in bookrank%}
+                <tr>
+                    <td>{{book.bookid}}</td>
+                    <td>{{book.booktitle}}</td>
+                    <td>{{book.borrowtimes}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+
+
+    </body>
+</html>
