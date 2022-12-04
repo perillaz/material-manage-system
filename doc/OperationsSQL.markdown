@@ -29,7 +29,7 @@ UPDATE User SET u_name = ? WHERE u_id = ?
 添加图书
 
 ```sql
-INSERT INTO Book(b_id,b_title,b_author,b_buyer,b_buytime,b_whereis,b_isonshelf,b_borrowtimes,b_publishtime,b_publisher) VALUES(?,?,?,?,?,?,?,?,?,?)
+INSERT INTO Book(title,author,copyamount,borrowedcopys,allborrowtimes,isbn,edition,publishtime,publisher,lang,briefinfo) VALUES(?,?,?,?,?,?,?,?,?,?,?)
 ```
 
 查找图书
@@ -41,17 +41,17 @@ SELECT * FROM Book WHERE b_id = ?
 
 By Title
 ```sql
-SELECT * FROM Book WHERE b_title LIKE %?%
+SELECT * FROM Book WHERE title LIKE CONCAT('%',?,'%') ORDER BY allborrowtimes DESC
 ```
 
 By Author
 ```sql
-SELECT * FROM Book WHERE b_author LIKE %?%
+SELECT * FROM Book WHERE author LIKE CONCAT('%',?,'%') ORDER BY allborrowtimes DESC
 ```
 
 By Title Or Author
 ```sql
-SELECT * FROM Book WHERE b_title LIKE %?% OR b_author LIKE %?%
+SELECT * FROM Book WHERE title LIKE CONCAT('%',?,'%') OR author LIKE CONCAT('%',?,'%') ORDER BY allborrowtimes DESC
 ```
 
 Get ALl Books
@@ -61,90 +61,150 @@ SELECT * FROM Book
 
 修改图书信息
 
-Change Title
+Change 'attribute'
 ```sql
-UPDATA Book SET b_title = ? WHERE b_id = ? 
+UPDATA Book SET attribute = ? WHERE id = ? 
 ```
 
-Change Author
+### CopyService
+
+添加图书副本
 ```sql
-UPDATA Book SET b_author = ? WHERE b_id = ? 
+INSERT INTO Copy(bid,btitle,loc,buyerid,buyername,buytime,borrowtimes,canbeborrow,canbereserve,reserver) VALUES(?,?,?,?,?,?,?,?,?,?)
 ```
 
-Change Buyer
+删除图书副本
 ```sql
-UPDATA Book SET b_buyer = ? WHERE b_id = ?
+DELETE FROM Copy WHERE id = ?
 ```
 
-Chnage Buytime
+查询副本
+
+By id
 ```sql
-UPDATA Book SET b_buytime = ? WHERE b_id = ? 
+SELECT * FROM COPY WHERE id=?
 ```
 
-Change Whereis
+By bid
 ```sql
-UPDATA Book SET b_whereis = ? WHERE b_id = ? 
+SELECT * FROM Copy WHERE bid = ?
 ```
 
-Change Isonshelf
+By buyer
 ```sql
-UPDATA Book SET b_isonshelf = ? WHERE b_id = ? 
+SELECT * FROM Copy WHERE buyerid = ?
+```
+
+修改副本信息
+```sql
+UPDATE Copy SET attribute = ? WHERE id = ? 
+```
+
+添加借阅记录
+```sql
+INSERT INTO BorrowCopy(uid,cid,bid,btitle,borrowtime,sendbacktime,duetime,finished) VALUES(?,?,?,?,?,?,?,?)
+```
+
+查询借阅记录
+
+By id
+```sql
+SELECT * FROM BorrowCopy WHERE id =?
+```
+
+查询用户未归还副本
+```sql
+SELECT * FROM BorrowCopy WHERE uid = ? AND  finished = false
+```
+
+查询用户已归还副本
+```sql
+SELECT * FROM BorrowCopy WHERE uid = ? AND  finished = true
+```
+
+修改借阅记录信息
+```sql
+UPDATE BorrowCopy SET ttribute = ? WHERE id = ? 
 ```
 
 ### DocumentService
 
 添加文档信息
 ```sql
-INSERT INTO Document(d_id,d_title,d_author,d_uploader,d_uploadtime,d_filepath,d_downloadtimes) VALUES(?,?,?,?,?,?,?)
+INSERT INTO Document(title,author,uploaderid,uploadername,uploadtime,filepath,downloadtimes,doi,literature) VALUES(?,?,?,?,?,?,?,?,?)
+```
+
+删除文档
+```sql
+DELETE FROM Document WHERE id = ?
 ```
 
 查找文档
 By Id
 ```sql
-SELECT * FROM Document WHERE d_id = ?
+SELECT * FROM Document WHERE id = ?
 ```
 
 By Title
 ```sql
-SELECT * FROM Document WHERE d_title LIKE %?%
+SELECT * FROM Document WHERE title LIKE CONCAT('%',?,'%') ORDER BY downloadtimes DESC
 ```
 
 By Author
 ```sql
-SELECT * FROM Document WHERE d_author = ?
+SELECT * FROM Document WHERE author LIKE CONCAT('%',?,'%') ORDER BY downloadtimes DESC
+```
+
+By TitleOrAuthor
+```sql
+SELECT * FROM Document WHERE title LIKE CONCAT('%',?,'%') OR author LIKE CONCAT('%',?,'%') ORDER BY downloadtimes DESC
+```
+
+By Uploaderid
+```sql
+SELECT * FROM Document WHERE uploaderid = ?
 ```
 
 Get All Documents
 ```sql
 SELECT * FROM Document
 ```
-Change 
-```sql
 
-```
 修改文档
 
-Change Title
+Change attributes
+
 ```sql
-UPDATA Document SET d_title = ? WHERE d_id = ? 
+UPDATA Document SET attribute = ? WHERE id = ? 
+```
+#### DownloadDocument
+
+添加下载记录
+```sql
+INSERT INTO DownloadDocument(uid,did,dtitle,downloadtime) VALUES(?,?,?,?)
+```
+查询下载记录
+
+By id
+```sql
+SELECT * FROM DownloadDocument WHERE uid = ?
 ```
 
-Change Author
+### StatisticService
+
+UserStatistic
 ```sql
-UPDATA Document SET d_author = ? WHERE d_id = ? 
+SELECT * FROM UserStatistics
 ```
 
-Change Uploader
+WeekBorrowRank
+借阅次数排行前10的书
 ```sql
-UPDATA Document SET d_uploader = ? WHERE d_id = ? 
+SELECT bid AS bookid,btitle AS booktitle, COUNT(*) AS borrowtimes FROM BorrowCopy WHERE borrowtime >= ? GROUP BY bid ORDER BY borrowtimes DESC LIMIT 10
 ```
 
-Change Filepath
+WeekDownloadRank
+下载次数排行前10的文档
 ```sql
-UPDATA Document SET d_filepath = ? WHERE d_id = ? 
-```
-
-Change Downloadtimes
-```sql
-UPDATA Document SET d_downloadtimes = ? WHERE d_id = ? 
+SELECT did AS documentid,dtitle AS documenttitle, COUNT(*) AS downloadtimes FROM DownloadDocument WHERE downloadtime >= ? GROUP BY did ORDER BY downloadtimes DESC LIMIT 10
 ```

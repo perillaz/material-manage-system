@@ -40,8 +40,6 @@ public class BookService {
     }
 
     public void AddBook(Book book){
-        //String title, String author, Date publishtime,String publisher,String buyer, Date buytime,
-        //String whereis, Boolean isonshelf,Integer borrowtimes, Boolean orderd, String orderuser
         KeyHolder holder = new GeneratedKeyHolder();
         String sql = "INSERT INTO Book(title,author,copyamount,borrowedcopys,allborrowtimes,isbn,edition,publishtime,publisher,lang,briefinfo) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {

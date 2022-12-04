@@ -1,4 +1,4 @@
-### Tables:
+# Tables:
 
 #### Users
 
@@ -13,36 +13,36 @@
 
 #### Book
 
-| Attributes    | description              | Type in SQL  | Type in JAVA |  |
-| ------------- | ------------------------ | ------------ | ------------ | ---- |
-| id(key)       | 书籍编号                     | BIGINT | Long |      |
-| title         | 标题                     | VARCHAR(50) | String       |      |
-| author        | 作者                     | VARCHAR(50) | String       |      |
-| copyamount     | 单册数量    | INTEGER       | Integer       |      |
-| borrowedcopys  |             | INTEGER       | Integer       |      |
-| allborrowtimes | 总借阅次数  | INTEGER       | Integer       |      |
-| isbn           | ISBN        | VARCHAR(13)   | String        |      |
-| edition        | 版本        | VARCHAR(30)  | String        |      |
-| publishtime | 出版时间 |DATE | java.sql.Date | 可空 |
-| publisher | 出版商 |VARCHAR(30) | String | 可空 |
-| lang | 语言 |VARCHAR(10) | String | 可空 |
-| briedinfo | 简介 |VARCHAR(1000) | String | 可空 |
+| Attributes    | description              | Type in SQL  | Type in JAVA |        |
+| ------------- | ------------------------ | ------------ | ------------ |--------|
+| id(key)       | 书籍编号                     | BIGINT | Long |        |
+| title         | 标题                     | VARCHAR(50) | String       |        |
+| author        | 作者                     | VARCHAR(50) | String       |        |
+| copyamount     | 单册数量    | INTEGER       | Integer       |        |
+| borrowedcopys  |             | INTEGER       | Integer       |        |
+| allborrowtimes | 总借阅次数  | INTEGER       | Integer       |        |
+| isbn           | ISBN        | VARCHAR(13)   | String        |        |
+| edition        | 版本        | VARCHAR(30)  | String        |        |
+| publishtime | 出版时间 |DATE | java.sql.Date | 可空     |
+| publisher | 出版商 |VARCHAR(30) | String | 可空     |
+| lang | 语言 |VARCHAR(10) | String | 可空     |
+| briedinfo | 简介 |VARCHAR(1000) | VARCHAR(13) | String |
 
 #### Copy
 
-| Attributes    | description              | Type in SQL  | Type in JAVA |  |
-| ------------- | ------------------------ | ------------ | ------------ | ---- |
-| id(key)       | 编号               | BIGINT | Long |      |
-| bid | 书籍编号 | BIGINT | Long | |
-| btitle | 书籍名称 | VARCHAR(50) | String        | |
-| loc | 在架上位置 | varchar(50) | String | |
-| isborrowed | 是否被借走 | BOOLEAN | Boolean | |
-| isreserved | 是否被预约 | BOOLEAN | Boolean | |
+| Attributes    | description      | Type in SQL | Type in JAVA |  |
+|---------------|------------------|-------------| ------------ | ---- |
+| id(key)       | 编号               | BIGINT      | Long |      |
+| bid           | 书籍编号             | BIGINT      | Long | |
+| btitle        | 书籍名称             | VARCHAR(50) | String        | |
+| loc           | 在架上位置            | varchar(50) | String | |
 | buyerid(u_id) | 单册购买者id(上传信息的用户) | VARCHAR(13) | String       |      |
-| buyername | 单册购买者姓名 | VARCHAR(30) | String | |
-| buytime       | 购买时间(上传时间)        | Date         | java.sql.Date |      |
-| borrowtimes   | 借阅次数                  |   INTEGER     |      Integer |      |
-
+| buyername     | 单册购买者姓名          | VARCHAR(30) | String | |
+| buytime       | 购买时间(上传时间)       | Date        | java.sql.Date |      |
+| borrowtimes   | 借阅次数             | INTEGER     |      Integer |      |
+| canbeborrow   | 是否被借走            | BOOLEAN     | Boolean | |
+| canbereserve  | 是否被预约            | BOOLEAN     | Boolean | |
+| reserver      | 预约者              | VARCHAR     | Boolean | |
 #### Document
 
 | Attributes    | description              | Type in SQL  | Type in JAVA |  |

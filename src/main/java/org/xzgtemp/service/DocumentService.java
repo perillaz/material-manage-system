@@ -62,7 +62,6 @@ public class DocumentService {
     }
 
     public void AddDocument(Document document){
-        //String title, String author, String uploaduser, Date uploadtime, String filepath
         KeyHolder holder = new GeneratedKeyHolder();
         String sql = "INSERT INTO Document(title,author,uploaderid,uploadername,uploadtime,filepath,downloadtimes,doi,literature) VALUES(?,?,?,?,?,?,?,?,?)";
         if(1 != jdbctemplate.update((conn) -> {
