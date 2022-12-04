@@ -182,21 +182,15 @@ public class LoginController {
     	
     }
 
-    @GetMapping("/BookRank")
+    @GetMapping("/BDRank")
     public ModelAndView Bookrank(HttpSession session) {
     	Map<String, Object> model = new HashMap<>();
     	model.put("bookrank", statisticservice.GetWeekBorrowRank());
-    	return new ModelAndView("bookrank.html",model);
+    	model.put("documentrank", statisticservice.GetWeekDownloadRank());
+    	return new ModelAndView("bdrank.html",model);
     	
     }
     
-    @GetMapping("/DocumentRank")
-    public ModelAndView Documentrank(HttpSession session) {
-    	Map<String, Object> model = new HashMap<>();
-    	model.put("documentrank", statisticservice.GetWeekDownloadRank());
-    	return new ModelAndView("documentrank.html",model);
-    	
-    }
     
 
 }

@@ -13,7 +13,7 @@
             <tbody>
                 {%for document in documentrank%}
                 <tr>
-                    <td>{{document.documentid}}</td>
+                    <td><a href="/documents/{{document.id}}">{{document.documentid}}</a></td>
                     <td>{{document.documenttitle}}</td>
                     <td>{{document.downloadtimes}}</td>
                 </tr>

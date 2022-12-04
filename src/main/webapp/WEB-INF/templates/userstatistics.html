@@ -6,14 +6,19 @@
     </head>
     <body>
         <h3>User Statistics</h3>
-        <label style="float:left">User ID:</label>
-        <p>{{userstatistic.userid}}</p>
-        <label style="float:left">User Name:</label>
-        <p>{{userstatistic.username}}</p>
-        <label style="float:left">The number of donated books:</label>
-        <p>{{userstatistic.uploadtimes}}</p>
-        <label style="float:left">The number of uploaded doucuments:</label>
-        <p>{{userstatistic.addcopytimes}}</p>
+        <table width="100%" border="1" align="center">
+            <thead bgcolor="#949494">
+            <th>User ID</th><th>User Name</th><th>Upload Times</th><th>Add Copy Times</th>
+            </thead>
+            <tbody>
+                {%for user in userstatistic}
+                <td>{{user.userid}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.uploadtimes}}</td>
+                <td>{{user.addcopytimes}}</td>
+                {%endfor%}
+            </tbody>
+        
 
     </body>
 </html>
