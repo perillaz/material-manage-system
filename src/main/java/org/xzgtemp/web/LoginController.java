@@ -174,22 +174,17 @@ public class LoginController {
         }
     }
     
-    @GetMapping("/UserStatistic")
+    @GetMapping("/StatisticInfo")
     public ModelAndView UserStatistic(HttpSession session) {
     	Map<String, Object> model = new HashMap<>();
     	model.put("userstatistic", statisticservice.GetUserStatistic());
-    	return new ModelAndView("userstatistics.html",model);
+    	model.put("bookrank", statisticservice.GetWeekBorrowRank());
+    	model.put("documentrank", statisticservice.GetWeekDownloadRank());
+    	return new ModelAndView("statistics.html",model);
     	
     }
 
-    @GetMapping("/BDRank")
-    public ModelAndView Bookrank(HttpSession session) {
-    	Map<String, Object> model = new HashMap<>();
-    	model.put("bookrank", statisticservice.GetWeekBorrowRank());
-    	model.put("documentrank", statisticservice.GetWeekDownloadRank());
-    	return new ModelAndView("bdrank.html",model);
-    	
-    }
+   
     
     
 

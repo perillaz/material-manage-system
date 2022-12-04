@@ -11,11 +11,13 @@
             <th>User ID</th><th>User Name</th><th>Upload Times</th><th>Add Copy Times</th>
             </thead>
             <tbody>
-                {%for user in userstatistic}
+                {%for user in userstatistic%}
+                <tr>
                 <td>{{user.userid}}</td>
                 <td>{{user.username}}</td>
                 <td>{{user.uploadtimes}}</td>
                 <td>{{user.addcopytimes}}</td>
+                </tr>
                 {%endfor%}
             </tbody>
         
