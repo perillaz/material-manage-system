@@ -236,11 +236,11 @@ public class UserController {
 				model.put("error","No user input, please input again.");
 				return new ModelAndView("changeusertype.html",model);
 			}else {
+				for (String target : userarr) {
+					User getuser = userservice.GetUserbyID(target);
+					userlist.add(getuser);
+				}
 				if (setwhat.equals("setadmini")) {
-					for (String target : userarr) {
-						User getuser = userservice.GetUserbyID(target);
-						userlist.add(getuser);
-					}
 					if(setlevel.equals("high")){
 						userservice.AddAdmini(user, userlist,true,true);
 					}
@@ -250,12 +250,12 @@ public class UserController {
 					else{
 						userservice.AddAdmini(user, userlist,false,false);
 					}
-				} else {
-					for (String target : userarr) {
-						User getuser = userservice.GetUserbyID(target);
-						userlist.add(getuser);
-					}
+				}
+				else if(setwhat.equals("setstudent")){
 					userservice.AddStudent(user, userlist);
+				}
+				else{
+					userservice.SetVisitor(user,userlist);
 				}
 				model.put("success","Set successfully.");
 				return new ModelAndView("changeusertype.html",model);

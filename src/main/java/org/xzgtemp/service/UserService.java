@@ -25,6 +25,8 @@ public class UserService {
 		if(user.getSetstudent()){
 			for(User User : users){
 				User.setUsertype("student");
+				User.setSetadmini(false);
+				User.setSetstudent(false);
 				ChangeUserpermission(User);
 			}
 		}
@@ -45,6 +47,17 @@ public class UserService {
 				User.setUsertype("admini");
 				User.setSetadmini(setAdmini);
 				User.setSetstudent(setStudent);
+				ChangeUserpermission(User);
+			}
+		}
+	}
+
+	public void SetVisitor(User user,List<User> users){
+		if(user.getSetstudent()){
+			for(User User : users){
+				User.setUsertype("visitor");
+				User.setSetadmini(false);
+				User.setSetstudent(false);
 				ChangeUserpermission(User);
 			}
 		}
