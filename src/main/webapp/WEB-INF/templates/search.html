@@ -60,7 +60,7 @@
         <div class="form-group">
         <button id="name" class="dropbtn">{{ user.usertype }} : {{ user.name }}</button>
         <div class="dropdown-content">
-            <a href="/search">Search</a>
+            
             <a href="/user/information">User Information</a>
             {% if user.usertype=="admini" %}
                 {% if user.setadmini == true %}
@@ -142,7 +142,7 @@
         {% endif %}
     </div>
 
-    <p><a href="/StatisticInfo">Statistics Information</a></p>
+    <p align = "center"><a href="/StatisticInfo">Statistics Information</a></p>
     
     
 </body>

@@ -176,7 +176,12 @@ public class LoginController {
     
     @GetMapping("/StatisticInfo")
     public ModelAndView UserStatistic(HttpSession session) {
-    	Map<String, Object> model = new HashMap<>();
+		User user = (User)session.getAttribute(KEY_USER);
+		if (user ==null){
+			return new ModelAndView("redirect:/signin");
+		}
+		Map<String, Object> model = new HashMap<>();
+        model.put("user",user);
     	model.put("userstatistic", statisticservice.GetUserStatistic());
     	model.put("bookrank", statisticservice.GetWeekBorrowRank());
     	model.put("documentrank", statisticservice.GetWeekDownloadRank());
@@ -184,8 +189,5 @@ public class LoginController {
     	
     }
 
-   
-    
-    
 
 }

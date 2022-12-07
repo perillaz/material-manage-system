@@ -75,10 +75,6 @@
                 <p>{{book.title}}</p>
                 <lable style="float:left">author:</lable>
                 <p>{{book.author}}</p>
-                <lable style="float:left">copyamount:</lable>
-                <p>{{book.copyamount}}</p>
-                <lable style="float:left">borrowedcopys:</lable>
-                <p>{{book.borrowedcopys}}</p>
                 <lable style="float:left">isbn:</lable>
                 <p>{{book.isbn}}</p>
                 <lable style="float:left">edition:</lable>
@@ -143,16 +139,17 @@
     <div>
         <a href="/books/{{book.id}}/addcopy">Add Copy</a>
     </div>
-    <div>
-        <a href="/search">Return Search</a>
-    </div>    
     {%if user.getUsertype()=="admini"%}
     <div>
         <a href="/books/{{book.id}}/change">Change Book Information</a>
     </div>
     <div>
         <a href="/books/{{book.id}}/delete">Delete Book</a>
-    </div>    
+    </div>   
+    <div>
+        <br>
+        <a href="/search">Return Search</a>
+    </div>     
     {%endif%}
         {% else %}
             <div class="form-group">

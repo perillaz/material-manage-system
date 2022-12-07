@@ -213,7 +213,6 @@ public class CopyService {
             field.set(copy,value);
             if(1 != jdbctemplate.update(
                 "UPDATE Copy SET " + attribute + " = ? WHERE id = ? ",
-                //attribute,
                 field.get(copy),
                 copy.getId()
                 )
@@ -232,7 +231,6 @@ public class CopyService {
             field.set(borrowcopy,value);
             if(1 != jdbctemplate.update(
                 "UPDATE BorrowCopy SET " + attribute + " = ? WHERE id = ? ",
-                //attribute,
                 field.get(borrowcopy),
                 borrowcopy.getId()
                 )

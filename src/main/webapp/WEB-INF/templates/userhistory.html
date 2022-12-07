@@ -79,7 +79,7 @@
         <th>Downloadload time </th>
         </thead>
         <tbody>
-            {% for dd in udlist %}
+            {% for dd in ddlist %}
             <tr>
                 <td><a href="/documents/{{dd.did}}">{{dd.did}}</a></td>
                 <td><a href="/documents/{{dd.did}}">{{dd.dtitle}}</a></td>
@@ -106,10 +106,10 @@
         <th>Borrow Times</th>
         </thead>
         <tbody>
-            {% for copy in udlist %}
+            {% for copy in bclist %}
             <tr>
                 <td><a href="/books/{{copy.bid}}">{{copy.bid}}</a></td>
-                <td><a href="//books/{{copy.bid}}">{{copy.btitle}}</a></td>
+                <td><a href="/books/{{copy.bid}}">{{copy.btitle}}</a></td>
                 <td>{{copy.id}}</td>
                 <td>{{copy.buytime}}</td>
                 <td>{{copy.borrowtimes}}</td>
@@ -128,6 +128,7 @@
     {% else %}
     <table width="100%" border="1" align="center">
         <thead bgcolor="#949494">
+        <th>Book ID</th>
         <th>Book Title</th>
         <th>Copy id</th>
         <th>Borrow time</th>
@@ -136,7 +137,7 @@
         <tbody>
             {%for bc in bclist %}
             <tr>
-            <td><a href="/books/{{bc.bid}}">{{bc.btitle}}</a></td>
+            <td><a href="/books/{{bc.bid}}">{{bc.bid}}</a></td>
             <td><a href="/books/{{bc.bid}}">{{bc.btitle}}</a></td>
             <td>{{bc.cid}}</td>
             <td>{{bc.borrowtime}}</td>

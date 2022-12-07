@@ -66,11 +66,11 @@
         <tbody>
             {%for bc in borrowcopylist %}
             <tr>
-                    <td>{{bc.btitle}}</td>
-                    <td>{{bc.cid}}</td>
-                    <td>{{bc.borrowtime}}</td>
-                    <td>{{bc.duetime}}</td>
-                    <td><a href="/books/{{bc.bid}}/copy/{{bc.cid}}/return/{{bc.id}}">Return</a></td>
+                <td><a href="/books/{{bc.bid}}">{{bc.btitle}}</a></td>
+                <td>{{bc.cid}}</td>
+                <td>{{bc.borrowtime}}</td>
+                <td>{{bc.duetime}}</td>
+                <td><a href="/books/{{bc.bid}}/copy/{{bc.cid}}/return/{{bc.id}}">Return</a></td>
             </tr>
                 {% endfor %}
         </tbody>
@@ -78,15 +78,10 @@
     {% endif %}
     </div>
     <div>
+        <br>
         <a href="/user/uploadhistory">Upload History</a>
-    </div>
-    <div>
         <a href="/user/downloadhistory">Download History</a>
-    </div>
-    <div>
         <a href="/user/addcopyhistory">Buy Copy History</a>
-    </div>
-    <div>
         <a href="/user/borrowcopyhistory">Borrow History</a>
     </div>
     <br>

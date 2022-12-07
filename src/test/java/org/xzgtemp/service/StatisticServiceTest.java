@@ -23,7 +23,11 @@ public class StatisticServiceTest {
 
     @Test
     public void GetUserStatisticTest(){
+
+        long startTime = System.currentTimeMillis();
         List<UserStatistic> ulist = statisticservice.GetUserStatistic();
+        long endTime = System.currentTimeMillis();
+        System.out.println("程序运行时间  :" + (double) (endTime - startTime) / 1000 + "s");
         for(UserStatistic us:ulist){
             System.out.println(us.toString());
         }
@@ -32,7 +36,10 @@ public class StatisticServiceTest {
     
     @Test
     public void GetWeekBorrowRankTest(){
+        long startTime = System.currentTimeMillis();
         List<WeekBorrowRank> wbrlist = statisticservice.GetWeekBorrowRank();
+        long endTime = System.currentTimeMillis();
+        System.out.println("程序运行时间  :" + (double) (endTime - startTime) / 1000 + "s");
         for(WeekBorrowRank wbr:wbrlist){
             System.out.println(wbr.toString());
         }
@@ -40,7 +47,10 @@ public class StatisticServiceTest {
 
     @Test
     public void GetWeekDownloadRankTest(){
+        long startTime = System.currentTimeMillis();
         List<WeekDownloadRank> wdrlist = statisticservice.GetWeekDownloadRank();
+        long endTime = System.currentTimeMillis();
+        System.out.println("程序运行时间  :" + (double) (endTime - startTime) / 1000 + "s");
         for(WeekDownloadRank wdr:wdrlist){
             System.out.println(wdr.toString());
         }

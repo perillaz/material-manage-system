@@ -21,7 +21,7 @@ public class DBInitializer {
 		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS BorrowCopy(id BIGINT PRIMARY KEY AUTO_INCREMENT,uid VARCHAR(20) NOT NULL,cid BIGINT NOT NULL,bid BIGINT NOT NULL,btitle VARCHAR(50) NOT NULL,borrowtime DATE NOT NULL,sendbacktime DATE NOT NULL,duetime DATE NOT NULL,finished BOOLEAN NOT NULL)");
 		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS DownloadDocument(id BIGINT PRIMARY KEY AUTO_INCREMENT,uid VARCHAR(13) NOT NULL,did BIGINT NOT NULL,dtitle VARCHAR(50) NOT NULL,downloadtime DATE NOT NULL)");
 		jdbcTemplate.update("DROP VIEW IF EXISTS UserStatistics");
-		jdbcTemplate.update("CREATE VIEW UserStatistics(userid,username,uploadtimes,addcopytimes) AS WITH dcounts AS (SELECT uploaderid AS id, COUNT(*) AS dcount FROM document GROUP BY uploaderid), ccounts AS (SELECT buyerid AS id, COUNT(*) AS ccount FROM copy GROUP BY buyerid) SELECT id AS userid,name AS username,dcount as uploadtimes,ccount AS addcopytimes FROM User NATURAL LEFT JOIN ccounts NATURAL LEFT JOIN dcounts WHERE ccount IS NOT NULL  or dcount IS NOT NULL");
+		jdbcTemplate.update("CREATE VIEW UserStatistics(userid,username,uploadtimes,addcopytimes) AS WITH dcounts AS (SELECT uploaderid AS id, COUNT(*) AS dcount FROM Document GROUP BY uploaderid), ccounts AS (SELECT buyerid AS id, COUNT(*) AS ccount FROM Copy GROUP BY buyerid) SELECT id AS userid,name AS username,dcount as uploadtimes,ccount AS addcopytimes FROM User NATURAL LEFT JOIN ccounts NATURAL LEFT JOIN dcounts WHERE ccount IS NOT NULL  or dcount IS NOT NULL");
 		jdbcTemplate.update("DROP TRIGGER IF EXISTS BookTitleSynchronization");
 		jdbcTemplate.update("DROP TRIGGER IF EXISTS DocumentTitleSynchronization");
 		jdbcTemplate.update("DROP TRIGGER IF EXISTS UserNameSynchronization");

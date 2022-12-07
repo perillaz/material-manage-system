@@ -80,10 +80,7 @@
                 <a href="/documents/{{did}}/download">Download</a>
             </header>
         </article>
-    </div>
-    <div>
-        <a href="/search">Return Search</a>
-    </div>    
+    </div>  
     {%if user.getUsertype()=="admini" or user.id == document.uploaderid%}
     <div>   
         <a href="/documents/{{did}}/change">Change Document Information</a>
@@ -92,6 +89,10 @@
         <a href="/documents/{{did}}/delete">Delete Document</a>
     </div> 
     {%endif%}
+    <div>
+        <br>
+        <a href="/search">Return Search</a>
+    </div>  
     {% else %}
         <div class="form-group">
             <form method="post" action="/documents/{{did}}/change/title">
